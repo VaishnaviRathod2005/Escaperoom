@@ -1,0 +1,912 @@
+/* ==========================================================================
+   ACADEMY ESCAPE ROOM — MODULE 5: THE BROKEN STARTUP (NOVALINK INCIDENT)
+   Photorealistic 4-Wall Interactive Investigation Suite
+   ========================================================================== */
+
+/* Module 5 Dark Walnut & Cyan Theme Styles for Modals and Hotspots */
+
+/* Master 16:9 Stage Box */
+.m5-stage-box {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  max-width: min(100vw, 177.78vh);
+  max-height: min(100vh, 56.25vw);
+  aspect-ratio: 16 / 9;
+  background: #000;
+  overflow: hidden;
+  box-shadow: 0 15px 60px rgba(0, 0, 0, 0.9);
+  perspective: 1200px;
+}
+
+/* Atmospheric Lighting Overlay */
+.m5-ambient-vignette {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 10;
+  background: radial-gradient(ellipse at 50% 45%, rgba(0, 0, 0, 0) 35%, rgba(0, 0, 0, 0.25) 75%, rgba(0, 0, 0, 0.55) 100%);
+  box-shadow: inset 0 0 70px rgba(0, 0, 0, 0.6);
+}
+
+/* Wall Scenes Container */
+.m5-walls-container {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.m5-wall-scene {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  background-position: center center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  z-index: 2;
+  transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.5s ease;
+  transform: scale(0.96) perspective(1200px);
+}
+
+.m5-wall-scene.active {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  z-index: 5;
+  transform: scale(1) perspective(1200px);
+}
+
+/* 4 Wall Background Renders */
+#m5-wall-view-1 { background-image: url('../assets/module5/wall1-exit.png?v=2'); }
+#m5-wall-view-2 { background-image: url('../assets/module5/wall2-novalink.png?v=2'); }
+#m5-wall-view-3 { background-image: url('../assets/module5/wall3-learning.png?v=2'); }
+#m5-wall-view-4 { background-image: url('../assets/module5/wall4-investigation.png?v=2'); }
+
+/* Top Header Bar */
+.m5-top-header {
+  position: absolute;
+  top: 16px;
+  left: 20px;
+  right: 20px;
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  pointer-events: auto;
+}
+
+.m5-header-title-box {
+  background: rgba(12, 6, 3, 0.85);
+  border: 1.5px solid rgba(255, 215, 0, 0.4);
+  backdrop-filter: blur(12px);
+  border-radius: 12px;
+  padding: 8px 18px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.85);
+}
+
+.m5-sub-tag {
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 1.5px;
+  color: #00e5ff;
+  text-transform: uppercase;
+  display: block;
+}
+
+.m5-main-title {
+  font-family: 'Cinzel', serif;
+  font-size: 17px;
+  font-weight: 900;
+  color: #ffd700;
+  letter-spacing: 1px;
+}
+
+.m5-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* Navigation Arrows & Bottom Dots */
+.m5-nav-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 48px;
+  height: 64px;
+  background: rgba(18, 9, 4, 0.8);
+  border: 1.5px solid rgba(212, 172, 13, 0.5);
+  backdrop-filter: blur(10px);
+  color: #ffd700;
+  font-size: 22px;
+  font-weight: 900;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 50;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.85);
+}
+
+.m5-nav-btn.left { left: 16px; border-radius: 16px 6px 6px 16px; }
+.m5-nav-btn.right { right: 16px; border-radius: 6px 16px 16px 6px; }
+
+.m5-nav-btn:hover {
+  background: linear-gradient(135deg, rgba(212, 172, 13, 0.5), rgba(40, 20, 10, 0.95));
+  border-color: #fff;
+  color: #fff;
+  box-shadow: 0 0 25px rgba(255, 215, 0, 0.7);
+  transform: translateY(-50%) scale(1.1);
+}
+
+/* Bottom Shelf Dots & Status Banner */
+.m5-bottom-shelf {
+  position: absolute;
+  bottom: 16px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 50;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  pointer-events: auto;
+}
+
+.m5-dots-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: rgba(12, 6, 3, 0.85);
+  border: 1px solid rgba(255, 215, 0, 0.3);
+  backdrop-filter: blur(10px);
+  padding: 6px 16px;
+  border-radius: 20px;
+}
+
+.m5-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.25);
+  border: 1.5px solid rgba(255, 255, 255, 0.4);
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.m5-dot.active {
+  background: radial-gradient(circle, #00e5ff 0%, #0088cc 100%);
+  border-color: #ffffff;
+  box-shadow: 0 0 14px #00e5ff;
+  transform: scale(1.3);
+}
+
+.m5-objective-banner {
+  background: rgba(12, 6, 3, 0.9);
+  border: 1px solid rgba(0, 229, 255, 0.5);
+  border-radius: 8px;
+  padding: 4px 14px;
+  font-size: 11.5px;
+  font-weight: 700;
+  color: #00e5ff;
+  letter-spacing: 0.5px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.8);
+}
+
+/* ==========================================================================
+   MODULE 5 INTERACTIVE HOTSPOTS OVERLAYS
+   ========================================================================== */
+
+.m5-hotspot {
+  position: absolute;
+  z-index: 30;
+  cursor: pointer;
+  border-radius: 8px;
+  transition: all 0.25s ease;
+  pointer-events: auto;
+}
+
+.m5-hotspot:hover {
+  box-shadow: 0 0 20px rgba(0, 229, 255, 0.6), inset 0 0 15px rgba(0, 229, 255, 0.3);
+  border: 1.5px solid rgba(0, 229, 255, 0.8);
+  background: rgba(0, 229, 255, 0.08);
+}
+
+/* Explicit Glowing Red Focal Dot Indicator on Module 5 Hotspots */
+.m5-hotspot::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: radial-gradient(circle, #ff3333 0%, #cc0000 70%, #880000 100%);
+  border: 2px solid #ffffff;
+  box-shadow: 0 0 12px #ff3333, 0 0 24px rgba(255, 0, 0, 0.8);
+  pointer-events: none;
+  z-index: 40;
+  animation: m5RedDotPulse 1.8s infinite ease-in-out;
+}
+
+@keyframes m5RedDotPulse {
+  0% {
+    transform: translate(-50%, -50%) scale(1);
+    box-shadow: 0 0 10px #ff3333, 0 0 20px rgba(255, 0, 0, 0.7);
+  }
+  50% {
+    transform: translate(-50%, -50%) scale(1.3);
+    box-shadow: 0 0 20px #ff6666, 0 0 35px rgba(255, 0, 0, 0.95);
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(1);
+    box-shadow: 0 0 10px #ff3333, 0 0 20px rgba(255, 0, 0, 0.7);
+  }
+}
+
+.m5-hotspot:hover::after {
+  background: radial-gradient(circle, #ff6666 0%, #ff0000 70%, #aa0000 100%);
+  border-color: #ffd700;
+  transform: translate(-50%, -50%) scale(1.4);
+  box-shadow: 0 0 25px #ff3333, 0 0 45px rgba(255, 215, 0, 0.9);
+}
+
+.m5-chit-spot {
+  border-radius: 50%;
+  border: 1px dashed rgba(255, 215, 0, 0.4);
+}
+
+.m5-chit-spot:hover {
+  border: 2px solid #ffd700;
+  box-shadow: 0 0 25px rgba(255, 215, 0, 0.9), inset 0 0 15px rgba(255, 215, 0, 0.5);
+  background: rgba(255, 215, 0, 0.2);
+}
+
+/* Wall 1 Hotspots */
+#m5-w1-exit-door { top: 28%; left: 45%; width: 17%; height: 52%; }
+#m5-w1-keypad { top: 48%; left: 64%; width: 4%; height: 12%; }
+#m5-w1-whiteboard { top: 41%; left: 73%; width: 12%; height: 23%; }
+
+.m5-door-status-badge {
+  position: absolute;
+  top: 22%;
+  left: 53.5%;
+  transform: translate(-50%, -50%);
+  z-index: 35;
+  padding: 4px 12px;
+  border-radius: 6px;
+  font-size: 10px;
+  font-weight: 900;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  white-space: nowrap;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.85);
+  transition: all 0.3s ease;
+}
+
+.m5-door-status-badge.locked {
+  background: rgba(180, 20, 20, 0.9);
+  border: 1px solid #ff4d4d;
+  color: #ffffff;
+  box-shadow: 0 0 15px rgba(255, 77, 77, 0.6);
+}
+
+.m5-door-status-badge.unlocked {
+  background: rgba(20, 160, 80, 0.9);
+  border: 1px solid #00ff88;
+  color: #ffffff;
+  box-shadow: 0 0 20px rgba(0, 255, 136, 0.8);
+}
+
+/* Physical Hotspot Lock Badge Overlay */
+.m5-hotspot-lock-badge {
+  position: absolute;
+  top: -12px;
+  right: -10px;
+  z-index: 45;
+  background: rgba(20, 10, 5, 0.95);
+  border: 1.5px solid #ff4d4d;
+  color: #ff6666;
+  font-size: 9px;
+  font-weight: 900;
+  letter-spacing: 0.5px;
+  padding: 2px 6px;
+  border-radius: 4px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.85);
+  pointer-events: none;
+  white-space: nowrap;
+  display: flex;
+  align-items: center;
+  gap: 3px;
+}
+
+.m5-hotspot-lock-badge.unlocked {
+  border-color: #00ff88;
+  color: #00ff88;
+}
+
+/* Wall 2 Hotspots */
+#m5-w2-timeline { top: 26%; left: 22%; width: 8%; height: 24%; }
+#m5-w2-corkboard { top: 26%; left: 33%; width: 31%; height: 38%; }
+#m5-w2-laptop { top: 56%; left: 2%; width: 24%; height: 28%; }
+#m5-w2-clue-1 { top: 66%; left: 14%; width: 12%; height: 15%; }
+
+/* Wall 3 Hotspots */
+#m5-w3-kb { top: 20%; left: 26%; width: 20%; height: 35%; }
+#m5-w3-dt-station { top: 18%; left: 48%; width: 24%; height: 40%; }
+#m5-w3-founders-journey { top: 28%; left: 74%; width: 16%; height: 36%; }
+
+/* Wall 4 Hotspots */
+#m5-w4-evidence-files { top: 28%; left: 27%; width: 8%; height: 20%; }
+#m5-w4-investigation-board { top: 28%; left: 37%; width: 26%; height: 25%; }
+#m5-w4-time-machine { top: 26%; left: 79%; width: 14%; height: 48%; }
+
+/* ==========================================================================
+   MODULE 5 PUZZLE MODALS & CUSTOM INVESTIGATION OVERLAYS
+   ========================================================================== */
+
+.m5-modal-card {
+  max-width: 680px;
+  width: 92%;
+  background: linear-gradient(145deg, rgba(20, 12, 8, 0.97) 0%, rgba(8, 4, 2, 0.99) 100%);
+  border: 2px solid #00e5ff;
+  border-radius: 16px;
+  box-shadow: 0 25px 70px rgba(0,0,0,0.95), 0 0 35px rgba(0,229,255,0.3);
+  padding: 24px;
+  position: relative;
+  color: #f5eedc;
+}
+
+.m5-modal-card.wide {
+  max-width: 860px;
+}
+
+.m5-modal-title {
+  font-family: 'Cinzel', serif;
+  font-size: 22px;
+  font-weight: 800;
+  color: #00e5ff;
+  margin-bottom: 4px;
+}
+
+.m5-modal-subtitle {
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 1.5px;
+  color: #ffd700;
+  text-transform: uppercase;
+}
+
+/* Timeline Cards */
+.m5-timeline-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 16px;
+}
+
+.m5-timeline-item {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 215, 0, 0.2);
+  border-radius: 8px;
+  padding: 10px 14px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.m5-timeline-year {
+  background: #ffd700;
+  color: #000;
+  font-weight: 900;
+  font-size: 12px;
+  padding: 4px 8px;
+  border-radius: 4px;
+}
+
+/* 5 Whys Flow Cards */
+.m5-whys-container {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 16px;
+}
+
+.m5-why-card {
+  background: rgba(12, 24, 36, 0.85);
+  border: 1px solid rgba(0, 229, 255, 0.4);
+  border-radius: 10px;
+  padding: 14px;
+}
+
+.m5-why-label {
+  font-size: 12px;
+  font-weight: 800;
+  color: #00e5ff;
+  margin-bottom: 6px;
+}
+
+/* Evidence Cards Grid */
+.m5-evidence-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 14px;
+  margin-top: 16px;
+}
+
+.m5-evidence-card {
+  background: rgba(20, 10, 5, 0.85);
+  border: 1.5px solid rgba(212, 172, 13, 0.4);
+  border-radius: 10px;
+  padding: 14px;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.m5-evidence-card:hover {
+  transform: translateY(-3px);
+  border-color: #ffd700;
+  box-shadow: 0 8px 20px rgba(255, 215, 0, 0.3);
+}
+
+.m5-evidence-tag {
+  font-size: 10px;
+  font-weight: 800;
+  color: #ff9900;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.m5-evidence-title {
+  font-size: 15px;
+  font-weight: 700;
+  color: #ffffff;
+  margin: 4px 0;
+}
+
+/* ==========================================================================
+   TACTILE ESCAPE-ROOM PUZZLE DESIGN SYSTEM (PHYSICAL OBJECTS)
+   ========================================================================== */
+
+/* Activity Stage Container (Responsive Percentage-Based Boundary) */
+.m5-activity-stage {
+  position: relative;
+  width: 100%;
+  height: 480px;
+  max-height: 70vh;
+  background: radial-gradient(circle at 50% 50%, #1e130c 0%, #0d0704 100%);
+  border: 1.5px solid rgba(212, 172, 13, 0.4);
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: inset 0 0 40px rgba(0,0,0,0.85);
+  margin-top: 14px;
+}
+
+/* Physical Card Base Concept */
+.m5-physical-card {
+  position: absolute;
+  background: #f4edd8;
+  color: #1a150e;
+  border: 1px solid #d4c49d;
+  border-radius: 6px;
+  padding: 12px 14px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.6), 0 1px 3px rgba(0, 0, 0, 0.4);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  cursor: grab;
+  user-select: none;
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.25s ease, border-color 0.25s ease;
+  z-index: 10;
+}
+
+.m5-physical-card:hover {
+  transform: translateY(-4px) scale(1.02);
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.75), 0 0 12px rgba(255, 215, 0, 0.5);
+  border-color: #ffd700;
+  z-index: 30 !important;
+}
+
+.m5-physical-card:active {
+  cursor: grabbing;
+  transform: scale(1.04);
+  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.85);
+}
+
+.m5-card-stamp {
+  position: absolute;
+  top: 6px;
+  right: 8px;
+  font-size: 9px;
+  font-weight: 900;
+  color: #8b0000;
+  border: 1px solid #8b0000;
+  padding: 1px 4px;
+  border-radius: 3px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  transform: rotate(-5deg);
+  opacity: 0.85;
+}
+
+.m5-card-label {
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 1px;
+  color: #6b4c1b;
+  text-transform: uppercase;
+  margin-bottom: 4px;
+  display: block;
+}
+
+.m5-card-body {
+  font-size: 12.5px;
+  line-height: 1.4;
+  font-weight: 600;
+  color: #2b2118;
+}
+
+/* Incident Report (Founder's Decision Terminal) */
+.m5-incident-report {
+  background: #fbf7ee;
+  border-left: 5px solid #d9534f;
+  border-radius: 4px;
+  padding: 16px 20px;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.7);
+  color: #111;
+  font-family: 'Courier New', Courier, monospace;
+}
+
+.m5-incident-header {
+  font-size: 11px;
+  font-weight: 900;
+  color: #8b0000;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin-bottom: 6px;
+}
+
+/* Manila Folder Styling */
+.m5-manila-folder {
+  position: absolute;
+  width: 140px;
+  height: 170px;
+  background: linear-gradient(135deg, #e4c489 0%, #cbb075 100%);
+  border: 1.5px solid #a88d56;
+  border-radius: 4px 18px 6px 6px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.65);
+  cursor: pointer;
+  padding: 14px;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.m5-manila-folder::before {
+  content: '';
+  position: absolute;
+  top: -12px;
+  left: 0;
+  width: 65px;
+  height: 14px;
+  background: #cbb075;
+  border: 1.5px solid #a88d56;
+  border-bottom: none;
+  border-radius: 4px 4px 0 0;
+}
+
+.m5-manila-folder:hover {
+  transform: translateY(-8px) scale(1.05);
+  box-shadow: 0 16px 32px rgba(0,0,0,0.85), 0 0 15px rgba(255, 215, 0, 0.4);
+  border-color: #ffd700;
+  z-index: 25 !important;
+}
+
+.m5-folder-clip {
+  position: absolute;
+  top: 8px;
+  right: 12px;
+  width: 16px;
+  height: 32px;
+  border: 2px solid #888;
+  border-radius: 8px;
+  background: rgba(200,200,200,0.4);
+}
+
+/* Combination Lock Visual */
+.m5-combination-lock {
+  background: linear-gradient(180deg, #2b2b2b 0%, #151515 100%);
+  border: 3px solid #ffd700;
+  border-radius: 14px;
+  padding: 18px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  box-shadow: 0 12px 35px rgba(0,0,0,0.9), inset 0 0 15px rgba(0,0,0,0.9);
+}
+
+.m5-digit-wheel {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: #000;
+  border: 1.5px solid rgba(255,215,0,0.5);
+  border-radius: 8px;
+  padding: 6px;
+}
+
+.m5-digit-display {
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 26px;
+  font-weight: 900;
+  color: #00e5ff;
+  text-shadow: 0 0 10px #00e5ff;
+  width: 36px;
+  text-align: center;
+  padding: 4px 0;
+}
+
+.m5-wheel-btn {
+  background: rgba(255,215,0,0.2);
+  border: 1px solid #ffd700;
+  color: #ffd700;
+  width: 32px;
+  height: 24px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 900;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.15s ease;
+}
+
+.m5-wheel-btn:hover {
+  background: #ffd700;
+  color: #000;
+}
+
+/* Corkboard & Pins */
+.m5-corkboard-stage {
+  background: radial-gradient(circle, #b8860b 0%, #8b5a2b 60%, #4a2e12 100%);
+  border: 10px solid #2b1810;
+  box-shadow: inset 0 0 50px rgba(0,0,0,0.85);
+}
+
+.m5-pin {
+  position: absolute;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 35%, #ff4d4d 0%, #8b0000 100%);
+  border: 1px solid #fff;
+  box-shadow: 2px 3px 6px rgba(0,0,0,0.7);
+  z-index: 40;
+}
+
+/* SVG Connection Strings */
+.m5-svg-strings {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 20;
+}
+
+.m5-string-line {
+  stroke: #ff3333;
+  stroke-width: 2.5;
+  stroke-dasharray: 6 4;
+  filter: drop-shadow(0px 2px 4px rgba(0,0,0,0.8));
+  animation: m5DashPulse 2s linear infinite;
+}
+
+@keyframes m5DashPulse {
+  to { stroke-dashoffset: -20; }
+}
+
+/* Founder Notebook */
+.m5-founder-notebook {
+  background: #fefae0;
+  border: 1px solid #dda15e;
+  border-radius: 4px;
+  padding: 24px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.7);
+  color: #283618;
+  font-family: 'Caveat', 'Comic Sans MS', cursive, sans-serif;
+  min-height: 200px;
+}
+
+.m5-notebook-lines {
+  background: repeating-linear-gradient(transparent, transparent 27px, #ccd5ae 28px);
+  line-height: 28px;
+}
+
+.m5-founder-stamp {
+  display: inline-block;
+  border: 3px double #bc6c25;
+  color: #bc6c25;
+  font-family: 'Cinzel', serif;
+  font-weight: 900;
+  font-size: 16px;
+  padding: 6px 14px;
+  letter-spacing: 2px;
+  transform: rotate(-6deg);
+  margin-top: 14px;
+}
+
+/* ==========================================================================
+   PRODUCT TIME MACHINE — PHYSICAL DRAG & DROP SYSTEM
+   ========================================================================== */
+
+.m5-ptm-container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  gap: 12px;
+  user-select: none;
+}
+
+.m5-ptm-header-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: rgba(0, 0, 0, 0.4);
+  border: 1px solid rgba(0, 229, 255, 0.3);
+  border-radius: 8px;
+  padding: 6px 14px;
+}
+
+.m5-scenario-selector {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(10, 20, 30, 0.9);
+  border: 1px solid #00e5ff;
+  border-radius: 6px;
+  padding: 4px 10px;
+  color: #00e5ff;
+  font-size: 11px;
+  font-weight: 800;
+}
+
+.m5-scenario-select {
+  background: transparent;
+  border: none;
+  color: #ffd700;
+  font-size: 11px;
+  font-weight: 800;
+  cursor: pointer;
+  outline: none;
+}
+
+.m5-scenario-select option {
+  background: #0a0f14;
+  color: #ffd700;
+}
+
+/* Target Drop Slots Container */
+.m5-ptm-slots-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.m5-ptm-slot {
+  min-height: 110px;
+  background: rgba(10, 20, 30, 0.6);
+  border: 2px dashed rgba(0, 229, 255, 0.4);
+  border-radius: 10px;
+  padding: 8px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  position: relative;
+  transition: all 0.2s ease;
+  box-shadow: inset 0 0 15px rgba(0, 0, 0, 0.6);
+}
+
+.m5-ptm-slot-title {
+  font-size: 10px;
+  font-weight: 900;
+  letter-spacing: 1.5px;
+  color: #00e5ff;
+  text-transform: uppercase;
+  margin-bottom: 6px;
+  text-align: center;
+  width: 100%;
+  border-bottom: 1px dashed rgba(0, 229, 255, 0.25);
+  padding-bottom: 4px;
+}
+
+.m5-ptm-slot-placeholder {
+  font-size: 10px;
+  color: rgba(255, 255, 255, 0.3);
+  font-weight: 700;
+  margin-auto: auto;
+  text-align: center;
+  padding: 12px 4px;
+  pointer-events: none;
+}
+
+.m5-ptm-slot.hover-target {
+  background: rgba(0, 229, 255, 0.25) !important;
+  border-color: #00ff88 !important;
+  box-shadow: 0 0 25px rgba(0, 255, 136, 0.6), inset 0 0 20px rgba(0, 255, 136, 0.3) !important;
+  transform: scale(1.03);
+}
+
+.m5-ptm-slot.occupied {
+  border-style: solid;
+  border-color: #00e5ff;
+  background: rgba(0, 229, 255, 0.1);
+}
+
+.m5-ptm-slot.correct-slot {
+  border-color: #00ff88;
+  background: rgba(0, 255, 136, 0.15);
+}
+
+/* Desk Stage Area for Scrambled Cards */
+.m5-ptm-desk-stage {
+  position: relative;
+  width: 100%;
+  height: 240px;
+  background: radial-gradient(circle at 50% 50%, #15202b 0%, #0a0f14 100%);
+  border: 1.5px solid rgba(0, 229, 255, 0.4);
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: inset 0 0 30px rgba(0, 0, 0, 0.9);
+  touch-action: none;
+}
+
+/* Draggable Physical PTM Card */
+.m5-ptm-card {
+  position: absolute;
+  width: 22%;
+  min-width: 140px;
+  background: #fbf7ee;
+  border: 2px solid #d4c49d;
+  border-radius: 8px;
+  padding: 10px;
+  color: #1a150e;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.7);
+  cursor: grab;
+  user-select: none;
+  touch-action: none;
+  z-index: 10;
+  transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
+}
+
+.m5-ptm-card:hover {
+  border-color: #ffd700;
+  box-shadow: 0 10px 25px rgba(255, 215, 0, 0.5);
+  z-index: 50 !important;
+}
+
+.m5-ptm-card.dragging {
+  cursor: grabbing !important;
+  opacity: 0.95;
+  transform: scale(1.06) rotate(0deg) !important;
+  box-shadow: 0 20px 45px rgba(0, 229, 255, 0.8), 0 0 25px rgba(0, 229, 255, 0.5) !important;
+  border-color: #00e5ff !important;
+  z-index: 1000 !important;
+}
+
+.m5-ptm-card.in-slot {
+  position: relative !important;
+  left: 0 !important;
+  top: 0 !important;
+  width: 100% !important;
+  transform: rotate(0deg) !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+  margin: 0;
+}
+
