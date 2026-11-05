@@ -1,0 +1,287 @@
+/* ==========================================================================
+   HUD, Top Navigation, Wall Controls, Dialogue & Inventory Styles
+   ========================================================================== */
+
+/* Main HUD Container - Flush with Screen Top */
+#game-hud {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 50;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  padding: 0;
+}
+
+/* Header Top Bar - Centered Toolbar Stuck to Absolute Top Edge */
+.hud-header {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  pointer-events: auto;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+/* Top Navigation Action Buttons Group - Attached to Top Screen Bezel */
+.top-nav-actions-group {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(18, 9, 5, 0.94);
+  border: 1px solid rgba(212, 172, 13, 0.45);
+  border-top: none;
+  padding: 4px 14px 6px 14px;
+  border-radius: 0 0 20px 20px;
+  backdrop-filter: blur(16px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.85), 0 0 16px rgba(212, 172, 13, 0.2);
+}
+
+.top-hud-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  background: rgba(38, 19, 10, 0.85);
+  border: 1px solid rgba(212, 172, 13, 0.35);
+  padding: 4px 10px;
+  border-radius: 16px;
+  color: #ffd700;
+  font-family: var(--font-main, sans-serif);
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.5);
+  white-space: nowrap;
+}
+
+.top-hud-btn:hover {
+  background: linear-gradient(135deg, rgba(212, 172, 13, 0.4), rgba(50, 25, 12, 0.95));
+  border-color: #ffd700;
+  color: #ffffff;
+  transform: translateY(1px);
+  box-shadow: 0 4px 14px rgba(255, 215, 0, 0.4);
+}
+
+.top-hud-btn:active {
+  transform: scale(0.96);
+}
+
+.top-hud-btn.icon-only {
+  padding: 4px 8px;
+  min-width: 28px;
+  justify-content: center;
+}
+
+.top-hud-btn-icon {
+  font-size: 12px;
+  filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.8));
+}
+
+.top-hud-btn-label {
+  display: inline-block;
+}
+
+.xp-pill {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(38, 19, 10, 0.85);
+  border: 1px solid var(--gold-primary);
+  padding: 4px 10px;
+  border-radius: 16px;
+  color: var(--gold-primary);
+  font-weight: 700;
+  font-size: 11px;
+  letter-spacing: 0.5px;
+  box-shadow: 0 2px 10px rgba(245, 176, 65, 0.25);
+  backdrop-filter: blur(12px);
+  white-space: nowrap;
+}
+
+.xp-icon {
+  font-size: 12px;
+  animation: float-badge 2s ease-in-out infinite;
+}
+  transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.5);
+  white-space: nowrap;
+}
+
+.top-hud-btn:hover {
+  background: linear-gradient(135deg, rgba(212, 172, 13, 0.4), rgba(50, 25, 12, 0.95));
+  border-color: #ffd700;
+  color: #ffffff;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 14px rgba(255, 215, 0, 0.4);
+}
+
+.top-hud-btn:active {
+  transform: translateY(0) scale(0.96);
+}
+
+.top-hud-btn.icon-only {
+  padding: 6px 10px;
+  min-width: 34px;
+  justify-content: center;
+}
+
+.top-hud-btn-icon {
+  font-size: 13px;
+  filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.8));
+}
+
+.top-hud-btn-label {
+  display: inline-block;
+}
+
+/* ==========================================================================
+   Professor Vance Dialogue UI
+   ========================================================================== */
+#dialogue-overlay {
+  position: fixed;
+  bottom: 40px;
+  left: 50%;
+  transform: translateX(-50%) translateY(20px);
+  width: min(880px, 92vw);
+  background: linear-gradient(135deg, rgba(26, 15, 10, 0.96) 0%, rgba(16, 8, 4, 0.98) 100%);
+  border: 2px solid var(--amber-light, #ffd700);
+  border-radius: var(--radius-lg, 16px);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.98), 0 0 45px rgba(212, 172, 13, 0.5);
+  padding: 22px 28px;
+  display: flex;
+  gap: 22px;
+  align-items: center;
+  z-index: 1000000;
+  backdrop-filter: blur(20px);
+  pointer-events: auto;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+#dialogue-overlay.active {
+  opacity: 1;
+  visibility: visible;
+  transform: translateX(-50%) translateY(0);
+}
+
+.npc-avatar-box {
+  position: relative;
+  width: 80px;
+  height: 80px;
+  min-width: 80px;
+  border-radius: 50%;
+  border: 2px solid var(--amber-primary);
+  background: radial-gradient(circle at 35% 35%, #5a351f, #1e0f09);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 0 20px var(--amber-glow);
+  overflow: hidden;
+}
+
+.npc-avatar-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.npc-speaking-pulse {
+  position: absolute;
+  inset: -4px;
+  border-radius: 50%;
+  border: 2px solid var(--cyan-primary);
+  animation: pulse-avatar 2s infinite;
+  opacity: 0.7;
+}
+
+.dialogue-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.npc-name-tag {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-serif);
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--amber-primary);
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.npc-role-tag {
+  font-family: var(--font-main);
+  font-size: 10px;
+  font-weight: 600;
+  background: var(--amber-dim);
+  border: 1px solid var(--amber-primary);
+  padding: 2px 8px;
+  border-radius: 10px;
+  color: var(--amber-light);
+}
+
+.dialogue-text {
+  font-size: 15px;
+  line-height: 1.6;
+  color: var(--text-main);
+  min-height: 48px;
+}
+
+.dialogue-actions {
+  display: flex;
+  gap: 10px;
+  align-self: flex-end;
+  margin-top: 4px;
+}
+
+/* ==========================================================================
+   Interactive Quick Notification Toast
+   ========================================================================== */
+#toast-container {
+  position: absolute;
+  top: 90px;
+  right: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  z-index: 100;
+  pointer-events: none;
+}
+
+.toast {
+  background: var(--surface-glass);
+  border: 1px solid var(--amber-light);
+  padding: 12px 20px;
+  border-radius: var(--radius-md);
+  color: var(--text-main);
+  font-weight: 600;
+  box-shadow: var(--shadow-warm);
+  backdrop-filter: blur(12px);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  animation: toast-slide 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.toast.success {
+  border-color: var(--color-success);
+  box-shadow: 0 4px 20px rgba(46, 204, 113, 0.3);
+}
+
+.toast.reward {
+  border-color: var(--gold-primary);
+  box-shadow: 0 4px 25px var(--gold-glow);
+}

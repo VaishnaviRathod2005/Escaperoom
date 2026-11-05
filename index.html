@@ -1,0 +1,961 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ESCAPE ROOM: The Entrepreneur's Journey | deAsra inspireLIFE</title>
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800;900&family=JetBrains+Mono:wght@500;700;800&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/rooms.css">
+  <link rel="stylesheet" href="css/hud.css">
+  <link rel="stylesheet" href="css/modals.css">
+  <link rel="stylesheet" href="css/animations.css">
+</head>
+<body>
+
+  <!-- MASTER GAME CONTAINER -->
+  <div id="game-container">
+    
+    <!-- PHOTOREALISTIC VICTORIAN MAHOGANY STUDY VIEWPORT -->
+    <div class="perspective-room-box">
+      
+      <!-- Volumetric Lighting & Atmospheric Vignette -->
+      <div class="room-lighting-vignette"></div>
+
+      <!-- ==========================================
+           INTERACTIVE WALL SCENES (WALLS 1 - 4)
+           Exact Matching Renders from User Uploads
+           ========================================== -->
+      <div class="walls-master-stage">
+
+        <!-- SLEEK FLOATING LEFT & RIGHT NAVIGATION BUTTONS -->
+        <button id="btn-room-left-wall" class="stage-nav-arrow left-arrow" title="Turn Left (← / A)">
+          <span>❮</span>
+        </button>
+        <button id="btn-room-right-wall" class="stage-nav-arrow right-arrow" title="Turn Right (→ / D)">
+          <span>❯</span>
+        </button>
+
+        <!-- SLEEK FLOATING BOTTOM WALL INDICATOR -->
+        <div class="stage-bottom-wall-dots">
+          <div class="wall-nav-dot active" title="Wall 1: Entrance & Wall Clock" onclick="window.vintageRoomEngine.setWall(1)"></div>
+          <div class="wall-nav-dot" title="Wall 2: Notice Board & Study Desk" onclick="window.vintageRoomEngine.setWall(2)"></div>
+          <div class="wall-nav-dot" title="Wall 3: Exit Door & Flower Painting" onclick="window.vintageRoomEngine.setWall(3)"></div>
+          <div class="wall-nav-dot" title="Wall 4: Library Bookshelf & Secret Book" onclick="window.vintageRoomEngine.setWall(4)"></div>
+        </div>
+        
+        <!-- ==========================================
+             WALL 1: ENTRANCE DOOR & REGULATOR WALL CLOCK
+             ========================================== -->
+        <div id="wall-view-1" class="wall-scene active">
+          <!-- Vintage Brass Nameplate on Entrance Door -->
+          <div class="vintage-door-plate entrance-plate">
+            <span class="door-plate-rivet top-left">●</span>
+            <span class="door-plate-rivet top-right">●</span>
+            <span class="door-plate-text">ENTRANCE</span>
+            <span class="door-plate-rivet bottom-left">●</span>
+            <span class="door-plate-rivet bottom-right">●</span>
+          </div>
+
+          <!-- Entrance Door Hotspot -->
+          <div id="w1-entrance-door" class="hotspot" onclick="window.app.showToast('🚪 The entrance door is securely locked from the outside. Find the escape key!', 'error')">
+            <div class="hotspot-badge">ENTRANCE DOOR • LOCKED</div>
+          </div>
+
+          <!-- Antique Wall Clock Hotspot -->
+          <div id="w1-wall-clock" class="hotspot" onclick="window.app.openClockPuzzle()">
+            <div class="hotspot-badge">REGULATOR WALL CLOCK 🕰️</div>
+          </div>
+
+          <!-- Floor Papers Hotspot -->
+          <div id="w1-floor-notes" class="hotspot" onclick="window.app.inspectFloorNote()">
+            <div class="hotspot-badge">INVESTIGATION BLUEPRINT 📜</div>
+          </div>
+        </div>
+
+        <!-- ==========================================
+             WALL 2: NOTICE BOARD & STUDY CONSOLE DESK
+             ========================================== -->
+        <div id="wall-view-2" class="wall-scene">
+          <!-- Inset Image Inside Wall 2 Notice Board Frame -->
+          <div class="wall2-notice-board-canvas"></div>
+
+          <!-- Standing Ornate Scratch Picture Frame Art on Desk -->
+          <div id="w2-standing-scratch-frame" class="wall2-desk-frame-art"></div>
+
+          <!-- Cork Notice Board Hotspot -->
+          <div id="w2-notice-board" class="hotspot" onclick="window.app.openNoticeBoard()">
+            <div class="hotspot-badge">📌 NOTICE BOARD • CLUES</div>
+          </div>
+
+          <!-- Scratch Picture Frame Hotspot -->
+          <div id="w2-scratch-frame" class="hotspot" onclick="window.app.openScratchPuzzle()">
+            <div class="hotspot-badge">🖼️ MYSTERY FRAME [SCRATCH ME]</div>
+          </div>
+
+          <!-- Drawer 01 Keypad Hotspot -->
+          <div id="w2-drawer-01" class="hotspot" onclick="window.app.openKeypadPuzzle()">
+            <div class="hotspot-badge">🔒 DRAWER 01 [LOCKED]</div>
+          </div>
+        </div>
+
+        <!-- ==========================================
+             WALL 3: EXIT DOOR & ROCOCO FLOWER PAINTING
+             ========================================== -->
+        <div id="wall-view-3" class="wall-scene">
+          <!-- Vintage Brass Nameplate on Exit Door -->
+          <div class="vintage-door-plate exit-plate">
+            <span class="door-plate-rivet top-left">●</span>
+            <span class="door-plate-rivet top-right">●</span>
+            <span class="door-plate-text">EXIT DOOR</span>
+            <span class="door-plate-rivet bottom-left">●</span>
+            <span class="door-plate-rivet bottom-right">●</span>
+          </div>
+
+          <!-- Dynamic 3-Piece Canvas Inset inside Golden Frame -->
+          <div id="wall3-painting-canvas" class="wall3-painting-restoration-canvas">
+            <div id="wall3-slice-1" class="painting-wall-slice slice-1"></div>
+            <div id="wall3-slice-2" class="painting-wall-slice slice-2"></div>
+            <div id="wall3-slice-3" class="painting-wall-slice slice-3"></div>
+            <div id="wall3-painting-glow" class="painting-completed-sheen"></div>
+          </div>
+
+          <!-- Reinforced Exit Door Hotspot -->
+          <div id="w3-exit-door" class="hotspot" onclick="window.app.attemptEscape()">
+            <div class="hotspot-badge">🚪 EXIT DOOR • NEEDS GOLDEN KEY</div>
+          </div>
+
+          <!-- Flower Painting Canvas Hotspot -->
+          <div id="w3-flower-painting" class="hotspot" onclick="window.app.openPaintingPuzzle()">
+            <div class="hotspot-badge">🌻 FLOWER CANVAS • RESTORE PIECES</div>
+          </div>
+        </div>
+
+        <!-- ==========================================
+             WALL 4: GRAND BOOKSHELF & SECRET RED BOOK
+             ========================================== -->
+        <div id="wall-view-4" class="wall-scene">
+          <!-- Glowing Secret Red Book Hotspot -->
+          <div id="w4-secret-red-book" class="hotspot" onclick="window.app.pullRedBook()">
+            <div class="hotspot-badge">📕 SECRET CRIMSON BOOK [PULL ME]</div>
+          </div>
+        </div>
+
+      </div> <!-- End Master Wall Stage -->
+
+    </div> <!-- End Perspective Room Box -->
+
+    <!-- Toast Notifications -->
+    <div id="toast-container"></div>
+
+    <!-- ==========================================
+         TOP HUD OVERLAY (STREAMLINED TOP TOOLBAR)
+         ========================================== -->
+    <div id="game-hud">
+      <header class="hud-header">
+        <!-- Top Screen Action Buttons Group -->
+        <div class="top-nav-actions-group">
+          <button id="hud-btn-hint" class="top-hud-btn" title="Get Mentor Hint">
+            <span class="top-hud-btn-icon">💡</span>
+            <span class="top-hud-btn-label">HINT</span>
+          </button>
+          
+          <button id="hud-btn-inventory" class="top-hud-btn" title="Open Bag">
+            <span class="top-hud-btn-icon">🎒</span>
+            <span class="top-hud-btn-label">BAG (<span id="hud-inv-count">0</span>)</span>
+          </button>
+          
+          <button id="hud-btn-map" class="top-hud-btn" title="View Building Map">
+            <span class="top-hud-btn-icon">🗺️</span>
+            <span class="top-hud-btn-label">BUILDING MAP</span>
+          </button>
+          
+          <button id="hud-btn-profile" class="top-hud-btn" title="Person Info">
+            <span class="top-hud-btn-icon">👤</span>
+            <span class="top-hud-btn-label">PERSON INFO</span>
+          </button>
+          
+          <button id="hud-btn-report" class="top-hud-btn" title="Learning Analytics & Certificate">
+            <span class="top-hud-btn-icon">📜</span>
+            <span class="top-hud-btn-label">CERTIFICATE</span>
+          </button>
+          
+          <button id="hud-btn-restart" class="top-hud-btn" title="Restart Game from Beginning" onclick="window.app.restartGame()">
+            <span class="top-hud-btn-icon">🔄</span>
+            <span class="top-hud-btn-label">RESTART</span>
+          </button>
+
+          <button id="hud-btn-audio" class="top-hud-btn icon-only" title="Toggle Sound">
+            <span id="audio-btn-icon">🔊</span>
+          </button>
+
+          <div class="xp-pill">
+            <span class="xp-icon">⚡</span>
+            <span><span id="hud-xp-val">0</span> XP</span>
+          </div>
+        </div>
+      </header>
+    </div>
+
+    <!-- ==========================================
+         0. GRAND TITLE SCREEN LANDING PAGE
+         (First Page of Game with 3s Delayed Pop-up & Let's Begin Button)
+         ========================================== -->
+    <div id="game-title-landing" class="title-landing-screen active">
+      <div class="title-landing-viewport">
+        <!-- Background Castle Artwork -->
+        <img src="assets/title_screen_cover.jpg" alt="The Entrepreneur's Escape" class="title-landing-bg">
+
+        <!-- Ambient Vignette & Mist Layer -->
+        <div class="title-ambient-vignette"></div>
+
+        <!-- 3-Second Delayed Story Description Pop-up Card -->
+        <div id="title-story-card" class="title-story-popup-card">
+          <span class="story-card-badge">DEASRA INSPIRELIFE • IMMERSIVE ESCAPE ROOM</span>
+          <h2 class="story-card-title">THE ENTREPRENEUR'S ESCAPE</h2>
+          <p class="story-card-description">
+            It is an educational escape room game where players explore mysterious rooms, find clues, solve puzzles, and complete challenges to unlock entrepreneurial knowledge. Each room tests creativity, problem-solving, decision-making, and entrepreneurial thinking.
+          </p>
+          <button id="title-begin-btn" class="btn btn-gold btn-begin-pulse" onclick="window.app.beginGameFromLanding()">
+            LET'S BEGIN →
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ==========================================
+         1. GRAND VOXEL CHARACTER SELECTION SCREEN
+         (Exact Artwork Matching User's Uploaded Character Selection Screen)
+         ========================================== -->
+    <div id="avatar-selection-screen" class="avatar-select-screen modal-backdrop modal-backdrop-fullscreen">
+      <div class="avatar-select-viewport">
+        <!-- 16:9 Aspect Frame Container -->
+        <div class="avatar-select-frame">
+          <!-- Background Artwork -->
+          <img src="assets/avatar_selection_screen.jpg" alt="Choose Your Entrepreneurial Avatar" class="avatar-select-bg">
+
+          <!-- 4 Interactive Clickable Avatar Selection Zones -->
+          <div class="avatar-cards-overlay">
+            <!-- Card 1: THE CREATOR (Creator Builder) -->
+            <div id="avatar-card-creator" class="avatar-char-card selected" title="Select The Creator" onclick="window.app.chooseVoxelAvatar('creator', 'The Creator')">
+              <div class="avatar-char-border"></div>
+              <div class="avatar-char-check">✓</div>
+            </div>
+
+            <!-- Card 2: THE LEADER (Leader King) -->
+            <div id="avatar-card-leader" class="avatar-char-card" title="Select The Leader" onclick="window.app.chooseVoxelAvatar('leader', 'The Leader')">
+              <div class="avatar-char-border"></div>
+              <div class="avatar-char-check">✓</div>
+            </div>
+
+            <!-- Card 3: THE EXPLORER (Explorer Alex) -->
+            <div id="avatar-card-explorer" class="avatar-char-card" title="Select The Explorer" onclick="window.app.chooseVoxelAvatar('explorer', 'The Explorer')">
+              <div class="avatar-char-border"></div>
+              <div class="avatar-char-check">✓</div>
+            </div>
+
+            <!-- Card 4: THE STRATEGIST (Strategist Tech) -->
+            <div id="avatar-card-strategist" class="avatar-char-card" title="Select The Strategist" onclick="window.app.chooseVoxelAvatar('strategist', 'The Strategist')">
+              <div class="avatar-char-border"></div>
+              <div class="avatar-char-check">✓</div>
+            </div>
+          </div>
+
+          <!-- Bottom Action Button Hotspot (Overlays the carved bottom button) -->
+          <button id="avatar-select-submit-btn" class="avatar-select-action-btn" onclick="window.app.confirmVoxelAvatar()">
+            <span id="avatar-btn-text">SELECT AVATAR (THE CREATOR) →</span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ==========================================
+         2. BUILDING LOBBY ENTRANCE CONCOURSE
+         (Exact Artwork Matching User's Uploaded Lobby with Room 1 Door & Professor Vance)
+         ========================================== -->
+    <div id="building-lobby-screen" class="building-lobby-screen modal-backdrop modal-backdrop-fullscreen">
+      <div class="lobby-viewport">
+        <!-- 16:9 Aspect Frame Container -->
+        <div class="lobby-frame-wrapper">
+          <!-- Background Lobby Artwork -->
+          <img src="assets/building_lobby_stage.jpg" alt="Building Lobby Entrance Concourse" class="lobby-bg-img">
+
+          <!-- Dynamic Top Avatar Tag Badge -->
+          <div class="lobby-top-avatar-tag">
+            <span id="lobby-avatar-name-tag">THE CREATOR</span>
+          </div>
+
+          <!-- Interactive Hotspot: Room 1 Entrance Door & Glowing Knob Dot -->
+          <div id="lobby-room1-door-hotspot" class="lobby-door-target" title="Click Door Knob to Enter Room 1" onclick="window.app.enterRoom1FromLobby()">
+            <!-- Glowing Access Dot directly on Doorknob / Brass Plate -->
+            <div class="lobby-knob-access-dot" title="Access Room 1"></div>
+          </div>
+
+          <!-- Interactive Hotspot: Professor Vance Guide -->
+          <div id="lobby-vance-hotspot" class="lobby-vance-target" title="Talk to Professor Vance" onclick="window.app.startDialogue('lobby_intro')"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ==========================================
+         3. BUILDING MAP PARCHMENT BLUEPRINT MODAL
+         (Exact Artwork Matching User's Uploaded Parchment Map)
+         ========================================== -->
+    <div id="map-modal" class="modal-backdrop">
+      <div class="parchment-map-viewport">
+        <div class="parchment-map-frame">
+          <!-- Parchment Map Artwork -->
+          <img src="assets/building_map_parchment.jpg" alt="deAsra Building Architectural Blueprint Map" class="parchment-map-img">
+
+          <!-- Close Map Button -->
+          <button class="parchment-map-close-btn" onclick="window.app.closeModal('map-modal')" title="Close Map">✕</button>
+
+          <!-- Interactive Clickable Blueprint Zones -->
+          <div class="map-zones-container">
+            <!-- 1. Entrance Lobby -->
+            <div id="map-zone-entrance" class="map-room-zone" title="Entrance Lobby (Ground Floor)" onclick="window.app.selectMapRoom('entrance')"></div>
+
+            <!-- 2. Introduction Room (Room 1) -->
+            <div id="map-zone-room1" class="map-room-zone active-room" title="Room 1: Introduction (Current Sanctuary)" onclick="window.app.selectMapRoom('room1')"></div>
+
+            <!-- 3. Lobby Concourse -->
+            <div id="map-zone-lobby" class="map-room-zone" title="Grand Mastery Lobby Concourse" onclick="window.app.selectMapRoom('lobby')"></div>
+
+            <!-- 4. Mindset Room (Room 2) -->
+            <div id="map-zone-mindset" class="map-room-zone" title="Room 101: Mindset Room" onclick="window.app.selectMapRoom('mindset')"></div>
+
+            <!-- 5. Financial Vault Room (Room 3) -->
+            <div id="map-zone-finance" class="map-room-zone" title="Room 102: Financial Vault Room" onclick="window.app.selectMapRoom('finance')"></div>
+
+            <!-- 6. Personal Branding Room (Room 4) -->
+            <div id="map-zone-branding" class="map-room-zone" title="Room 103: Personal Branding Room" onclick="window.app.selectMapRoom('branding')"></div>
+
+            <!-- 7. Problem Solving & Ideas (Room 5) -->
+            <div id="map-zone-ideas" class="map-room-zone" title="Room 104: Problem Solving & Idea Generation" onclick="window.app.selectMapRoom('ideas')"></div>
+          </div>
+
+          <!-- Bottom Status Banner -->
+          <div class="parchment-map-banner">
+            <span>🗺️ ARCHITECTURAL BLUEPRINT • CLICK ANY UNLOCKED CHAMBER TO ENTER</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ==========================================
+         3. NOTICE BOARD CLUES MODAL (Wall 2)
+         ========================================== -->
+    <div id="notice-board-modal" class="modal-backdrop">
+      <div class="notice-board-modal-frame">
+        <button class="modal-close-btn" onclick="window.app.closeModal('notice-board-modal')">✕</button>
+        <img src="assets/notice_board_clues.jpg" alt="Academy Notice Board Confidential Clues" class="notice-board-full-img" />
+        <!-- Interactive Close Hitbox over the 'GOT IT! CLOSE NOTICE BOARD' Plaque -->
+        <div class="notice-board-close-plaque-btn" onclick="window.app.closeModal('notice-board-modal')" title="Close Notice Board">
+          <span class="notice-board-close-text">✓ GOT IT! CLOSE NOTICE BOARD</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- ==========================================
+         4. VINTAGE DESK SCRATCH FRAME MODAL (Wall 2)
+         ========================================== -->
+    <div id="scratch-modal" class="modal-backdrop">
+      <div class="modal-card scratch-desk-modal-card">
+        <button class="modal-close-btn" onclick="window.app.closeModal('scratch-modal')">✕</button>
+        
+        <div class="modal-header" style="margin-bottom: 12px;">
+          <span class="modal-subtitle">WALL 2 • TABLE MYSTERY FRAME</span>
+          <h2 class="modal-title">SCRATCH THE VINTAGE FRAME</h2>
+          <p style="font-size: 13px; color: var(--text-muted); margin-top: 4px;">
+            Rub your cursor across the wax parchment in the frame to uncover the secret passcode.
+          </p>
+        </div>
+
+        <div class="scratch-desk-vignette-frame">
+          <img src="assets/scratch_frame_desk.jpg" alt="Vintage Ornate Table Frame" class="scratch-desk-bg-img" />
+          
+          <!-- Interactive Scratch Canvas Container over the exact frame opening -->
+          <div class="scratch-card-box">
+            <div class="scratch-secret-reveal">
+              <div class="scratch-filigree-top">⚜ ── ❖ ── ⚜</div>
+              <span class="scratch-reveal-label">SECRET KEYCODE</span>
+              <div class="scratch-reveal-passcode">29</div>
+              <span class="scratch-reveal-sub">DRAWER 01 PASSCODE</span>
+              <div class="scratch-filigree-bottom">── ❖ ──</div>
+            </div>
+            <canvas id="scratch-canvas-el" class="scratch-canvas-layer"></canvas>
+          </div>
+        </div>
+
+        <div class="scratch-modal-footer">
+          <button id="btn-scratch-goto-keypad" class="btn btn-gold" style="width: 100%; font-weight: 800;" onclick="window.app.closeModal('scratch-modal'); window.app.openKeypadPuzzle();">
+            ENTER PASSCODE [29] INTO DRAWER 01 KEYPAD →
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ==========================================
+         5. DRAWER 01 KEYPAD MODAL (Wall 2)
+         ========================================== -->
+    <div id="keypad-modal" class="modal-backdrop">
+      <div class="modal-card" style="max-width: 380px; text-align: center;">
+        <button class="modal-close-btn">✕</button>
+        <div class="modal-header">
+          <span class="modal-subtitle">WALL 2 • TABLE DRAWER</span>
+          <h2 class="modal-title">ENTER 2-DIGIT PASSCODE</h2>
+        </div>
+
+        <div class="keypad-display-screen">
+          <span id="keypad-display-text">__</span>
+        </div>
+
+        <div class="keypad-buttons-grid">
+          <button class="key-btn" onclick="window.puzzleManager.pressKeypad('1')">1</button>
+          <button class="key-btn" onclick="window.puzzleManager.pressKeypad('2')">2</button>
+          <button class="key-btn" onclick="window.puzzleManager.pressKeypad('3')">3</button>
+          <button class="key-btn" onclick="window.puzzleManager.pressKeypad('4')">4</button>
+          <button class="key-btn" onclick="window.puzzleManager.pressKeypad('5')">5</button>
+          <button class="key-btn" onclick="window.puzzleManager.pressKeypad('6')">6</button>
+          <button class="key-btn" onclick="window.puzzleManager.pressKeypad('7')">7</button>
+          <button class="key-btn" onclick="window.puzzleManager.pressKeypad('8')">8</button>
+          <button class="key-btn" onclick="window.puzzleManager.pressKeypad('9')">9</button>
+          <button class="key-btn key-btn-clear" onclick="window.puzzleManager.clearKeypad()">C</button>
+          <button class="key-btn" onclick="window.puzzleManager.pressKeypad('0')">0</button>
+          <button class="key-btn key-btn-enter" onclick="window.puzzleManager.validateKeypad()">↵</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ==========================================
+         6. STEEL SAFE MODAL (Wall 4)
+         ========================================== -->
+    <div id="safe-modal" class="modal-backdrop">
+      <div class="modal-card" style="max-width: 440px; text-align: center;">
+        <button class="modal-close-btn">✕</button>
+        <div class="modal-header">
+          <span class="modal-subtitle">WALL 4 • HIDDEN COMPARTMENT</span>
+          <h2 class="modal-title">STEEL WALL SAFE</h2>
+          <p style="font-size: 13px; color: var(--text-muted); margin-top: 4px;">
+            Pulling the red leather book released the magnetic bookshelf lock!
+          </p>
+        </div>
+
+        <div class="safe-vault-door-graphic">
+          <div class="vault-dial-wheel">
+            <span style="font-size: 32px;">☸️</span>
+          </div>
+        </div>
+
+        <button class="btn btn-gold" style="width: 100%; margin-top: 20px;" onclick="window.puzzleManager.openSafe()">
+          TURN DIAL & OPEN SAFE →
+        </button>
+      </div>
+    </div>
+
+    <!-- ==========================================
+         7. REGULATOR CLOCK MODAL (Wall 1)
+         ========================================== -->
+    <div id="clock-modal" class="modal-backdrop">
+      <div class="modal-card" style="max-width: 480px; text-align: center;">
+        <button class="modal-close-btn">✕</button>
+        <div class="modal-header">
+          <span class="modal-subtitle">WALL 1 • REGULATOR CLOCK</span>
+          <h2 class="modal-title">SET CLOCK TIME</h2>
+          <p style="font-size: 13px; color: var(--text-muted); margin-top: 4px;">
+            Align the hands according to Clue 3 from the Notice Board.
+          </p>
+        </div>
+
+        <div class="clock-puzzle-dial-box">
+          <div class="vintage-dial-face">
+            <div id="modal-clock-hand-h" class="dial-hand dial-hour" style="transform: rotate(120deg);"></div>
+            <div id="modal-clock-hand-m" class="dial-hand dial-minute" style="transform: rotate(0deg);"></div>
+            <div class="dial-center-cap"></div>
+            <span class="dial-roman num-12">XII</span>
+            <span class="dial-roman num-3">III</span>
+            <span class="dial-roman num-4">IV</span>
+            <span class="dial-roman num-6">VI</span>
+            <span class="dial-roman num-9">IX</span>
+          </div>
+        </div>
+
+        <div style="display: flex; gap: 12px; max-width: 260px; margin: 16px auto;">
+          <input type="text" id="clock-input-val" class="form-input" style="text-align: center; font-size: 20px; font-weight: 800;" placeholder="04:00" value="04:00">
+        </div>
+
+        <button class="btn btn-gold" style="width: 100%;" onclick="window.puzzleManager.submitClockTime(document.getElementById('clock-input-val').value)">
+          ACTIVATE CLOCK MECHANISM →
+        </button>
+      </div>
+    </div>
+
+    <!-- ==========================================
+         8. HISTORIC PORTRAITS MODAL (Wall 1)
+         ========================================== -->
+    <div id="portraits-modal" class="modal-backdrop">
+      <div class="modal-card" style="max-width: 580px; text-align: center;">
+        <button class="modal-close-btn">✕</button>
+        <div class="modal-header">
+          <span class="modal-subtitle">WALL 1 • GALLERY OF INNOVATORS</span>
+          <h2 class="modal-title">HISTORIC PORTRAITS</h2>
+        </div>
+        <div style="display: flex; justify-content: center; gap: 16px; margin-bottom: 20px;">
+          <div style="background: #240c04; border: 3px double #d4ac0d; padding: 12px; border-radius: 6px;">
+            <div style="font-size: 42px;">👩‍💼</div>
+            <div style="font-size: 11px; font-weight: 700; color: var(--brass-highlight); margin-top: 6px;">The Visionary</div>
+          </div>
+          <div style="background: #240c04; border: 3px double #d4ac0d; padding: 12px; border-radius: 6px;">
+            <div style="font-size: 42px;">👨‍💼</div>
+            <div style="font-size: 11px; font-weight: 700; color: var(--brass-highlight); margin-top: 6px;">The Builder</div>
+          </div>
+          <div style="background: #240c04; border: 3px double #d4ac0d; padding: 12px; border-radius: 6px;">
+            <div style="font-size: 42px;">🏞️</div>
+            <div style="font-size: 11px; font-weight: 700; color: var(--brass-highlight); margin-top: 6px;">The Horizon</div>
+          </div>
+        </div>
+        <p style="font-size: 13px; color: #f5ede6; line-height: 1.6; background: rgba(0,0,0,0.3); padding: 12px; border-radius: 6px;">
+          "The greatest breakthroughs occur when creativity, systematic discipline, and timely execution unite as one."
+        </p>
+      </div>
+    </div>
+
+    <!-- ==========================================
+         9. 3-PIECE PAINTING RESTORATION MODAL (Wall 3)
+         ========================================== -->
+    <div id="painting-modal" class="modal-backdrop">
+      <div class="modal-card" style="max-width: 680px;">
+        <button class="modal-close-btn" onclick="window.app.closeModal('painting-modal')">✕</button>
+        <div class="modal-header">
+          <span class="modal-subtitle">WALL 3 • VISION MASTERPIECE RESTORATION</span>
+          <h2 class="modal-title">RESTORE THE FLORAL MASTERPIECE</h2>
+          <p id="painting-assembly-subtitle" style="font-size: 13px; color: var(--text-muted); margin-top: 4px;">
+            Place the 3 missing fragments collected from the Knowledge Boxes into the canvas frame.
+          </p>
+        </div>
+
+        <div class="painting-assembly-area">
+          <!-- Framed Canvas Container -->
+          <div class="painting-canvas-frame-outer">
+            <div id="modal-painting-canvas" class="painting-canvas-interactive-grid">
+              <!-- Slice 1 (Left 33.3%) -->
+              <div id="painting-slot-1" class="painting-slot-col slot-1" onclick="window.puzzleManager.placePaintingPiece(1)">
+                <div class="empty-slot-placeholder">
+                  <span class="slot-icon">🧩</span>
+                  <span class="slot-label">FRAGMENT I</span>
+                  <span class="slot-hint">(Left Section)</span>
+                </div>
+              </div>
+
+              <!-- Slice 2 (Middle 33.3%) -->
+              <div id="painting-slot-2" class="painting-slot-col slot-2" onclick="window.puzzleManager.placePaintingPiece(2)">
+                <div class="empty-slot-placeholder">
+                  <span class="slot-icon">🧩</span>
+                  <span class="slot-label">FRAGMENT II</span>
+                  <span class="slot-hint">(Center Bouquet)</span>
+                </div>
+              </div>
+
+              <!-- Slice 3 (Right 33.3%) -->
+              <div id="painting-slot-3" class="painting-slot-col slot-3" onclick="window.puzzleManager.placePaintingPiece(3)">
+                <div class="empty-slot-placeholder">
+                  <span class="slot-icon">🧩</span>
+                  <span class="slot-label">FRAGMENT III</span>
+                  <span class="slot-hint">(Right Section)</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Inventory Piece Trays -->
+          <div class="painting-inv-pieces-shelf">
+            <button id="piece-thumb-1" class="piece-action-btn" onclick="window.puzzleManager.placePaintingPiece(1)">
+              <span>🧩</span> Place Fragment 1 (Left)
+            </button>
+            <button id="piece-thumb-2" class="piece-action-btn" onclick="window.puzzleManager.placePaintingPiece(2)">
+              <span>🧩</span> Place Fragment 2 (Center)
+            </button>
+            <button id="piece-thumb-3" class="piece-action-btn" onclick="window.puzzleManager.placePaintingPiece(3)">
+              <span>🧩</span> Place Fragment 3 (Right)
+            </button>
+          </div>
+
+          <!-- Secret Key Compartment (Revealed upon completing all 3 pieces) -->
+          <div id="painting-golden-key-section" class="golden-key-unlocked-card" style="display: none;">
+            <div class="golden-key-crest">
+              <span class="golden-key-spin">🗝️</span>
+            </div>
+            <div class="golden-key-details">
+              <h3 style="font-family: var(--font-serif); color: #ffd700; margin: 0 0 4px 0;">MASTERPIECE RESTORED!</h3>
+              <p style="font-size: 13px; color: #fdf4b8; margin: 0 0 12px 0;">
+                The hidden spring compartment in the frame opened, dispensing the <strong>Golden Escape Key</strong>!
+              </p>
+              <button class="btn btn-gold" style="padding: 12px 28px; font-size: 14px; font-weight: 800;" onclick="window.puzzleManager.collectGoldenKey()">
+                CLAIM GOLDEN ESCAPE KEY 🗝️ →
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ==========================================
+         10. KNOWLEDGE BOX VIDEO & QUIZ MODAL
+         ========================================== -->
+    <div id="kb-modal" class="modal-backdrop">
+      <div class="modal-card modal-card-lg">
+        <div class="modal-header">
+          <span class="modal-subtitle">deAsra inspireLIFE • KNOWLEDGE BOX</span>
+          <h2 id="kb-modal-title" class="modal-title">Knowledge Box 01</h2>
+        </div>
+
+        <!-- 1. Video Player View -->
+        <div id="kb-video-view">
+          <div class="kb-video-container">
+            <div class="kb-video-player-mock">
+              <span style="font-size: 48px; margin-bottom: 8px;">🎬</span>
+              <div id="kb-video-title" style="font-family: var(--font-serif); font-size: 18px; font-weight: 700; color: #fff; text-align: center; padding: 0 20px;">
+                Video Title
+              </div>
+              <div id="kb-video-topic" style="font-size: 12px; color: var(--amber-light); margin-top: 4px;">
+                Topic
+              </div>
+              <div class="kb-video-progress" id="kb-video-bar"></div>
+            </div>
+          </div>
+          <p id="kb-video-summary" style="font-size: 13px; color: var(--text-muted); line-height: 1.5; margin-bottom: 20px;"></p>
+          <button id="kb-video-continue-btn" class="btn btn-cyan" style="width: 100%; display: none;" onclick="window.roomController.showQuiz()">
+            PROCEED TO QUIZ CHALLENGE →
+          </button>
+        </div>
+
+        <!-- 2. Quiz View -->
+        <div id="kb-quiz-view" class="quiz-container" style="display: none;">
+          <div style="display: flex; justify-content: space-between; align-items: center;">
+            <span id="quiz-q-count" style="font-size: 11px; font-weight: 700; color: var(--amber-primary); letter-spacing: 1px;">QUESTION 1 OF 3</span>
+          </div>
+          <div id="quiz-q-title" class="quiz-question-header">Question text goes here...</div>
+          <div id="quiz-options-box" class="quiz-options-list"></div>
+        </div>
+
+        <!-- 3. Reward Claim View -->
+        <div id="kb-reward-view" style="display: none; flex-direction: column; align-items: center; gap: 16px; text-align: center; padding: 20px 0;">
+          <div id="kb-reward-icon" style="font-size: 64px;">🎁</div>
+          <h3 id="kb-reward-title" style="font-family: var(--font-serif); font-size: 22px; color: var(--gold-primary);">Missing Piece Found!</h3>
+          <p id="kb-reward-desc" style="font-size: 13px; color: var(--text-muted); max-width: 400px;"></p>
+          <button class="btn btn-gold" style="width: 100%; margin-top: 10px;" onclick="window.app.closeModal('kb-modal');">
+            ADD TO INVENTORY & CONTINUE EXPLORING ✓
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ==========================================
+         11. ROOM 1 COMPLETION CELEBRATION MODAL
+         ========================================== -->
+    <div id="room-completion-modal" class="modal-backdrop">
+      <div class="modal-card" style="text-align: center; border-color: var(--gold-primary); box-shadow: 0 0 60px var(--gold-glow);">
+        <div style="font-size: 64px; margin-bottom: 10px;">🏆</div>
+        <span class="modal-subtitle">ESCAPE SUCCESSFUL</span>
+        <h2 class="modal-title" style="color: var(--gold-primary); margin-bottom: 8px;">ROOM 01 COMPLETED!</h2>
+        <div style="font-family: var(--font-serif); font-size: 16px; color: #fff; margin-bottom: 20px;">
+          Introduction to deAsra inspireLIFE
+        </div>
+
+        <div style="background: rgba(18, 9, 6, 0.85); border: 1px solid var(--border-glass); border-radius: var(--radius-md); padding: 18px; display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin-bottom: 24px;">
+          <div><span style="font-size: 11px; color: var(--text-muted);">KNOWLEDGE BOXES</span><div style="font-size: 20px; font-weight: 800; color: #fff;">3 / 3 ✓</div></div>
+          <div><span style="font-size: 11px; color: var(--text-muted);">QUIZZES PASSED</span><div style="font-size: 20px; font-weight: 800; color: #fff;">3 / 3 ✓</div></div>
+          <div><span style="font-size: 11px; color: var(--text-muted);">PAINTING RESTORED</span><div style="font-size: 20px; font-weight: 800; color: #fff;">100% ✓</div></div>
+          <div><span style="font-size: 11px; color: var(--text-muted);">SPECIALIZED ROOMS</span><div style="font-size: 20px; font-weight: 800; color: var(--cyan-primary);">4 UNLOCKED 🔓</div></div>
+        </div>
+
+        <button class="btn btn-gold" style="width: 100%; padding: 14px;" onclick="window.app.closeModal('room-completion-modal'); window.roomController.openMasteryCorridor(); window.app.startDialogue('room1_completed');">
+          MEET PROFESSOR VANCE & ENTER 4 UNLOCKED ROOMS →
+        </button>
+      </div>
+    </div>
+
+    <!-- ==========================================
+         12. GRAND 4-DOOR MASTERY CORRIDOR VIEW
+         (Exact Match to User's Uploaded Victorian Hallway)
+         ========================================== -->
+    <div id="mastery-corridor-modal" class="modal-backdrop modal-backdrop-fullscreen">
+      <div class="corridor-master-viewport">
+        <!-- 16:9 Sharp Aspect-Locked Frame Container -->
+        <div class="corridor-frame-wrapper">
+          <!-- Crystal Clear Ultra-HD Background -->
+          <img src="assets/mastery_corridor_hub.jpg" alt="Mastery Chambers Corridor" class="corridor-bg-img">
+
+          <!-- Top Header Navigation inside Corridor -->
+          <div class="corridor-top-bar">
+            <div class="corridor-title-tag">
+              <span class="corridor-phase-sub">PHASE 2 • SPECIALIZED MASTERY WING</span>
+              <span class="corridor-main-title">THE GRAND CORRIDOR • 4 ROOMS UNLOCKED</span>
+            </div>
+            
+            <div class="corridor-top-actions">
+              <button class="btn btn-gold" onclick="window.app.closeModal('mastery-corridor-modal'); window.app.showToast('Returned to Room 1 Study.', 'normal');">
+                🏛️ RETURN TO STUDY
+              </button>
+              <button class="btn" onclick="window.profileReportManager.renderReport();">
+                📜 CERTIFICATE
+              </button>
+            </div>
+          </div>
+
+          <!-- 4 Interactive Clickable Doors Overlay (Zero Rectangular Outlines) -->
+          <div class="corridor-doors-container">
+            <!-- Door 1: Room 101 - Mindset Room -->
+            <div id="door-101-btn" class="corridor-door-target door-101" title="Room 101: Mindset Room" onclick="window.roomController.enterSpecializedRoom(2)"></div>
+
+            <!-- Door 2: Room 102 - Financial Vault Room -->
+            <div id="door-102-btn" class="corridor-door-target door-102" title="Room 102: Financial Vault Room" onclick="window.roomController.enterSpecializedRoom(3)"></div>
+
+            <!-- Door 3: Room 103 - Personal Branding Room -->
+            <div id="door-103-btn" class="corridor-door-target door-103" title="Room 103: Personal Branding Room" onclick="window.roomController.enterSpecializedRoom(4)"></div>
+
+            <!-- Door 4: Room 104 - Problem Solving & Idea Generation Room -->
+            <div id="door-104-btn" class="corridor-door-target door-104" title="Room 104: Problem Solving & Idea Generation" onclick="window.roomController.enterSpecializedRoom(5)"></div>
+          </div>
+
+          <!-- Bottom Tip Floating Prompt -->
+          <div class="corridor-bottom-banner">
+            <span>✨ Click any of the 4 doors to step into that Mastery Chamber!</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ==========================================
+         13. SPECIALIZED ROOMS MODALS (2, 3, 4, 5)
+         ========================================== -->
+    <div id="room-2-modal" class="modal-backdrop">
+      <div class="modal-card">
+        <button class="modal-close-btn">✕</button>
+        <div class="modal-header">
+          <span class="modal-subtitle">ROOM 02 • SPECIALIZED CHAMBER</span>
+          <h2 class="modal-title">Entrepreneurial Mindset</h2>
+        </div>
+        <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 20px;">
+          Analyze the opportunity matrix and test your resilience against ambiguity.
+        </p>
+        <button class="btn btn-cyan" style="width: 100%; margin-bottom: 12px;" onclick="window.roomController.startKnowledgeBox(4)">
+          OPEN KNOWLEDGE BOX 04 (VIDEO & QUIZ) →
+        </button>
+        <button class="btn btn-gold" style="width: 100%;" onclick="window.roomController.solveSpecializedRoom(2)">
+          UNLOCK CHAMBER & CLAIM MINDSET EMBLEM 🔑
+        </button>
+      </div>
+    </div>
+
+    <div id="room-3-modal" class="modal-backdrop">
+      <div class="modal-card">
+        <button class="modal-close-btn">✕</button>
+        <div class="modal-header">
+          <span class="modal-subtitle">ROOM 03 • FINANCIAL VAULT</span>
+          <h2 class="modal-title">Personal Finance Management</h2>
+        </div>
+        <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 20px;">
+          Master the 50/30/20 capital allocation matrix for sustained venture runway.
+        </p>
+        <button class="btn btn-cyan" style="width: 100%; margin-bottom: 12px;" onclick="window.roomController.startKnowledgeBox(5)">
+          OPEN KNOWLEDGE BOX 05 (VIDEO & QUIZ) →
+        </button>
+        <button class="btn btn-gold" style="width: 100%;" onclick="window.roomController.solveSpecializedRoom(3)">
+          UNLOCK VAULT & CLAIM FINANCE EMBLEM 🔑
+        </button>
+      </div>
+    </div>
+
+    <div id="room-4-modal" class="modal-backdrop">
+      <div class="modal-card">
+        <button class="modal-close-btn">✕</button>
+        <div class="modal-header">
+          <span class="modal-subtitle">ROOM 04 • IDENTITY STUDIO</span>
+          <h2 class="modal-title">Personal Branding</h2>
+        </div>
+        <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 20px;">
+          Align your core strengths, reputation architecture, and professional presence.
+        </p>
+        <button class="btn btn-cyan" style="width: 100%; margin-bottom: 12px;" onclick="window.roomController.startKnowledgeBox(6)">
+          OPEN KNOWLEDGE BOX 06 (VIDEO & QUIZ) →
+        </button>
+        <button class="btn btn-gold" style="width: 100%;" onclick="window.roomController.solveSpecializedRoom(4)">
+          UNLOCK STUDIO & CLAIM BRANDING EMBLEM 🔑
+        </button>
+      </div>
+    </div>
+
+    <div id="room-5-modal" class="modal-backdrop">
+      <div class="modal-card">
+        <button class="modal-close-btn">✕</button>
+        <div class="modal-header">
+          <span class="modal-subtitle">ROOM 05 • INNOVATION LAB</span>
+          <h2 class="modal-title">Problem Solving & Business Ideas</h2>
+        </div>
+        <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 20px;">
+          Transform real customer pain points into high-leverage business concepts.
+        </p>
+        <button class="btn btn-cyan" style="width: 100%; margin-bottom: 12px;" onclick="window.roomController.startKnowledgeBox(7)">
+          OPEN KNOWLEDGE BOX 07 (VIDEO & QUIZ) →
+        </button>
+        <button class="btn btn-gold" style="width: 100%;" onclick="window.roomController.solveSpecializedRoom(5)">
+          COMPLETE LAB & CLAIM MASTER INNOVATION EMBLEM 👑
+        </button>
+      </div>
+    </div>
+
+    <!-- ==========================================
+         13. INVENTORY DRAWER MODAL
+         ========================================== -->
+    <div id="inventory-modal" class="modal-backdrop">
+      <div class="modal-card modal-card-lg">
+        <button class="modal-close-btn">✕</button>
+        <div class="modal-header">
+          <span class="modal-subtitle">EXPLORER'S BAG</span>
+          <h2 class="modal-title">PLAYER INVENTORY</h2>
+        </div>
+        <div id="inventory-items-grid" class="inventory-grid"></div>
+      </div>
+    </div>
+
+    <!-- ==========================================
+         14. HINT MODAL
+         ========================================== -->
+    <div id="hint-modal" class="modal-backdrop">
+      <div class="modal-card" style="max-width: 480px;">
+        <button class="modal-close-btn">✕</button>
+        <div class="modal-header">
+          <span id="hint-level-tag" class="modal-subtitle">HINT LEVEL 1 OF 3</span>
+          <h2 class="modal-title">MENTOR'S GUIDANCE</h2>
+        </div>
+        <div style="background: rgba(18, 9, 6, 0.85); border-left: 4px solid var(--amber-light); padding: 18px; border-radius: var(--radius-sm); margin-bottom: 20px;">
+          <p id="hint-content-text" style="font-size: 14px; color: var(--text-main); line-height: 1.5;"></p>
+        </div>
+        <button class="btn btn-gold" style="width: 100%;" onclick="window.app.closeModal('hint-modal')">
+          RETURN TO ROOM ✓
+        </button>
+      </div>
+    </div>
+
+    <!-- ==========================================
+         15. PLAYER PROFILE MODAL
+         ========================================== -->
+    <div id="profile-modal" class="modal-backdrop">
+      <div class="modal-card modal-card-lg">
+        <button class="modal-close-btn">✕</button>
+        <div class="modal-header">
+          <span class="modal-subtitle">PERSON INFO</span>
+          <h2 id="profile-avatar-name" class="modal-title">Player Name</h2>
+          <div id="profile-avatar-title" style="color: var(--amber-light); font-weight: 700; font-size: 13px; text-transform: uppercase;">Role</div>
+        </div>
+
+        <div style="display: flex; gap: 20px; align-items: center; background: rgba(18, 9, 6, 0.7); border: 1px solid var(--border-glass); border-radius: var(--radius-md); padding: 18px; margin-bottom: 24px;">
+          <div id="profile-avatar-icon" style="font-size: 48px;">💡</div>
+          <div>
+            <p id="profile-avatar-desc" style="font-size: 13px; color: var(--text-muted);"></p>
+            <div style="display: flex; gap: 20px; margin-top: 10px;">
+              <div><span style="font-size: 11px; color: var(--text-muted);">LEVEL</span> <strong id="profile-level-val" style="color: #fff;">1</strong></div>
+              <div><span style="font-size: 11px; color: var(--text-muted);">TOTAL XP</span> <strong id="profile-xp-val" style="color: var(--gold-primary);">0</strong></div>
+            </div>
+          </div>
+        </div>
+
+        <h3 class="report-section-title">ACHIEVEMENT BADGES</h3>
+        <div id="profile-badges-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 12px;"></div>
+      </div>
+    </div>
+
+    <!-- ==========================================
+         16. LEARNING ANALYTICS REPORT & CERTIFICATE
+         ========================================== -->
+    <div id="report-modal" class="modal-backdrop">
+      <div class="modal-card modal-card-xl">
+        <button class="modal-close-btn">✕</button>
+        <div class="modal-header">
+          <span class="modal-subtitle">deAsra inspireLIFE • ANALYTICS</span>
+          <h2 class="modal-title">LEARNING REPORT & CERTIFICATE</h2>
+        </div>
+
+        <div class="report-stats-row">
+          <div class="report-stat-card">
+            <div id="report-completed-rooms" class="report-stat-val">1 / 5</div>
+            <div class="report-stat-lbl">Rooms Completed</div>
+          </div>
+          <div class="report-stat-card">
+            <div id="report-overall-pct" class="report-stat-val">20%</div>
+            <div class="report-stat-lbl">Overall Mastery</div>
+          </div>
+          <div class="report-stat-card">
+            <div id="report-total-xp" class="report-stat-val">0</div>
+            <div class="report-stat-lbl">Total Experience</div>
+          </div>
+          <div class="report-stat-card">
+            <div id="report-kbs-found" class="report-stat-val">3 / 7</div>
+            <div class="report-stat-lbl">Knowledge Boxes</div>
+          </div>
+        </div>
+
+        <h3 class="report-section-title">OFFICIAL COMPLETION CERTIFICATE</h3>
+        <div class="certificate-preview-box">
+          <div class="cert-title">CERTIFICATE OF ENTREPRENEURIAL EXCELLENCE</div>
+          <div style="font-size: 12px; color: #7a5833; letter-spacing: 2px;">THIS IS PROUDLY AWARDED TO</div>
+          <div id="cert-student-name-text" class="cert-student-name">Alex Pioneer</div>
+          <div style="font-size: 13px; color: #4a2e18; max-width: 500px; margin: 0 auto 12px auto; line-height: 1.5;">
+            For demonstrating outstanding curiosity, strategic problem solving, and mastering the core entrepreneurial principles of deAsra inspireLIFE.
+          </div>
+          <div style="display: flex; justify-content: space-around; font-size: 11px; font-weight: 700; color: #7a5833; border-top: 1px solid #d4ac0d; padding-top: 10px; margin-top: 14px;">
+            <div>ARCHETYPE: <span id="cert-avatar-role-text" style="color: #1a0f0a;">The Creator</span></div>
+            <div>DATE: <span id="cert-date-text" style="color: #1a0f0a;">August 2026</span></div>
+            <div>ISSUED BY: <span style="color: #1a0f0a;">Professor Vance</span></div>
+          </div>
+        </div>
+
+        <button class="btn btn-gold" style="width: 100%;" onclick="window.profileReportManager.printCertificate()">
+          PRINT / DOWNLOAD OFFICIAL CERTIFICATE 🖨️
+        </button>
+      </div>
+    </div>
+
+    <!-- ==========================================
+         GLOBAL PROFESSOR VANCE DIALOGUE OVERLAY
+         (Renders Directly Over Lobby, Rooms, & Modals)
+         ========================================== -->
+    <div id="dialogue-overlay">
+      <div class="npc-avatar-box">
+        <div class="npc-speaking-pulse"></div>
+        <span style="font-size: 42px;">👨‍🏫</span>
+      </div>
+      <div class="dialogue-content">
+        <div class="npc-name-tag">
+          <span id="diag-npc-name">Professor Vance</span>
+          <span id="diag-npc-role" class="npc-role-tag">Director of Innovation</span>
+        </div>
+        <div id="diag-text" class="dialogue-text">Welcome to the deAsra inspireLIFE Entrepreneurial Sanctuary...</div>
+        <div class="dialogue-actions">
+          <button id="diag-continue-btn" class="btn btn-gold" style="padding: 6px 18px; font-size: 12px;">Continue →</button>
+        </div>
+      </div>
+    </div>
+
+  </div> <!-- End Game Container -->
+
+  <!-- Application Scripts -->
+  <script src="js/audio.js"></script>
+  <script src="js/state.js"></script>
+  <script src="js/dialogues.js"></script>
+  <script src="js/learningData.js"></script>
+  <script src="js/vintageRoomEngine.js"></script>
+  <script src="js/puzzles.js"></script>
+  <script src="js/roomController.js"></script>
+  <script src="js/profileReport.js"></script>
+  <script src="js/app.js"></script>
+
+</body>
+</html>

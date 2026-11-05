@@ -1,0 +1,610 @@
+/* ==========================================================================
+   ESCAPE ROOM: THE ENTREPRENEUR'S JOURNEY
+   Photorealistic 4-Wall Interactive Room Engine (Ultra HD 8K Clean Edition)
+   Active Puzzle Hotspots with Glowing Golden Focal Dots
+   ========================================================================== */
+
+/* Main Room Box & Viewport */
+.perspective-room-box {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  background: #080302;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+/* Atmospheric Ambient Vignette */
+.room-lighting-vignette {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 10;
+  background: radial-gradient(circle at 50% 40%, transparent 45%, rgba(5, 2, 1, 0.3) 80%, rgba(2, 1, 0, 0.65) 100%);
+}
+
+/* ==========================================================================
+   WALL VIEWS MASTER STAGE (16:9 Cinema Container with 3D Perspective)
+   ========================================================================== */
+.walls-master-stage {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  max-width: min(100vw, 177.78vh);
+  max-height: min(100vh, 56.25vw);
+  aspect-ratio: 16 / 9;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  box-shadow: 0 0 50px rgba(0,0,0,0.95);
+  perspective: 1400px;
+  transform-style: preserve-3d;
+}
+
+/* Base Wall Scene - 3D Panoramic Transition */
+.wall-scene {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-position: center center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  image-rendering: -webkit-optimize-contrast;
+  image-rendering: high-quality;
+  filter: contrast(1.04) brightness(1.02);
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  z-index: 2;
+  transform-origin: center center;
+  will-change: transform, opacity, filter;
+  transition: transform 0.52s cubic-bezier(0.25, 1, 0.5, 1),
+              opacity 0.52s cubic-bezier(0.25, 1, 0.5, 1),
+              filter 0.52s ease,
+              visibility 0.52s ease;
+}
+
+/* Active Resting State */
+.wall-scene.active {
+  opacity: 1;
+  visibility: visible;
+  transform: translate3d(0, 0, 0) rotateY(0deg) scale(1);
+  filter: contrast(1.04) brightness(1.02) blur(0px);
+  pointer-events: auto;
+  z-index: 5;
+}
+
+/* 3D Wall Turn Animations */
+/* When moving to NEXT wall (turn right) */
+.wall-scene.slide-exit-left {
+  opacity: 0;
+  visibility: visible;
+  transform: translate3d(-100%, 0, -180px) rotateY(38deg) scale(0.9);
+  filter: contrast(1.04) brightness(0.65) blur(2px);
+  z-index: 4;
+}
+
+.wall-scene.slide-enter-from-right {
+  opacity: 0;
+  visibility: visible;
+  transform: translate3d(100%, 0, -180px) rotateY(-38deg) scale(0.9);
+  filter: contrast(1.04) brightness(0.65) blur(2px);
+  z-index: 6;
+}
+
+/* When moving to PREVIOUS wall (turn left) */
+.wall-scene.slide-exit-right {
+  opacity: 0;
+  visibility: visible;
+  transform: translate3d(100%, 0, -180px) rotateY(-38deg) scale(0.9);
+  filter: contrast(1.04) brightness(0.65) blur(2px);
+  z-index: 4;
+}
+
+.wall-scene.slide-enter-from-left {
+  opacity: 0;
+  visibility: visible;
+  transform: translate3d(-100%, 0, -180px) rotateY(38deg) scale(0.9);
+  filter: contrast(1.04) brightness(0.65) blur(2px);
+  z-index: 6;
+}
+
+/* Remastered Ultra HD Clean Wall Background Images */
+#wall-view-1 {
+  background-image: url('../assets/wall1_entrance_clock.png');
+}
+
+#wall-view-2 {
+  background-image: url('../assets/wall2_notice_desk.png');
+}
+
+/* Inset Image Inside the Notice Board Frame on Wall 2 */
+.wall2-notice-board-canvas {
+  position: absolute;
+  top: 24.8%;
+  left: 15.3%;
+  width: 22.8%;
+  height: 31%;
+  background-image: url('../assets/notice_board_clues.jpg');
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  border-radius: 3px;
+  box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.85);
+  pointer-events: none;
+  z-index: 10;
+  filter: contrast(1.03) brightness(0.96);
+}
+
+/* Standing Vintage Cutout Picture Frame on Desk in Wall 2 (Clean Transparent Cutout) */
+.wall2-desk-frame-art {
+  position: absolute;
+  top: 31%;
+  left: 56.5%;
+  width: 12.5%;
+  height: 19.5%;
+  background: url('../assets/standing_scratch_frame.png') no-repeat center bottom / contain !important;
+  border: none !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  filter: drop-shadow(0 14px 16px rgba(0, 0, 0, 0.95)) drop-shadow(0 4px 6px rgba(0, 0, 0, 0.8));
+  pointer-events: none;
+  z-index: 12;
+  transition: transform 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275), filter 0.25s ease;
+}
+
+#w2-scratch-frame:hover ~ .wall2-desk-frame-art {
+  transform: scale(1.06);
+  filter: drop-shadow(0 16px 22px rgba(0, 0, 0, 0.98)) drop-shadow(0 0 22px rgba(255, 215, 0, 0.65));
+}
+
+#wall-view-3 {
+  background-image: url('../assets/wall3_exit_painting.png');
+}
+
+/* Dynamic 3-Piece Canvas Inset inside Golden Frame on Wall 3 */
+.wall3-painting-restoration-canvas {
+  position: absolute;
+  top: 36.6%;
+  left: 49.6%;
+  width: 20.6%;
+  height: 25.8%;
+  background: transparent;
+  border-radius: 2px;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 10;
+}
+
+.painting-wall-slice {
+  position: absolute;
+  top: 0;
+  height: 100%;
+  width: 33.333%;
+  background-image: url('../assets/flower_painting_master.jpg');
+  background-size: 300% 100%;
+  background-repeat: no-repeat;
+  opacity: 0;
+  transform: scale(0.92);
+  transition: opacity 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275), transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.painting-wall-slice.slice-1 {
+  left: 0;
+  background-position: 0% center;
+}
+
+.painting-wall-slice.slice-2 {
+  left: 33.333%;
+  background-position: 50% center;
+}
+
+.painting-wall-slice.slice-3 {
+  left: 66.666%;
+  background-position: 100% center;
+}
+
+.painting-wall-slice.revealed {
+  opacity: 1;
+  transform: scale(1);
+  box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.6);
+}
+
+.painting-completed-sheen {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  pointer-events: none;
+  background: linear-gradient(135deg, rgba(255, 215, 0, 0) 0%, rgba(255, 215, 0, 0.3) 50%, rgba(255, 215, 0, 0) 100%);
+  transition: opacity 0.8s ease;
+}
+
+.wall3-painting-restoration-canvas.completed .painting-completed-sheen {
+  opacity: 1;
+  animation: shimmer-gold 2.5s infinite;
+}
+
+@keyframes shimmer-gold {
+  0% { transform: translateX(-100%); opacity: 0; }
+  50% { opacity: 0.5; }
+  100% { transform: translateX(100%); opacity: 0; }
+}
+
+#wall-view-4 {
+  background-image: url('../assets/wall4_bookshelf.png');
+}
+
+/* ==========================================================================
+   VINTAGE BRASS DOOR NAMEPLATES (Entrance Door & Exit Door)
+   ========================================================================== */
+.vintage-door-plate {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4px 14px;
+  background: linear-gradient(135deg, #bfa054 0%, #e5c365 30%, #a67c3b 70%, #6b4414 100%);
+  border: 1.5px solid #ffd700;
+  outline: 1.5px solid #2d1606;
+  border-radius: 3px;
+  box-shadow: 
+    0 4px 12px rgba(0, 0, 0, 0.9),
+    0 1px 3px rgba(0, 0, 0, 0.8),
+    inset 0 1px 1px rgba(255, 255, 255, 0.7),
+    inset 0 -1px 2px rgba(0, 0, 0, 0.8);
+  z-index: 15;
+  pointer-events: none;
+  user-select: none;
+}
+
+.vintage-door-plate::before {
+  content: '';
+  position: absolute;
+  inset: 2px;
+  border: 1px solid rgba(75, 42, 12, 0.8);
+  pointer-events: none;
+}
+
+.door-plate-text {
+  font-family: var(--font-serif, 'Cinzel', serif);
+  font-size: 10px;
+  font-weight: 900;
+  letter-spacing: 2px;
+  color: #1a0b03;
+  text-shadow: 0 1px 0 rgba(255, 240, 180, 0.75), 0 -1px 0 rgba(0, 0, 0, 0.6);
+  text-transform: uppercase;
+  position: relative;
+  z-index: 2;
+  white-space: nowrap;
+}
+
+.door-plate-rivet {
+  position: absolute;
+  font-size: 6px;
+  color: #2b1706;
+  text-shadow: 0 1px 0 rgba(255, 235, 160, 0.7);
+  line-height: 1;
+  z-index: 3;
+}
+
+.door-plate-rivet.top-left { top: 2px; left: 3px; }
+.door-plate-rivet.top-right { top: 2px; right: 3px; }
+.door-plate-rivet.bottom-left { bottom: 2px; left: 3px; }
+.door-plate-rivet.bottom-right { bottom: 2px; right: 3px; }
+
+/* Wall 1 Entrance Door Nameplate */
+.entrance-plate {
+  top: 24.5%;
+  left: 23%;
+}
+
+/* Wall 3 Exit Door Nameplate */
+.exit-plate {
+  top: 24.5%;
+  left: 23.5%;
+}
+
+/* ==========================================================================
+   INTERACTIVE HOTSPOTS LAYER (Zero Rectangular Outlines - Glowing Golden Dot)
+   ========================================================================== */
+.hotspot {
+  position: absolute;
+  cursor: pointer;
+  border: none !important;
+  outline: none !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 20;
+  transition: all 0.25s ease;
+}
+
+/* Strictly no rectangular borders on hover */
+.hotspot:hover {
+  border: none !important;
+  outline: none !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  transform: none !important;
+}
+
+/* Small Golden Indicator Dot */
+.hotspot::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0.8);
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: radial-gradient(circle, #ffffff 0%, #ffd700 50%, #d4ac0d 100%);
+  box-shadow: 0 0 8px rgba(255, 215, 0, 0.6), 0 0 16px rgba(212, 172, 13, 0.4);
+  opacity: 0.35;
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  pointer-events: none;
+  z-index: 25;
+}
+
+/* On Mouse Hover: The Golden Dot Glows Radiantly with Light Halo */
+.hotspot:hover::after {
+  opacity: 1;
+  transform: translate(-50%, -50%) scale(1.6);
+  background: radial-gradient(circle, #ffffff 0%, #fff6a8 30%, #ffd700 70%, #e67e22 100%);
+  box-shadow: 0 0 16px rgba(255, 215, 0, 1), 0 0 32px rgba(243, 156, 18, 0.9), 0 0 50px rgba(255, 215, 0, 0.6);
+  animation: gold-dot-glow 1.2s infinite alternate ease-in-out;
+}
+
+@keyframes gold-dot-glow {
+  0% {
+    transform: translate(-50%, -50%) scale(1.4);
+    box-shadow: 0 0 14px rgba(255, 215, 0, 0.9), 0 0 28px rgba(243, 156, 18, 0.7);
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(1.8);
+    box-shadow: 0 0 24px rgba(255, 215, 0, 1), 0 0 45px rgba(243, 156, 18, 0.95), 0 0 65px rgba(255, 215, 0, 0.75);
+  }
+}
+
+/* Focal Points for Each Active Hotspot */
+#w1-wall-clock::after {
+  top: 50%;
+  left: 50%;
+}
+
+#w1-entrance-door::after {
+  top: 48%;
+  left: 78%;
+}
+
+#w1-floor-notes::after {
+  top: 50%;
+  left: 50%;
+}
+
+#w2-notice-board::after {
+  top: 45%;
+  left: 50%;
+}
+
+#w2-scratch-frame::after {
+  top: 50%;
+  left: 50%;
+}
+
+#w2-drawer-01::after {
+  top: 50%;
+  left: 50%;
+}
+
+#w3-exit-door::after {
+  top: 48%;
+  left: 78%;
+}
+
+#w3-flower-painting::after {
+  top: 50%;
+  left: 50%;
+}
+
+#w4-secret-red-book::after {
+  top: 50%;
+  left: 50%;
+  background: radial-gradient(circle, #ffffff 0%, #ff4d4d 50%, #b30000 100%);
+  box-shadow: 0 0 10px rgba(255, 77, 77, 0.8);
+}
+
+#w4-secret-red-book:hover::after {
+  background: radial-gradient(circle, #ffffff 0%, #ff8080 30%, #ff3333 70%, #990000 100%);
+  box-shadow: 0 0 20px rgba(255, 50, 50, 1), 0 0 40px rgba(200, 0, 0, 0.9);
+}
+
+/* Tooltip Name Tag - Clean & Subtle */
+.hotspot-badge {
+  position: absolute;
+  top: -30px;
+  background: rgba(16, 8, 4, 0.92);
+  border: 1px solid rgba(212, 172, 13, 0.6);
+  color: #ffd700;
+  font-family: var(--font-serif, 'Cinzel', serif);
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.8px;
+  padding: 3px 10px;
+  border-radius: 4px;
+  white-space: nowrap;
+  pointer-events: none;
+  opacity: 0;
+  transform: translateY(4px);
+  transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.85);
+  z-index: 30;
+}
+
+.hotspot:hover .hotspot-badge {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ==========================================================================
+   HOTSPOT POSITION COORDINATES (Active Puzzles Only)
+   ========================================================================== */
+#w1-entrance-door {
+  top: 13%;
+  left: 13%;
+  width: 20%;
+  height: 72%;
+}
+
+#w1-wall-clock {
+  top: 5.5%;
+  left: 58.0%;
+  width: 17.0%;
+  height: 26.0%;
+}
+
+#w1-floor-notes {
+  top: 80%;
+  left: 17%;
+  width: 25%;
+  height: 16%;
+}
+
+#w2-notice-board {
+  top: 20%;
+  left: 12%;
+  width: 29%;
+  height: 40%;
+}
+
+#w2-scratch-frame {
+  top: 31%;
+  left: 56.5%;
+  width: 12.5%;
+  height: 19.5%;
+}
+
+#w2-drawer-01 {
+  top: 52.8%;
+  left: 48.0%;
+  width: 17.0%;
+  height: 12.0%;
+}
+
+#w3-exit-door {
+  top: 13%;
+  left: 13%;
+  width: 21%;
+  height: 73%;
+}
+
+#w3-flower-painting {
+  top: 24%;
+  left: 45.5%;
+  width: 28%;
+  height: 44%;
+}
+
+#w4-secret-red-book {
+  top: 47.5%;
+  left: 48.5%;
+  width: 4%;
+  height: 11%;
+  pointer-events: auto;
+  border-radius: 4px;
+}
+
+/* ==========================================================================
+   SLEEK FLOATING NAVIGATION ARROWS & BOTTOM DOTS
+   ========================================================================== */
+.stage-nav-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 48px;
+  height: 64px;
+  background: rgba(18, 9, 4, 0.72);
+  border: 1.5px solid rgba(212, 172, 13, 0.4);
+  backdrop-filter: blur(10px);
+  color: #ffd700;
+  font-size: 22px;
+  font-weight: 900;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 50;
+  transition: all 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.85);
+  outline: none;
+}
+
+.stage-nav-arrow.left-arrow {
+  left: 16px;
+  border-radius: 8px 20px 20px 8px;
+}
+
+.stage-nav-arrow.right-arrow {
+  right: 16px;
+  border-radius: 20px 8px 8px 20px;
+}
+
+.stage-nav-arrow:hover {
+  background: linear-gradient(135deg, rgba(212, 172, 13, 0.45), rgba(40, 20, 10, 0.9));
+  border-color: #fff;
+  color: #fff;
+  box-shadow: 0 0 25px rgba(255, 215, 0, 0.7), 0 8px 30px rgba(0, 0, 0, 0.95);
+  transform: translateY(-50%) scale(1.12);
+}
+
+.stage-nav-arrow:active {
+  transform: translateY(-50%) scale(0.95);
+}
+
+/* Floating Bottom 4-Dot Wall Indicator Shelf */
+.stage-bottom-wall-dots {
+  position: absolute;
+  bottom: 16px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: rgba(14, 7, 4, 0.85);
+  border: 1.5px solid rgba(212, 172, 13, 0.35);
+  backdrop-filter: blur(10px);
+  padding: 8px 18px;
+  border-radius: 24px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.85);
+  z-index: 50;
+}
+
+.wall-nav-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.25);
+  border: 1.5px solid rgba(255, 255, 255, 0.35);
+  cursor: pointer;
+  transition: all 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.wall-nav-dot:hover {
+  transform: scale(1.3);
+  background: rgba(255, 215, 0, 0.6);
+  border-color: #ffd700;
+}
+
+.wall-nav-dot.active {
+  background: radial-gradient(circle, #f39c12 0%, #d35400 100%);
+  border-color: #f1c40f;
+  box-shadow: 0 0 14px rgba(243, 156, 18, 0.95);
+  transform: scale(1.35);
+}
