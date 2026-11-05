@@ -11,13 +11,16 @@
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800;900&family=JetBrains+Mono:wght@500;700;800&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
   
   <!-- Stylesheets -->
-  <link rel="stylesheet" href="css/style.css">
-  <link rel="stylesheet" href="css/rooms.css">
-  <link rel="stylesheet" href="css/hud.css">
-  <link rel="stylesheet" href="css/modals.css">
-  <link rel="stylesheet" href="css/animations.css">
+  <link rel="stylesheet" href="css/style.css?v=37">
+  <link rel="stylesheet" href="css/rooms.css?v=37">
+  <link rel="stylesheet" href="css/hud.css?v=37">
+  <link rel="stylesheet" href="css/modals.css?v=37">
+  <link rel="stylesheet" href="css/animations.css?v=37">
 </head>
 <body>
+
+  <!-- Fullscreen Red Security Alarm Flicker Overlay -->
+  <div id="alarm-screen-overlay" class="alarm-red-flicker-overlay"></div>
 
   <!-- MASTER GAME CONTAINER -->
   <div id="game-container">
@@ -55,38 +58,71 @@
              WALL 1: ENTRANCE DOOR & CONSOLE TABLE
              ========================================== -->
         <div id="wall-view-1" class="wall-scene active">
-          <!-- Vintage Brass Nameplate on Entrance Door (Brown Door) -->
-          <div class="vintage-door-plate entrance-plate" onclick="window.app.showToast('🔒 ENTRANCE DOOR IS LOCKED - Sealed securely from the outside!', 'error')">
-            <div class="door-plate-text">ENTRANCE DOOR</div>
+
+          <!-- 1. Royal Prince Statue Interactive Dot -->
+          <div id="w1-dot-prince" class="museum-interactive-dot" style="top: 38%; left: 80.5%;" onclick="window.app.openRoyalPrince()" title="Royal Prince">
+            <div class="dot-core"></div>
+            <div class="dot-ring"></div>
+            <div class="dot-ping"></div>
+            <div class="dot-label">
+              <span class="dot-label-icon">👑</span>
+              <span class="dot-label-text">Royal Prince</span>
+            </div>
           </div>
 
-          <!-- Glowing Golden Focal Dot on Entrance Door Knob -->
-          <div id="w1-entrance-dot" class="door-focal-dot" title="Entrance Door Knob" onclick="window.app.showToast('🔒 ENTRANCE DOOR IS LOCKED - Sealed securely from the outside!', 'error')"></div>
-
-          <!-- Glowing Golden Focal Dot on Topiary Painting -->
-          <div id="w1-painting-dot" class="door-focal-dot" title="Topiary Painting Canvas" onclick="window.app.openPaintingClue()"></div>
-
-          <!-- Glowing Golden Focal Dot on Console Table Drawer -->
-          <div id="w1-drawer-dot" class="door-focal-dot" title="Console Table Drawer" onclick="window.app.openKeypadPuzzle()"></div>
-
-          <!-- Entrance Door Hotspot -->
-          <div id="w1-entrance-door" class="hotspot" onclick="window.app.showToast('🔒 ENTRANCE DOOR IS LOCKED - Sealed securely from the outside!', 'error')">
-            <div class="hotspot-badge">ENTRANCE DOOR • LOCKED</div>
+          <!-- 2. Prince Empire Wall Painting Interactive Dot -->
+          <div id="w1-dot-painting" class="museum-interactive-dot locked" style="top: 36.5%; left: 39%;" onclick="window.app.openPrinceEmpire()" title="Prince Empire">
+            <div class="dot-core"></div>
+            <div class="dot-ring"></div>
+            <div class="dot-ping"></div>
+            <div class="dot-label">
+              <span id="w1-dot-painting-icon" class="dot-label-icon">🔒</span>
+              <span id="w1-dot-painting-text" class="dot-label-text">Prince Empire (Locked 🔒)</span>
+            </div>
           </div>
 
-          <!-- Antique Wall Clock Hotspot -->
-          <div id="w1-wall-clock" class="hotspot" onclick="window.app.openClockPuzzle()">
-            <div class="hotspot-badge">REGULATOR WALL CLOCK 🕰️</div>
+          <!-- 3. Electric Circuit Stand Interactive Dot -->
+          <div id="w1-dot-circuit" class="museum-interactive-dot" style="top: 56.5%; left: 69.5%;" onclick="window.app.openElectricCircuit()" title="Electric Circuit">
+            <div class="dot-core"></div>
+            <div class="dot-ring"></div>
+            <div class="dot-ping"></div>
+            <div class="dot-label">
+              <span class="dot-label-icon">⚡</span>
+              <span class="dot-label-text">Electric Circuit</span>
+            </div>
           </div>
 
-          <!-- Counter 1: DEPOSIT Hotspot -->
-          <div id="w1-deposit-counter" class="hotspot" onclick="window.app.inspectCounter('deposit')">
-            <div class="hotspot-badge">📈 DEPOSIT COUNTER [7]</div>
+          <!-- 4. Hidden Gold Bar in Center-Left Plant Pot (Wall 1) -->
+          <div id="w1-dot-gold-pot" class="museum-interactive-dot" style="top: 67.5%; left: 24.2%;" onclick="window.app.collectPotGoldBar('w1_pot', 'Golden Bar (Entrance Pot)', 1, 'w1-dot-gold-pot')" title="Golden Bar (Plant Pot)">
+            <div class="dot-core"></div>
+            <div class="dot-ring"></div>
+            <div class="dot-ping"></div>
+            <div class="dot-label">
+              <span class="dot-label-icon">⚜️</span>
+              <span class="dot-label-text">Hidden Golden Bar</span>
+            </div>
           </div>
 
-          <!-- Floor Papers Hotspot -->
-          <div id="w1-floor-notes" class="hotspot" onclick="window.app.inspectFloorNote()">
-            <div class="hotspot-badge">INVESTIGATION BLUEPRINT 📜</div>
+          <!-- 5. Hidden Gold Bar in Corner Plant Pot (Wall 1) -->
+          <div id="w1-dot-gold-corner" class="museum-interactive-dot" style="top: 78.5%; left: 2.2%;" onclick="window.app.collectPotGoldBar('w1_corner', 'Golden Bar (Corner Pot)', 1, 'w1-dot-gold-corner')" title="Golden Bar (Corner Pot)">
+            <div class="dot-core"></div>
+            <div class="dot-ring"></div>
+            <div class="dot-ping"></div>
+            <div class="dot-label">
+              <span class="dot-label-icon">⚜️</span>
+              <span class="dot-label-text">Hidden Golden Bar</span>
+            </div>
+          </div>
+
+          <!-- 6. Grand Exit Gate / Entrance Door -->
+          <div id="w1-dot-exit-door" class="museum-interactive-dot locked" style="top: 48.0%; left: 14.0%;" onclick="window.app.interactExitDoor()" title="Grand Exit Gate">
+            <div class="dot-core"></div>
+            <div class="dot-ring"></div>
+            <div class="dot-ping"></div>
+            <div class="dot-label">
+              <span id="w1-dot-exit-icon" class="dot-label-icon">🚪</span>
+              <span id="w1-dot-exit-text" class="dot-label-text">Museum Exit Gate (Locked 🔒)</span>
+            </div>
           </div>
         </div>
 
@@ -94,118 +130,326 @@
              WALL 2: NOTICE BOARD & STUDY CONSOLE DESK
              ========================================== -->
         <div id="wall-view-2" class="wall-scene">
-          <!-- Wooden Pin Board Plaque on Wall 2 (Right side of ATM) -->
-          <div id="w2-wooden-pin-board" class="wall2-pinboard-element" onclick="window.app.openNoticeBoard()" title="Handwritten PIN Note">
-            <img src="assets/pin_board.png?v=2" alt="Financial Flow Wooden Pin Board" style="width: 100%; height: 100%; object-fit: contain; pointer-events: none; filter: none; box-shadow: none;" />
+
+          <!-- 1. The Antique Cash Box Interactive Dot (Center Table) -->
+          <div id="w2-dot-box" class="museum-interactive-dot" style="top: 60.8%; left: 43.3%;" onclick="window.app.openCashBox()" title="Antique Cash Box">
+            <div class="dot-core"></div>
+            <div class="dot-ring"></div>
+            <div class="dot-ping"></div>
+            <div class="dot-label">
+              <span id="w2-dot-box-icon" class="dot-label-icon">📦</span>
+              <span id="w2-dot-box-text" class="dot-label-text">Antique Cash Box</span>
+            </div>
           </div>
 
-          <!-- Standing Ornate Scratch Picture Frame Art on Desk -->
-          <div id="w2-standing-scratch-frame" class="wall2-desk-frame-art"></div>
-
-          <!-- Glowing Golden Focal Dots on Wall 2 -->
-          <div id="w2-atm-dot" class="door-focal-dot" title="ATM Machine" onclick="window.app.openATMPuzzle()"></div>
-          <div id="w2-suitcase-dot" class="door-focal-dot" title="Suitcase" onclick="window.app.openSuitcasePuzzle()"></div>
-
-          <!-- Cork Notice Board Hotspot -->
-          <div id="w2-notice-board" class="hotspot" onclick="window.app.openNoticeBoard()">
-            <div class="hotspot-badge">📌 NOTICE BOARD • CLUES</div>
+          <!-- 2. The Merchant's Records Notice Board Interactive Dot (Pinboard) -->
+          <div id="w2-dot-records" class="museum-interactive-dot locked" style="top: 38.5%; left: 68.2%;" onclick="window.app.openMerchantRecords()" title="The Merchant's Records">
+            <div class="dot-core"></div>
+            <div class="dot-ring"></div>
+            <div class="dot-ping"></div>
+            <div class="dot-label">
+              <span id="w2-dot-records-icon" class="dot-label-icon">📌</span>
+              <span id="w2-dot-records-text" class="dot-label-text">Merchant's Diary & Records</span>
+            </div>
           </div>
 
-          <!-- Counter 2: WITHDRAWAL Hotspot -->
-          <div id="w2-withdrawal-counter" class="hotspot" onclick="window.app.inspectCounter('withdrawal')">
-            <div class="hotspot-badge">📉 WITHDRAWAL COUNTER [3]</div>
+          <!-- 3. The Account Ledger Table Interactive Dot (Right Desk) -->
+          <div id="w2-dot-ledger" class="museum-interactive-dot locked" style="top: 63.5%; left: 91.2%;" onclick="window.app.openAccountLedger()" title="Merchant's Account Ledger">
+            <div class="dot-core"></div>
+            <div class="dot-ring"></div>
+            <div class="dot-ping"></div>
+            <div class="dot-label">
+              <span id="w2-dot-ledger-icon" class="dot-label-icon">📜</span>
+              <span id="w2-dot-ledger-text" class="dot-label-text">Account Ledger</span>
+            </div>
           </div>
 
-          <!-- Scratch Picture Frame Hotspot -->
-          <div id="w2-scratch-frame" class="hotspot" onclick="window.app.openScratchPuzzle()">
-            <div class="hotspot-badge">🖼️ MYSTERY FRAME [SCRATCH ME]</div>
+          <!-- 4. Hidden Gold Bar on Left Plant Pot -->
+          <div id="w2-dot-gold-pot-left" class="museum-interactive-dot" style="top: 78.5%; left: 10.5%;" onclick="window.app.collectPotGoldBar('w2_left', 'Golden Bar (Study Left Pot)', 2, 'w2-dot-gold-pot-left')" title="Golden Bar (Plant Pot)">
+            <div class="dot-core"></div>
+            <div class="dot-ring"></div>
+            <div class="dot-ping"></div>
+            <div class="dot-label">
+              <span class="dot-label-icon">⚜️</span>
+              <span class="dot-label-text">Hidden Golden Bar</span>
+            </div>
           </div>
 
-          <!-- Drawer 01 Keypad Hotspot -->
-          <div id="w2-drawer-01" class="hotspot" onclick="window.app.openKeypadPuzzle()">
-            <div class="hotspot-badge">🔒 DRAWER 01 [LOCKED]</div>
+          <!-- 5. Hidden Gold Bar on Right Plant Pot -->
+          <div id="w2-dot-gold-pot-right" class="museum-interactive-dot" style="top: 76.5%; left: 85.0%;" onclick="window.app.collectPotGoldBar('w2_right', 'Golden Bar (Study Right Pot)', 2, 'w2-dot-gold-pot-right')" title="Golden Bar (Plant Pot)">
+            <div class="dot-core"></div>
+            <div class="dot-ring"></div>
+            <div class="dot-ping"></div>
+            <div class="dot-label">
+              <span class="dot-label-icon">⚜️</span>
+              <span class="dot-label-text">Hidden Golden Bar</span>
+            </div>
           </div>
+
         </div>
 
         <!-- ==========================================
              WALL 3: BANK VAULT & EXIT DOOR
              ========================================== -->
         <div id="wall-view-3" class="wall-scene">
-          <!-- Vintage Brass Nameplate on Exit Door (Black Door) -->
-          <div class="vintage-door-plate exit-plate" onclick="window.app.attemptEscape()">
-            <div class="door-plate-text">EXIT DOOR</div>
+
+          <!-- 1. Antique Balance Scale / Weight Balancer Interactive Dot (Center Table) -->
+          <div id="w3-dot-scale" class="museum-interactive-dot" style="top: 52.0%; left: 51.5%;" onclick="window.app.openBalanceScale()" title="Weight Balancer">
+            <div class="dot-core"></div>
+            <div class="dot-ring"></div>
+            <div class="dot-ping"></div>
+            <div class="dot-label">
+              <span id="w3-dot-scale-icon" class="dot-label-icon">⚖️</span>
+              <span id="w3-dot-scale-text" class="dot-label-text">Weight Balancer</span>
+            </div>
           </div>
 
-          <!-- Glowing Golden Focal Dot on Exit Door Handle -->
-          <div id="w3-exit-dot" class="door-focal-dot" title="Exit Door Handle" onclick="window.app.attemptEscape()"></div>
-
-          <!-- Installed Handle 1 Brass Wheel Visual Overlay on Wall 3 -->
-          <div id="w3-installed-handle1-container" class="w3-handle1-wheel-wrapper" style="position: absolute; top: 48.4%; left: 33.3%; transform: translate(-50%, -50%); transform-origin: 50% 50%; width: 150px; height: 150px; pointer-events: auto; cursor: pointer; z-index: 28; display: none;" onclick="window.puzzleManager.rotateHandle(1)" title="Click to rotate Handle 1 (30°/click)">
-            <img src="assets/handle1_wheel.png?v=2" alt="Installed Handle 1 Brass Wheel" style="width: 100%; height: 100%; object-fit: contain; filter: drop-shadow(0 6px 18px rgba(0,0,0,0.95)); transform-origin: 50% 50%;" />
-            <div id="w3-handle1-degree-badge" style="position: absolute; bottom: -18px; left: 50%; transform: translateX(-50%); background: rgba(12, 6, 3, 0.9); border: 1px solid #ffd700; color: #ffd700; border-radius: 4px; padding: 2px 8px; font-size: 11px; font-weight: 800; white-space: nowrap; pointer-events: none; box-shadow: 0 4px 10px rgba(0,0,0,0.85); display: none;">0°</div>
+          <!-- 2. Seven Envelopes Board Interactive Dot (Right Wall Frame) -->
+          <div id="w3-dot-envelopes" class="museum-interactive-dot locked" style="top: 38.5%; left: 83.5%;" onclick="window.app.openSevenEnvelopesBoard()" title="Seven Envelopes Console">
+            <div class="dot-core"></div>
+            <div class="dot-ring"></div>
+            <div class="dot-ping"></div>
+            <div class="dot-label">
+              <span id="w3-dot-envelopes-icon" class="dot-label-icon">✉️</span>
+              <span id="w3-dot-envelopes-text" class="dot-label-text">Seven Envelopes (Locked 🔒)</span>
+            </div>
           </div>
 
-          <!-- Installed Handle 2 Brass Wheel Visual Overlay on Wall 3 -->
-          <div id="w3-installed-handle2-container" class="w3-handle2-wheel-wrapper" style="position: absolute; top: 48.6%; left: 41.7%; transform: translate(-50%, -50%); width: 95px; height: 95px; pointer-events: auto; cursor: pointer; z-index: 28; display: none;" onclick="window.puzzleManager.rotateHandle(2)" title="Click to rotate Handle 2 (30°/click)">
-            <img src="assets/handle2_wheel.png?v=2" alt="Installed Handle 2 Brass Wheel" style="width: 100%; height: 100%; object-fit: contain; filter: drop-shadow(0 6px 18px rgba(0,0,0,0.95));" />
+          <!-- 3. Hidden Gold Bar in Large Plant Pot beside Cabinet (Wall 3) -->
+          <div id="w3-dot-gold-pot" class="museum-interactive-dot" style="top: 70.5%; left: 4.5%;" onclick="window.app.collectPotGoldBar('w3_pot', 'Golden Bar (Cabinet Pot)', 3, 'w3-dot-gold-pot')" title="Golden Bar (Cabinet Pot)">
+            <div class="dot-core"></div>
+            <div class="dot-ring"></div>
+            <div class="dot-ping"></div>
+            <div class="dot-label">
+              <span class="dot-label-icon">⚜️</span>
+              <span class="dot-label-text">Hidden Golden Bar</span>
+            </div>
           </div>
 
-          <!-- Glowing Golden Focal Dot on Vault Safe (Handle 1) -->
-          <div id="w3-vault-safe-dot" class="door-focal-dot" title="Handle 1" onclick="window.app.openHandle1Modal()"></div>
-
-          <!-- Glowing Golden Focal Dot on Vault Safe (Handle 2) -->
-          <div id="w3-handle2-dot" class="door-focal-dot" title="Handle 2" onclick="window.app.openHandle2Modal()"></div>
-
-          <!-- Dynamic 3-Piece Canvas Inset inside Golden Frame -->
-          <div id="wall3-painting-canvas" class="wall3-painting-restoration-canvas">
-            <div id="wall3-slice-1" class="painting-wall-slice slice-1"></div>
-            <div id="wall3-slice-2" class="painting-wall-slice slice-2"></div>
-            <div id="wall3-slice-3" class="painting-wall-slice slice-3"></div>
-            <div id="wall3-painting-glow" class="painting-completed-sheen"></div>
+          <!-- 4. Hidden Gold Bar on Wooden Stool (Wall 3) -->
+          <div id="w3-dot-gold-stool" class="museum-interactive-dot" style="top: 74.5%; left: 66.0%;" onclick="window.app.collectPotGoldBar('w3_stool', 'Golden Bar (Wood Stool)', 3, 'w3-dot-gold-stool')" title="Golden Bar (Wood Stool)">
+            <div class="dot-core"></div>
+            <div class="dot-ring"></div>
+            <div class="dot-ping"></div>
+            <div class="dot-label">
+              <span class="dot-label-icon">⚜️</span>
+              <span class="dot-label-text">Hidden Golden Bar</span>
+            </div>
           </div>
 
-          <!-- Counter 3: TRANSFER Hotspot -->
-          <div id="w3-transfer-counter" class="hotspot" onclick="window.app.inspectCounter('transfer')">
-            <div class="hotspot-badge">💸 TRANSFER COUNTER [8]</div>
-          </div>
-
-          <!-- Main Vault Safe Hotspot -->
-          <div id="w3-vault-safe" class="hotspot" onclick="window.app.openSafeModal()">
-            <div class="hotspot-badge">🔑 HANDLE 1 • MAIN VAULT SAFE</div>
-          </div>
-
-          <!-- Reinforced Exit Door Hotspot -->
-          <div id="w3-exit-door" class="hotspot" onclick="window.app.attemptEscape()">
-            <div class="hotspot-badge">🚪 EXIT DOOR • NEEDS GOLDEN KEY</div>
-          </div>
-
-          <!-- Flower Painting Canvas Hotspot -->
-          <div id="w3-flower-painting" class="hotspot" onclick="window.app.openPaintingPuzzle()">
-            <div class="hotspot-badge">🌻 FLOWER CANVAS • RESTORE PIECES</div>
-          </div>
         </div>
 
         <!-- ==========================================
-             WALL 4: BANK TELLER COUNTER
+             WALL 4: TREASURE CHAMBER & LASER MATRIX
              ========================================== -->
         <div id="wall-view-4" class="wall-scene">
-          <!-- Handwritten Clock Rotation Clue Sticky Note Element -->
-          <div id="w4-wall-sticky-note" class="wall4-sticky-note-element" onclick="window.app.openStickyNoteZoom()" title="Click to inspect Sticky Note Clue">
-            <img src="assets/w4_sticky_note.png" alt="Clock Rotation Sticky Note Clue" class="sticky-note-img">
+
+          <!-- 1. Glasses HUD Status & Controls Banner -->
+          <div id="w4-glasses-hud" class="glasses-hud-banner">
+            <div style="display: flex; flex-direction: column; gap: 2px;">
+              <span style="display: flex; align-items: center; gap: 8px;">
+                <span id="w4-glasses-icon" style="font-size: 18px;">👓</span>
+                <strong id="w4-glasses-title" style="letter-spacing: 0.5px;">GLASSES UNEQUIPPED (LASERS INVISIBLE)</strong>
+              </span>
+              <span id="w4-mirrors-placed-text" style="font-size: 11px; color: #ffd700;">Mirrors placed: 0 / 4</span>
+            </div>
+            <div id="w4-laser-status-badge" class="glasses-indicator-pill blocked" style="display: none;">
+              <span id="w4-laser-status-icon">⚠️</span>
+              <span id="w4-laser-status-text">4 BEAMS BLOCKING CHEST</span>
+            </div>
+            <div style="display: flex; gap: 6px; align-items: center; flex-wrap: wrap;">
+              <button id="btn-laser-hint" class="btn btn-secondary" style="padding: 4px 10px; font-size: 11px; border-color: #ffd700; color: #ffd700;" onclick="window.puzzleManager.showLaserHint()">
+                💡 VIEW HINT
+              </button>
+              <button id="btn-toggle-laser-vision" class="btn btn-secondary" style="padding: 4px 12px; font-size: 11px;" onclick="window.puzzleManager.toggleLaserVision()">
+                👓 WEAR GLASSES
+              </button>
+              <button id="btn-align-all-mirrors-quick" class="btn btn-secondary" style="padding: 4px 10px; font-size: 11px; color: #2ecc71; border-color: #2ecc71;" onclick="window.puzzleManager.autoAlignAllMirrors()">
+                ⚡ ALIGN 4 MIRRORS
+              </button>
+            </div>
           </div>
 
-          <!-- Glowing Golden Focal Dot on Sticky Note -->
-          <div id="w4-sticky-note-dot" class="door-focal-dot" title="STICKY NOTE" onclick="window.app.openStickyNoteZoom()"></div>
+          <!-- 2. Safe Perimeter Aura (Active when lasers deflected) -->
+          <div id="w4-chest-safe-aura" class="chest-safe-perimeter-aura" style="top: 51.5%; left: 46.2%;"></div>
 
-          <!-- Counter 4: SAVINGS Hotspot -->
-          <div id="w4-savings-counter" class="hotspot" onclick="window.app.inspectCounter('savings')">
-            <div class="hotspot-badge">🏦 SAVINGS COUNTER [5]</div>
+          <!-- 3. Dynamic Real-Time SVG Laser Grid Overlay (1024x678 coordinate space) -->
+          <svg id="wall4-laser-svg" class="wall4-laser-svg lasers-off" viewBox="0 0 1024 678" preserveAspectRatio="none">
+            <defs>
+              <filter id="laser-glow" x="-20%" y="-20%" width="140%" height="140%">
+                <feGaussianBlur stdDeviation="3.2" result="blur" />
+                <feMerge>
+                  <feMergeNode in="blur" />
+                  <feMergeNode in="SourceGraphic" />
+                </feMerge>
+              </filter>
+            </defs>
+
+            <!-- Wall Emitter 1 (Upper Left Wall: 120, 180) -->
+            <g class="laser-emitter-hub">
+              <circle cx="120" cy="180" r="14" fill="#140a08" stroke="#d4af37" stroke-width="2" />
+              <circle cx="120" cy="180" r="7" fill="#ff0033" filter="url(#laser-glow)" />
+              <circle cx="120" cy="180" r="2.5" fill="#ffffff" />
+            </g>
+
+            <!-- Wall Emitter 2 (Mid Left Wall under panel: 150, 340) -->
+            <g class="laser-emitter-hub">
+              <circle cx="150" cy="340" r="13" fill="#140a08" stroke="#d4af37" stroke-width="2" />
+              <circle cx="150" cy="340" r="6.5" fill="#ff0033" filter="url(#laser-glow)" />
+              <circle cx="150" cy="340" r="2.5" fill="#ffffff" />
+            </g>
+
+            <!-- Column Emitter 3 (Left Column: 285, 290) -->
+            <g class="laser-emitter-hub">
+              <circle cx="285" cy="290" r="13" fill="#140a08" stroke="#d4af37" stroke-width="2" />
+              <circle cx="285" cy="290" r="6.5" fill="#ff0033" filter="url(#laser-glow)" />
+              <circle cx="285" cy="290" r="2.5" fill="#ffffff" />
+            </g>
+
+            <!-- Wall Emitter 4 (Upper Right Wall: 840, 175) -->
+            <g class="laser-emitter-hub">
+              <circle cx="840" cy="175" r="14" fill="#140a08" stroke="#d4af37" stroke-width="2" />
+              <circle cx="840" cy="175" r="7" fill="#ff0033" filter="url(#laser-glow)" />
+              <circle cx="840" cy="175" r="2.5" fill="#ffffff" />
+            </g>
+
+            <!-- Wall Emitter 5 (Mid Right Wall: 840, 340) -->
+            <g class="laser-emitter-hub">
+              <circle cx="840" cy="340" r="13" fill="#140a08" stroke="#d4af37" stroke-width="2" />
+              <circle cx="840" cy="340" r="6.5" fill="#ff0033" filter="url(#laser-glow)" />
+              <circle cx="840" cy="340" r="2.5" fill="#ffffff" />
+            </g>
+
+            <!-- Column Emitter 6 (Right Column: 650, 290) -->
+            <g class="laser-emitter-hub">
+              <circle cx="650" cy="290" r="13" fill="#140a08" stroke="#d4af37" stroke-width="2" />
+              <circle cx="650" cy="290" r="6.5" fill="#ff0033" filter="url(#laser-glow)" />
+              <circle cx="650" cy="290" r="2.5" fill="#ffffff" />
+            </g>
+
+            <!-- Ambient Atmospheric Cross Beams (matching reference image) -->
+            <line class="laser-beam-line" x1="150" y1="340" x2="650" y2="480" opacity="0.65" filter="url(#laser-glow)" />
+            <line class="laser-beam-core" x1="150" y1="340" x2="650" y2="480" opacity="0.65" />
+            <line class="laser-beam-line" x1="840" y1="340" x2="285" y2="480" opacity="0.65" filter="url(#laser-glow)" />
+            <line class="laser-beam-core" x1="840" y1="340" x2="285" y2="480" opacity="0.65" />
+
+            <!-- Beam 1: Emitter 3 (285, 290) -> Hook 1 (395, 322) or Chest (512, 356) -->
+            <line id="laser-beam-1" class="laser-beam-line" x1="285" y1="290" x2="468" y2="345" filter="url(#laser-glow)" />
+            <line id="laser-beam-1-core" class="laser-beam-core" x1="285" y1="290" x2="468" y2="345" />
+            <line id="laser-beam-1-deflected" class="laser-deflected-line" x1="395" y1="322" x2="395" y2="50" style="display: none;" />
+            <line id="laser-beam-1-deflected-core" class="laser-deflected-core" x1="395" y1="322" x2="395" y2="50" style="display: none;" />
+
+            <!-- Beam 2: Emitter 6 (650, 290) -> Hook 2 (598, 320) or Chest (512, 356) -->
+            <line id="laser-beam-2" class="laser-beam-line" x1="650" y1="290" x2="468" y2="345" filter="url(#laser-glow)" />
+            <line id="laser-beam-2-core" class="laser-beam-core" x1="650" y1="290" x2="468" y2="345" />
+            <line id="laser-beam-2-deflected" class="laser-deflected-line" x1="598" y1="320" x2="598" y2="50" style="display: none;" />
+            <line id="laser-beam-2-deflected-core" class="laser-deflected-core" x1="598" y1="320" x2="598" y2="50" style="display: none;" />
+
+            <!-- Beam 3: Emitter 2 (150, 340) -> Hook 3 (291, 492) or Chest Dais (512, 370) -->
+            <line id="laser-beam-3" class="laser-beam-line" x1="150" y1="340" x2="468" y2="355" filter="url(#laser-glow)" />
+            <line id="laser-beam-3-core" class="laser-beam-core" x1="150" y1="340" x2="468" y2="355" />
+            <line id="laser-beam-3-deflected" class="laser-deflected-line" x1="291" y1="492" x2="291" y2="670" style="display: none;" />
+            <line id="laser-beam-3-deflected-core" class="laser-deflected-core" x1="291" y1="492" x2="291" y2="670" style="display: none;" />
+
+            <!-- Beam 4: Emitter 5 (840, 340) -> Hook 4 (654, 492) or Chest Dais (512, 370) -->
+            <line id="laser-beam-4" class="laser-beam-line" x1="840" y1="340" x2="468" y2="355" filter="url(#laser-glow)" />
+            <line id="laser-beam-4-core" class="laser-beam-core" x1="840" y1="340" x2="468" y2="355" />
+            <line id="laser-beam-4-deflected" class="laser-deflected-line" x1="654" y1="492" x2="654" y2="670" style="display: none;" />
+            <line id="laser-beam-4-deflected-core" class="laser-deflected-core" x1="654" y1="492" x2="654" y2="670" style="display: none;" />
+
+            <!-- Chest Impact Sparks -->
+            <circle id="laser-spark-1" class="laser-impact-spark" cx="448" cy="342" r="7" />
+            <circle id="laser-spark-2" class="laser-impact-spark" cx="462" cy="346" r="7" />
+            <circle id="laser-spark-3" class="laser-impact-spark" cx="474" cy="346" r="7" />
+            <circle id="laser-spark-4" class="laser-impact-spark" cx="488" cy="342" r="7" />
+          </svg>
+
+          <!-- 4. Interactive Wall Hook 1 (Upper Left Arch Pillar: 38.6%, 47.5%) -->
+          <div id="w4-hook-container-1" class="mirror-hook-container" style="top: 47.5%; left: 38.6%;" onclick="window.puzzleManager.interactMirrorMount(1)" title="Wall Hook 1 (Left Arch Pillar)">
+            <img id="mirror-hook-img-1" class="mirror-wall-hook-img" src="assets/mirror_wall_hook.png" alt="Ornate Brass Hook" />
+            <img id="mirror-hanging-img-1" class="mirror-hanging-img" src="assets/ornate_hand_mirror.png" alt="Rotatable Optical Mirror" style="display: none; transform: translateX(-50%) rotate(0deg);" />
+            <div id="w4-dot-mirror-1" class="museum-interactive-dot mirror-hook-dot">
+              <div class="dot-core"></div>
+              <div class="dot-ring"></div>
+              <div class="dot-ping"></div>
+              <div class="dot-label">
+                <span id="mirror-1-icon" class="dot-label-icon">🪞</span>
+                <span id="mirror-1-label" class="dot-label-text">Hook 1 (Left Arch)</span>
+              </div>
+              <div id="mirror-1-angle-badge" class="mirror-angle-badge">Empty Hook</div>
+            </div>
           </div>
 
-          <!-- Glowing Secret Red Book Hotspot -->
-          <div id="w4-secret-red-book" class="hotspot" onclick="window.app.pullRedBook()">
-            <div class="hotspot-badge">📕 SECRET CRIMSON BOOK [PULL ME]</div>
+          <!-- 5. Interactive Wall Hook 2 (Upper Right Arch Pillar: 58.4%, 47.2%) -->
+          <div id="w4-hook-container-2" class="mirror-hook-container" style="top: 47.2%; left: 58.4%;" onclick="window.puzzleManager.interactMirrorMount(2)" title="Wall Hook 2 (Right Arch Pillar)">
+            <img id="mirror-hook-img-2" class="mirror-wall-hook-img" src="assets/mirror_wall_hook.png" alt="Ornate Brass Hook" />
+            <img id="mirror-hanging-img-2" class="mirror-hanging-img" src="assets/ornate_hand_mirror.png" alt="Rotatable Optical Mirror" style="display: none; transform: translateX(-50%) rotate(0deg);" />
+            <div id="w4-dot-mirror-2" class="museum-interactive-dot mirror-hook-dot">
+              <div class="dot-core"></div>
+              <div class="dot-ring"></div>
+              <div class="dot-ping"></div>
+              <div class="dot-label">
+                <span id="mirror-2-icon" class="dot-label-icon">🪞</span>
+                <span id="mirror-2-label" class="dot-label-text">Hook 2 (Right Arch)</span>
+              </div>
+              <div id="mirror-2-angle-badge" class="mirror-angle-badge">Empty Hook</div>
+            </div>
           </div>
+
+          <!-- 6. Interactive Wall Hook 3 (Lower Left Column Base: 28.4%, 72.6%) -->
+          <div id="w4-hook-container-3" class="mirror-hook-container" style="top: 72.6%; left: 28.4%;" onclick="window.puzzleManager.interactMirrorMount(3)" title="Wall Hook 3 (Left Column Base)">
+            <img id="mirror-hook-img-3" class="mirror-wall-hook-img" src="assets/mirror_wall_hook.png" alt="Ornate Brass Hook" />
+            <img id="mirror-hanging-img-3" class="mirror-hanging-img" src="assets/ornate_hand_mirror.png" alt="Rotatable Optical Mirror" style="display: none; transform: translateX(-50%) rotate(0deg);" />
+            <div id="w4-dot-mirror-3" class="museum-interactive-dot mirror-hook-dot">
+              <div class="dot-core"></div>
+              <div class="dot-ring"></div>
+              <div class="dot-ping"></div>
+              <div class="dot-label">
+                <span id="mirror-3-icon" class="dot-label-icon">🪞</span>
+                <span id="mirror-3-label" class="dot-label-text">Hook 3 (Left Column)</span>
+              </div>
+              <div id="mirror-3-angle-badge" class="mirror-angle-badge">Empty Hook</div>
+            </div>
+          </div>
+
+          <!-- 7. Interactive Wall Hook 4 (Lower Right Stand Base: 63.9%, 72.6%) -->
+          <div id="w4-hook-container-4" class="mirror-hook-container" style="top: 72.6%; left: 63.9%;" onclick="window.puzzleManager.interactMirrorMount(4)" title="Wall Hook 4 (Right Stand Base)">
+            <img id="mirror-hook-img-4" class="mirror-wall-hook-img" src="assets/mirror_wall_hook.png" alt="Ornate Brass Hook" />
+            <img id="mirror-hanging-img-4" class="mirror-hanging-img" src="assets/ornate_hand_mirror.png" alt="Rotatable Optical Mirror" style="display: none; transform: translateX(-50%) rotate(0deg);" />
+            <div id="w4-dot-mirror-4" class="museum-interactive-dot mirror-hook-dot">
+              <div class="dot-core"></div>
+              <div class="dot-ring"></div>
+              <div class="dot-ping"></div>
+              <div class="dot-label">
+                <span id="mirror-4-icon" class="dot-label-icon">🪞</span>
+                <span id="mirror-4-label" class="dot-label-text">Hook 4 (Right Stand)</span>
+              </div>
+              <div id="mirror-4-angle-badge" class="mirror-angle-badge">Empty Hook</div>
+            </div>
+          </div>
+
+          <!-- 8. Interactive Golden Treasure Chest Hotspot (Center Dais: 50.0%, 52.5%) -->
+          <div id="w4-dot-chest" class="museum-interactive-dot locked" style="top: 51.5%; left: 46.2%;" onclick="window.puzzleManager.interactTreasureChest()" title="The Grand Treasure Chest">
+            <div class="dot-core"></div>
+            <div class="dot-ring"></div>
+            <div class="dot-ping"></div>
+            <div class="dot-label">
+              <span id="w4-chest-icon" class="dot-label-icon">🔒</span>
+              <span id="w4-chest-text" class="dot-label-text">Treasure Chest (Lasers Active 🔒)</span>
+            </div>
+          </div>
+
+          <!-- 9. Plan List Framed Plaque (Left Wall Painting area) -->
+          <div id="w4-dot-plan-list" class="museum-interactive-dot" style="top: 36.0%; left: 9.2%;" onclick="window.puzzleManager.openPlanListPlaque()" title="Imperial Master Painting & Plaque">
+            <div class="dot-core"></div>
+            <div class="dot-ring"></div>
+            <div class="dot-ping"></div>
+            <div class="dot-label">
+              <span class="dot-label-icon">📜</span>
+              <span class="dot-label-text">Plan List: Better Tomorrow</span>
+            </div>
+          </div>
+
         </div>
 
         <!-- ==========================================
@@ -221,14 +465,7 @@
           <!-- Dynamic 56 Locker Handle Dots Container (7500 - 7559) -->
           <div id="w5-locker-grid-container"></div>
 
-          <!-- Focal Dot on Reserve Cash -->
-          <div id="w5-cash-dot" class="door-focal-dot cash-focal-dot" style="top: 78%; left: 12%;" title="Collect ₹10,000 Reserve Cash" onclick="window.puzzleManager ? window.puzzleManager.collectVaultCash() : null"></div>
 
-          <!-- Focal Dot on Golden Escape Key -->
-          <div id="w5-key-dot" class="door-focal-dot key-focal-dot" style="top: 78%; left: 88%;" title="Golden Escape Key" onclick="window.puzzleManager ? window.puzzleManager.collectEscapeKey() : null"></div>
-
-          <!-- Focal Dot for Knowledge Box 03 -->
-          <div id="w5-kb3-dot" class="door-focal-dot kb3-focal-dot" style="top: 14%; left: 50%;" title="Knowledge Box 03" onclick="window.roomController ? window.roomController.startKnowledgeBox(3) : null"></div>
         </div>
 
       </div> <!-- End Master Wall Stage -->
@@ -374,6 +611,1712 @@
     </div>
 
     <!-- ==========================================
+         MUSEUM PUZZLE 1: ROYAL PRINCE MODAL (Wall 1)
+         ========================================== -->
+    <div id="royal-prince-modal" class="modal-backdrop" onclick="if(event.target === this) window.app.closeModal('royal-prince-modal')">
+      <div class="modal-card royal-prince-card">
+        <button class="modal-close-btn" onclick="window.app.closeModal('royal-prince-modal')">✕</button>
+
+        <div class="modal-header">
+          <span class="modal-subtitle">THE MUSEUM OF LOST FORTUNES • PUZZLE 01</span>
+          <h2 class="modal-title">👑 THE ROYAL PRINCE</h2>
+        </div>
+
+        <div class="prince-statue-emblem-box">
+          <span>👑</span>
+        </div>
+
+        <p style="font-size: 14px; color: var(--text-main); line-height: 1.6; margin: 12px 0;">
+          Before you stands the marble likeness of the young sovereign who preserved his realm's wealth through financial discipline. Clutched securely in his right hand is the <strong>First Golden Bar</strong>—a sacred relic of financial wisdom.
+        </p>
+
+        <!-- Dynamic Status Section -->
+        <div id="prince-status-box" class="prince-status-box">
+          <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 6px;">
+            <span id="prince-status-icon" style="font-size: 20px;">🔒</span>
+            <strong id="prince-status-header" class="status-header-text" style="color: #ffd700; font-size: 13px; letter-spacing: 0.5px;">MECHANICAL WRIST CLASP LOCKED</strong>
+          </div>
+          <p id="prince-status-desc" style="font-size: 12.5px; color: #d0c8b8; margin: 0; line-height: 1.5;">
+            An electric security sensor buried beneath the pedestal keeps the prince's fingers locked tightly around the bar. Disarm the circuit at the lectern stand to release it.
+          </p>
+        </div>
+
+        <!-- Action Buttons -->
+        <div id="prince-action-container" style="margin-top: 18px; display: flex; flex-direction: column; gap: 10px;">
+          <button id="btn-prince-go-circuit" class="btn btn-gold" style="width: 100%; font-weight: 800; letter-spacing: 1px;" onclick="window.app.closeModal('royal-prince-modal'); window.app.openElectricCircuit();">
+            ⚡ DISARM ELECTRIC CIRCUIT →
+          </button>
+          <button id="btn-prince-go-records" class="btn btn-gold" style="width: 100%; font-weight: 800; letter-spacing: 1px; display: none;" onclick="window.app.closeModal('royal-prince-modal'); window.app.openPrinceEmpire();">
+            🏰 INSPECT PRINCE EMPIRE RECORDS →
+          </button>
+          <button id="btn-prince-claim-bar" class="btn btn-gold" style="width: 100%; font-weight: 800; letter-spacing: 1px; display: none; background: linear-gradient(180deg, #d4ac0d 0%, #9a7d0a 100%);" onclick="window.app.collectGoldenBar1()">
+            ⚜ UNLOCK CLASP & CLAIM GOLDEN BAR (+250 XP) ⚜
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ==========================================
+         MUSEUM PUZZLE 1: VIDEO 3.3 — SMARTER SPENDING DECISIONS
+         ========================================== -->
+    <div id="video-3-3-modal" class="modal-backdrop" onclick="if(event.target === this) window.app.closeModal('video-3-3-modal')">
+      <div class="modal-card royal-archive-video-card">
+        <button class="modal-close-btn" onclick="window.app.closeModal('video-3-3-modal')">✕</button>
+
+        <div class="modal-header">
+          <span class="modal-subtitle">ROYAL ARCHIVE — VIDEO 3.3</span>
+          <h2 class="modal-title">REAL LIFE = REAL MONEY</h2>
+          <p style="font-size: 13px; color: #ffd700; margin: 4px 0 0 0;">
+            Understanding Needs vs. Wants, Impulse Spending & Long-Term Value
+          </p>
+        </div>
+
+        <!-- Simulated Interactive Video Screen -->
+        <div class="royal-video-viewport">
+          <div id="video-scene-content" class="video-scene-canvas">
+            <div id="video-stage-badge" class="video-stage-badge">MODULE 3.3 PREVIEW</div>
+            <div id="video-stage-title" class="video-stage-title">💡 Needs vs. Wants</div>
+            <div id="video-stage-sub" class="video-stage-sub">
+              Every financial choice you make either builds an enduring asset or creates a lingering liability.
+            </div>
+          </div>
+        </div>
+
+        <!-- Captions Display Area -->
+        <div id="video-captions-box" class="video-captions-box">
+          <span id="video-captions-text">“A cracked tool is an essential need; a brand-new upgrade is an impulsive want.”</span>
+        </div>
+
+        <!-- Video Player Controls Bar -->
+        <div class="video-controls-bar">
+          <button id="btn-video-play-pause" class="btn btn-secondary" style="padding: 6px 14px; font-size: 12px;" onclick="window.puzzleManager.toggleVideoPlayback()">
+            ▶ PLAY
+          </button>
+          
+          <div class="video-progress-track" onclick="window.puzzleManager.seekVideoProgress(event)">
+            <div id="video-progress-fill" class="video-progress-fill"></div>
+          </div>
+
+          <span id="video-time-display" class="video-time-disp">00:00 / 00:10</span>
+
+          <button id="btn-video-captions" class="btn btn-secondary" style="padding: 6px 10px; font-size: 11px;" onclick="window.puzzleManager.toggleVideoCaptions()">
+            💬 CAPTIONS: ON
+          </button>
+
+          <button id="btn-video-skip" class="btn btn-secondary" style="padding: 6px 10px; font-size: 11px;" onclick="window.puzzleManager.skipVideoPlayback()">
+            ⏭ SKIP
+          </button>
+        </div>
+
+        <!-- Post-Video Action Button -->
+        <div style="margin-top: 18px;">
+          <button id="btn-video-continue-records" class="btn btn-gold" style="width: 100%; font-weight: 800; display: none; background: linear-gradient(180deg, #d4ac0d 0%, #9a7d0a 100%); letter-spacing: 1px;" onclick="window.app.closeModal('video-3-3-modal'); window.app.openPrinceEmpire();">
+            📜 CONTINUE TO THE PRINCE'S RECORDS →
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ==========================================
+         MUSEUM PUZZLE 1: PRINCE EMPIRE PAINTING MODAL (Wall 1)
+         ========================================== -->
+    <div id="prince-empire-modal" class="modal-backdrop" onclick="if(event.target === this) window.app.closeModal('prince-empire-modal')">
+      <div class="modal-card spending-activity-card">
+        <button class="modal-close-btn" onclick="window.app.closeModal('prince-empire-modal')">✕</button>
+
+        <div class="modal-header">
+          <span class="modal-subtitle">GALLERY ARCHIVE • IMPERIAL OIL ON CANVAS</span>
+          <h2 class="modal-title">🏰 THE PRINCE'S EMPIRE & RECORDS</h2>
+        </div>
+
+        <!-- Painting Visual Banner -->
+        <div class="empire-painting-viewport" style="max-height: 180px;">
+          <img src="assets/wall1_entrance.jpg" alt="The Prince Empire Sunset Painting" style="object-position: 38% 36%; transform: scale(1.8); transform-origin: 39% 36%;" />
+        </div>
+
+        <!-- LOCKED VIEW (When Video 3.3 is not yet completed) -->
+        <div id="empire-locked-container" style="display: none; padding: 14px 0;">
+          <div style="background: rgba(0, 0, 0, 0.6); border: 1.5px solid #d4ac0d; border-radius: 10px; padding: 20px; text-align: center;">
+            <div style="font-size: 36px; margin-bottom: 8px;">🔒</div>
+            <h3 style="font-family: 'Cinzel', Georgia, serif; color: #ffd700; margin: 0 0 8px 0; font-size: 16px; letter-spacing: 1px;">
+              PRINCE'S RECORDS & ACTIVITY LOCKED
+            </h3>
+            <p id="empire-locked-desc" style="font-size: 13px; color: #dcd0c0; line-height: 1.6; max-width: 580px; margin: 0 auto 16px auto;">
+              The records describing the Prince’s spending decisions and the Value Decay Calculator are locked within the royal archive. Disarm the Electric Circuit stand and complete Video 3.3 (Real Life = Real Money) to unlock this activity.
+            </p>
+            <div style="display: flex; justify-content: center; gap: 10px;">
+              <button id="btn-locked-go-video" class="btn btn-gold" style="padding: 10px 22px; font-weight: 800;" onclick="window.app.closeModal('prince-empire-modal'); window.app.openVideo33();">
+                🎬 WATCH VIDEO 3.3 TO UNLOCK ACTIVITY →
+              </button>
+              <button id="btn-locked-go-circuit" class="btn btn-gold" style="padding: 10px 22px; font-weight: 800; display: none;" onclick="window.app.closeModal('prince-empire-modal'); window.app.openElectricCircuit();">
+                ⚡ DISARM ELECTRIC CIRCUIT STAND FIRST →
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- UNLOCKED ACTIVITY CONTAINER (Unlocked after Video 3.3 is completed) -->
+        <div id="empire-unlocked-activity-container">
+          <!-- Activity Tab Navigation -->
+          <div class="activity-tab-nav">
+            <button id="tab-btn-scenarios" class="activity-tab-btn active" onclick="window.puzzleManager.switchActivityTab('scenarios')">
+              📜 1. CHOOSE THE WISER PURCHASE
+            </button>
+            <button id="tab-btn-decay" class="activity-tab-btn" onclick="window.puzzleManager.switchActivityTab('decay')">
+              📉 2. VALUE DECAY CALCULATOR
+            </button>
+          </div>
+
+          <!-- TAB 1: 4 SPENDING SCENARIOS -->
+          <div id="activity-tab-scenarios-panel">
+            <p style="font-size: 13px; color: #ffd700; margin-bottom: 14px; text-align: left;">
+              Compare the prince’s shopping desires with the trader's wisdom. For each scenario, decide whether to <strong>SPEND</strong>, <strong>POSTPONE</strong>, or <strong>SKIP</strong> to reveal the ancient royal symbols.
+            </p>
+
+            <!-- Scenario 1: The Broken Essential Item -->
+            <div id="scenario-card-1" class="scenario-card-item">
+              <div class="scenario-header-row">
+                <span class="scenario-tag">SCENARIO 1: THE BROKEN ESSENTIAL ITEM</span>
+                <span id="scenario-symbol-1" class="scenario-symbol-reveal">⚜</span>
+              </div>
+              <p style="font-size: 13px; color: #f1f2f6; margin: 4px 0;">
+                The prince’s phone has a cracked screen. Repairing it costs <strong>₹1,200</strong>, while a brand-new replacement phone costs <strong>₹15,000</strong>.
+              </p>
+              <div class="scenario-cost-pills">
+                <span class="cost-pill">🔧 Repair: ₹1,200</span>
+                <span class="cost-pill">📱 Replace: ₹15,000</span>
+              </div>
+              <div class="scenario-choices-row">
+                <button class="choice-btn" data-choice="spend" onclick="window.puzzleManager.selectScenarioChoice(1, 'spend')">SPEND (ON REPAIR)</button>
+                <button class="choice-btn" data-choice="postpone" onclick="window.puzzleManager.selectScenarioChoice(1, 'postpone')">POSTPONE</button>
+                <button class="choice-btn" data-choice="skip" onclick="window.puzzleManager.selectScenarioChoice(1, 'skip')">SKIP</button>
+              </div>
+              <div id="scenario-feedback-1" class="scenario-feedback-box"></div>
+            </div>
+
+            <!-- Scenario 2: The Luxury Purchase -->
+            <div id="scenario-card-2" class="scenario-card-item">
+              <div class="scenario-header-row">
+                <span class="scenario-tag">SCENARIO 2: THE LUXURY PURCHASE</span>
+                <span id="scenario-symbol-2" class="scenario-symbol-reveal">⚖</span>
+              </div>
+              <p style="font-size: 13px; color: #f1f2f6; margin: 4px 0;">
+                The prince wants to spend <strong>₹6,000</strong> on an exciting weekend trip with friends, but has not planned or budgeted for it.
+              </p>
+              <div class="scenario-cost-pills">
+                <span class="cost-pill">🏖 Unplanned Trip: ₹6,000</span>
+                <span class="cost-pill">📊 Current Plan: Not Budgeted</span>
+              </div>
+              <div class="scenario-choices-row">
+                <button class="choice-btn" data-choice="spend" onclick="window.puzzleManager.selectScenarioChoice(2, 'spend')">SPEND</button>
+                <button class="choice-btn" data-choice="postpone" onclick="window.puzzleManager.selectScenarioChoice(2, 'postpone')">POSTPONE (UNTIL BUDGETED)</button>
+                <button class="choice-btn" data-choice="skip" onclick="window.puzzleManager.selectScenarioChoice(2, 'skip')">SKIP</button>
+              </div>
+              <div id="scenario-feedback-2" class="scenario-feedback-box"></div>
+            </div>
+
+            <!-- Scenario 3: The Useful Course -->
+            <div id="scenario-card-3" class="scenario-card-item">
+              <div class="scenario-header-row">
+                <span class="scenario-tag">SCENARIO 3: THE USEFUL COURSE</span>
+                <span id="scenario-symbol-3" class="scenario-symbol-reveal">📜</span>
+              </div>
+              <p style="font-size: 13px; color: #f1f2f6; margin: 4px 0;">
+                A three-month certified course costs <strong>₹4,500</strong>. It directly develops high-income skills for the prince’s future business.
+              </p>
+              <div class="scenario-cost-pills">
+                <span class="cost-pill">🎓 Skill Certification: ₹4,500</span>
+                <span class="cost-pill">📈 Growth: Future Income</span>
+              </div>
+              <div class="scenario-choices-row">
+                <button class="choice-btn" data-choice="spend" onclick="window.puzzleManager.selectScenarioChoice(3, 'spend')">SPEND (INVEST IN SKILL)</button>
+                <button class="choice-btn" data-choice="postpone" onclick="window.puzzleManager.selectScenarioChoice(3, 'postpone')">POSTPONE</button>
+                <button class="choice-btn" data-choice="skip" onclick="window.puzzleManager.selectScenarioChoice(3, 'skip')">SKIP</button>
+              </div>
+              <div id="scenario-feedback-3" class="scenario-feedback-box"></div>
+            </div>
+
+            <!-- Scenario 4: The Risky Investment -->
+            <div id="scenario-card-4" class="scenario-card-item">
+              <div class="scenario-header-row">
+                <span class="scenario-tag">SCENARIO 4: THE RISKY INVESTMENT</span>
+                <span id="scenario-symbol-4" class="scenario-symbol-reveal">🛡</span>
+              </div>
+              <p style="font-size: 13px; color: #f1f2f6; margin: 4px 0;">
+                A stranger approaches offering guaranteed "triple returns in 30 days" if the prince invests in an unverified secret scheme.
+              </p>
+              <div class="scenario-cost-pills">
+                <span class="cost-pill">⚠️ Unverified Scheme</span>
+                <span class="cost-pill">💸 Guaranteed Returns: High Risk</span>
+              </div>
+              <div class="scenario-choices-row">
+                <button class="choice-btn" data-choice="spend" onclick="window.puzzleManager.selectScenarioChoice(4, 'spend')">SPEND</button>
+                <button class="choice-btn" data-choice="postpone" onclick="window.puzzleManager.selectScenarioChoice(4, 'postpone')">POSTPONE</button>
+                <button class="choice-btn" data-choice="skip" onclick="window.puzzleManager.selectScenarioChoice(4, 'skip')">SKIP (AVOID UNVERIFIED)</button>
+              </div>
+              <div id="scenario-feedback-4" class="scenario-feedback-box"></div>
+            </div>
+
+            <!-- Complete and Advance Banner for Tab 1 -->
+            <div id="scenarios-complete-advance-box" style="margin-top: 18px; padding: 14px 18px; background: rgba(46, 204, 113, 0.12); border: 1.5px solid #2ecc71; border-radius: 8px; text-align: center;">
+              <div style="font-family: 'Cinzel', serif; font-size: 14px; font-weight: 800; color: #2ecc71; margin-bottom: 4px;">
+                ✓ ALL 4 WISER PURCHASE SCENARIOS ANSWERED!
+              </div>
+              <p style="font-size: 12.5px; color: #e8f8f5; margin: 0 0 12px 0;">
+                The 4 royal symbols have aligned! Claim the Hidden Cabinet Key to unlock the Royal Prince Statue and retrieve his Golden Bar.
+              </p>
+              <div style="display: flex; justify-content: center; gap: 10px; flex-wrap: wrap;">
+                <button class="btn btn-gold" style="font-size: 13px; font-weight: 800; padding: 10px 22px; background: linear-gradient(180deg, #27ae60 0%, #1e8449 100%); border-color: #2ecc71;" onclick="window.app.claimHiddenCabinetKey()">
+                  🔑 CLAIM KEY & PROCEED TO ROYAL PRINCE STATUE (+200 XP) →
+                </button>
+                <button class="btn btn-secondary" style="font-size: 12px; padding: 10px 16px;" onclick="window.puzzleManager.switchActivityTab('decay')">
+                  📉 REVIEW VALUE DECAY CALCULATOR
+                </button>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- TAB 2: VALUE DECAY CALCULATOR -->
+          <div id="activity-tab-decay-panel" style="display: none;">
+            <div class="decay-calculator-box">
+              <h3 style="font-family: 'Cinzel', Georgia, serif; color: #ffd700; margin: 0 0 8px 0; font-size: 16px;">
+                💎 THE VALUE DECAY CALCULATOR
+              </h3>
+              <p style="font-size: 12.5px; color: #dcd0c0; line-height: 1.5; margin: 0 0 14px 0;">
+                Inspect a luxury possession from the prince's collection. How much did owning this luxury item truly cost over 1 year?
+              </p>
+
+              <div class="decay-formula-grid">
+                <div class="decay-step-card">
+                  <span style="font-size: 11px; color: #a4b0be;">Purchase Price</span>
+                  <div class="decay-step-val" style="color: #ffffff;">₹20,000</div>
+                </div>
+                <div class="decay-step-card">
+                  <span style="font-size: 11px; color: #ff6b6b;">− Resale (1 Yr)</span>
+                  <div class="decay-step-val" style="color: #ff6b6b;">− ₹12,000</div>
+                </div>
+                <div class="decay-step-card">
+                  <span style="font-size: 11px; color: #ffa502;">+ Maintenance</span>
+                  <div class="decay-step-val" style="color: #ffa502;">+ ₹1,000</div>
+                </div>
+                <div class="decay-step-card" style="border-color: #ffd700;">
+                  <span style="font-size: 11px; color: #ffd700;">= Real 1-Yr Cost</span>
+                  <div id="decay-calc-result-display" class="decay-step-val" style="color: #ffd700;">₹9,000</div>
+                </div>
+              </div>
+
+              <!-- Calculation Check -->
+              <div style="background: rgba(255, 215, 0, 0.08); border: 1px dashed rgba(255, 215, 0, 0.35); border-radius: 8px; padding: 14px; margin-top: 14px;">
+                <div style="font-size: 12px; font-weight: 700; color: #ffd700; margin-bottom: 6px;">
+                  CALCULATION VERIFICATION:
+                </div>
+                <p style="font-size: 12.5px; color: #f1f2f6; margin: 0 0 10px 0;">
+                  ₹20,000 (Purchase) − ₹12,000 (Resale) + ₹1,000 (Maintenance) = <strong>₹9,000 Real One-Year Cost</strong>
+                </p>
+                <button id="btn-verify-decay-calc" class="btn btn-gold" style="padding: 7px 18px; font-size: 12px;" onclick="window.puzzleManager.verifyDecayCalculation()">
+                  ✓ CONFIRM CALCULATION & REVEAL KEY
+                </button>
+              </div>
+
+              <!-- Comparative Reflection -->
+              <div class="decay-comparison-card">
+                <strong style="color: #2ecc71; font-size: 12.5px;">💡 CRITICAL FINANCIAL TAKEAWAY:</strong>
+                <p style="font-size: 12px; color: #e8f8f5; margin: 6px 0 0 0; line-height: 1.5;">
+                  ₹9,000 evaporated in depreciation and upkeep on a single luxury item. That same ₹9,000 could have established a 3-month emergency safety buffer or seeded a growing business venture!
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Revealed Cabinet Key Box (Opens once both parts completed) -->
+          <div id="cabinet-key-reveal-section" class="cabinet-key-reveal-section">
+            <div style="font-family: 'Cinzel', Georgia, serif; font-size: 14px; color: #ffd700; font-weight: 800; letter-spacing: 1px;">
+              ⚜ THE FOUR SYMBOLS HAVE ALIGNED ⚜
+            </div>
+            <div class="symbols-align-row">
+              <div class="symbol-token" title="1. Broken Essential → Spend (Repair)">⚜</div>
+              <div class="symbol-token" title="2. Luxury Trip → Postpone">⚖</div>
+              <div class="symbol-token" title="3. Useful Course → Spend (Skill)">📜</div>
+              <div class="symbol-token" title="4. Risky Investment → Skip">🛡</div>
+            </div>
+            <p style="font-size: 13px; color: #ffffff; margin: 8px 0;">
+              A secret compartment under the prince's record console has clicked open, revealing the <strong>Hidden Cabinet Key</strong>!
+            </p>
+            <button id="btn-claim-cabinet-key" class="btn btn-gold" style="font-size: 14px; font-weight: 900; padding: 12px 28px; background: linear-gradient(180deg, #d4ac0d 0%, #9a7d0a 100%); margin-top: 10px;" onclick="window.app.claimHiddenCabinetKey()">
+              🔑 CLAIM THE HIDDEN CABINET KEY (+200 XP)
+            </button>
+          </div>
+        </div> <!-- End empire-unlocked-activity-container -->
+
+      </div>
+    </div>
+
+    <!-- ==========================================
+         MUSEUM PUZZLE 1: ELECTRIC CIRCUIT BOARD MODAL (Wall 1)
+         ========================================== -->
+    <div id="electric-circuit-modal" class="modal-backdrop" onclick="if(event.target === this) window.app.closeModal('electric-circuit-modal')">
+      <div class="modal-card electric-circuit-card">
+        <button class="modal-close-btn" onclick="window.app.closeModal('electric-circuit-modal')">✕</button>
+
+        <div class="modal-header">
+          <span class="modal-subtitle">WALL 1 • KIOSK STAND CONSOLE</span>
+          <h2 class="modal-title">⚡ ELECTRIC CIRCUIT BOARD</h2>
+          <p id="circuit-instruction-text" style="font-size: 12.5px; color: #ffd700; margin: 4px 0 0 0;">
+            Click a wire terminal on the left, then click the matching colored socket on the right.
+          </p>
+        </div>
+
+        <div id="circuit-board-container" class="circuit-board-chassis">
+          <!-- SVG Connecting Wire Traces -->
+          <svg id="circuit-wire-svg" class="circuit-canvas-svg">
+            <!-- Dynamically populated wire lines -->
+          </svg>
+
+          <!-- Left Power Terminals -->
+          <div class="circuit-column left-col">
+            <div class="circuit-node-item" data-wire="red" data-color="#ff4757" onclick="window.puzzleManager.selectWire('red')">
+              <div class="node-terminal-peg" style="color: #ff4757; background: #ff4757;"></div>
+              <span class="node-name-text">🔴 Capital</span>
+            </div>
+            <div class="circuit-node-item" data-wire="blue" data-color="#1e90ff" onclick="window.puzzleManager.selectWire('blue')">
+              <div class="node-terminal-peg" style="color: #1e90ff; background: #1e90ff;"></div>
+              <span class="node-name-text">🔵 Reserves</span>
+            </div>
+            <div class="circuit-node-item" data-wire="gold" data-color="#ffd700" onclick="window.puzzleManager.selectWire('gold')">
+              <div class="node-terminal-peg" style="color: #ffd700; background: #ffd700;"></div>
+              <span class="node-name-text">🟡 Investment</span>
+            </div>
+            <div class="circuit-node-item" data-wire="green" data-color="#2ed573" onclick="window.puzzleManager.selectWire('green')">
+              <div class="node-terminal-peg" style="color: #2ed573; background: #2ed573;"></div>
+              <span class="node-name-text">🟢 Growth</span>
+            </div>
+          </div>
+
+          <!-- Right Sockets (Shuffled order for puzzle interaction) -->
+          <div class="circuit-column right-col">
+            <div class="circuit-node-item" data-socket="blue" data-color="#1e90ff" onclick="window.puzzleManager.connectSocket('blue')">
+              <div class="node-terminal-peg" style="color: #1e90ff; background: rgba(30, 144, 255, 0.25);"></div>
+              <span class="node-name-text">Reserves Socket 🔵</span>
+            </div>
+            <div class="circuit-node-item" data-socket="red" data-color="#ff4757" onclick="window.puzzleManager.connectSocket('red')">
+              <div class="node-terminal-peg" style="color: #ff4757; background: rgba(255, 71, 87, 0.25);"></div>
+              <span class="node-name-text">Capital Socket 🔴</span>
+            </div>
+            <div class="circuit-node-item" data-socket="green" data-color="#2ed573" onclick="window.puzzleManager.connectSocket('green')">
+              <div class="node-terminal-peg" style="color: #2ed573; background: rgba(46, 213, 115, 0.25);"></div>
+              <span class="node-name-text">Growth Socket 🟢</span>
+            </div>
+            <div class="circuit-node-item" data-socket="gold" data-color="#ffd700" onclick="window.puzzleManager.connectSocket('gold')">
+              <div class="node-terminal-peg" style="color: #ffd700; background: rgba(255, 215, 0, 0.25);"></div>
+              <span class="node-name-text">Investment Socket 🟡</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Status & Actions -->
+        <div id="circuit-status-banner" class="circuit-status-banner">
+          STATUS: SECURITY SENSOR ACTIVE (0/4 CIRCUITS ALIGNED)
+        </div>
+
+        <div style="margin-top: 16px; display: flex; gap: 10px;">
+          <button class="btn btn-secondary" style="flex: 1;" onclick="window.puzzleManager.resetCircuit()">
+            ↺ RESET WIRES
+          </button>
+          <button id="btn-circuit-return-prince" class="btn btn-gold" style="flex: 2; display: none;" onclick="window.app.closeModal('electric-circuit-modal'); window.app.openRoyalPrince();">
+            👑 RETURN TO ROYAL PRINCE →
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ==========================================
+         WALL 2: THE MERCHANT'S ANTIQUE CASH BOX MODAL
+         ========================================== -->
+    <div id="cash-box-modal" class="modal-backdrop" onclick="if(event.target === this) window.app.closeModal('cash-box-modal')">
+      
+      <!-- VIEW A: LOCKED CASH BOX (Waiting for Golden Bar) -->
+      <div id="cash-box-locked-view" class="modal-card cash-box-card">
+        <button class="modal-close-btn" onclick="window.app.closeModal('cash-box-modal')">✕</button>
+
+        <div class="modal-header">
+          <span class="modal-subtitle">WALL 2 • THE MERCHANT'S STUDY</span>
+          <h2 class="modal-title">📦 THE MERCHANT'S ANTIQUE CASH BOX</h2>
+        </div>
+
+        <div class="cash-box-icon-box">
+          <span>📦</span>
+        </div>
+
+        <p style="font-size: 14px; color: var(--text-main); line-height: 1.6; margin: 12px 0;">
+          Resting in the center of the display table is an ornate bronze-bound chest. A deep rectangular slot on the lid requires a solid golden bar to depress the heavy internal tumblers.
+        </p>
+
+<!-- Royal Crest Lock: 3 Math Budgeting Equations -->
+        <div style="background: rgba(0, 0, 0, 0.65); border: 1.5px solid #ffd700; border-radius: 10px; padding: 16px; margin: 14px 0; text-align: left; box-shadow: 0 4px 20px rgba(0,0,0,0.8);">
+          <div style="font-family: 'Cinzel', serif; font-size: 14px; font-weight: 800; color: #ffd700; margin-bottom: 6px; text-align: center; letter-spacing: 0.5px;">
+            👑 ROYAL CREST LOCK — 3 BUDGETING EQUATIONS
+          </div>
+          <p style="font-size: 12.5px; color: #dcd0c0; margin: 0 0 14px 0; text-align: center; line-height: 1.45;">
+            The heavy bronze cash box lid is secured by a combination lock. Solve the merchant's 3 basic daily budgeting equations below to release the internal tumblers:
+          </p>
+
+          <div style="display: flex; flex-direction: column; gap: 10px;">
+            <!-- Equation 1 -->
+            <div style="display: flex; justify-content: space-between; align-items: center; background: rgba(255, 215, 0, 0.08); padding: 10px 14px; border-radius: 6px; border: 1px solid rgba(255, 215, 0, 0.25);">
+              <span style="font-size: 13px; color: #f1f2f6;">
+                <strong>1. Daily Surplus:</strong> Daily Income (₹4,500) − Essentials (₹2,100) =
+              </span>
+              <div style="display: flex; align-items: center; gap: 4px;">
+                <span style="color: #ffd700; font-weight: bold; font-size: 14px;">₹</span>
+                <input id="cashbox-math-1" type="number" class="envelope-input" style="width: 100px; text-align: center; font-weight: 700; font-size: 14px;" placeholder="Amount" />
+              </div>
+            </div>
+
+            <!-- Equation 2 -->
+            <div style="display: flex; justify-content: space-between; align-items: center; background: rgba(255, 215, 0, 0.08); padding: 10px 14px; border-radius: 6px; border: 1px solid rgba(255, 215, 0, 0.25);">
+              <span style="font-size: 13px; color: #f1f2f6;">
+                <strong>2. Savings Target:</strong> Initial Fund (₹4,200) + New Deposit (₹2,300) =
+              </span>
+              <div style="display: flex; align-items: center; gap: 4px;">
+                <span style="color: #ffd700; font-weight: bold; font-size: 14px;">₹</span>
+                <input id="cashbox-math-2" type="number" class="envelope-input" style="width: 100px; text-align: center; font-weight: 700; font-size: 14px;" placeholder="Amount" />
+              </div>
+            </div>
+
+            <!-- Equation 3 -->
+            <div style="display: flex; justify-content: space-between; align-items: center; background: rgba(255, 215, 0, 0.08); padding: 10px 14px; border-radius: 6px; border: 1px solid rgba(255, 215, 0, 0.25);">
+              <span style="font-size: 13px; color: #f1f2f6;">
+                <strong>3. Emergency Gap:</strong> Target Buffer (₹10,000) − Current Cash (₹6,500) =
+              </span>
+              <div style="display: flex; align-items: center; gap: 4px;">
+                <span style="color: #ffd700; font-weight: bold; font-size: 14px;">₹</span>
+                <input id="cashbox-math-3" type="number" class="envelope-input" style="width: 100px; text-align: center; font-weight: 700; font-size: 14px;" placeholder="Amount" />
+              </div>
+            </div>
+          </div>
+
+          <div style="display: flex; gap: 10px; margin-top: 16px;">
+            <button class="btn btn-secondary" style="font-size: 11px; padding: 8px 12px; color: #ffd700; border-color: #ffd700;" onclick="window.puzzleManager.autoFillCashBoxMath()">
+              ⚡ AUTO-FILL (TEST)
+            </button>
+            <button class="btn btn-gold" style="flex: 1; font-weight: 800; padding: 11px; background: linear-gradient(180deg, #d4ac0d 0%, #9a7d0a 100%); letter-spacing: 0.5px;" onclick="window.puzzleManager.submitCashBoxMath()">
+              🔓 SOLVE EQUATIONS & UNLOCK CASH BOX (+200 XP)
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- VIEW B: UNLOCKED CASH BOX (Inner Archive, Habits Check, Video 3.1 & Ledger) -->
+      <div id="cash-box-unlocked-view" class="modal-card cash-box-unlocked-card" style="display: none;">
+        <button class="modal-close-btn" onclick="window.app.closeModal('cash-box-modal')">✕</button>
+
+        <div class="modal-header">
+          <span class="modal-subtitle">WALL 2 • THE MERCHANT'S INNER ARCHIVE</span>
+          <h2 class="modal-title">📦 THE MERCHANT'S MISSING COINS & FORTUNE</h2>
+        </div>
+
+        <!-- Multi-Step Activity Navigation Tabs (Cash Box Phase) -->
+        <div class="merchant-tab-nav" style="display: flex; gap: 8px; margin-bottom: 14px;">
+          <button id="tab-btn-m-habits" class="merchant-tab-btn active" style="flex: 1;" onclick="window.puzzleManager.switchMerchantTab('habits')">
+            📋 1. MONEY HABITS CHECK
+          </button>
+          <button id="tab-btn-m-video" class="merchant-tab-btn" style="flex: 1;" onclick="window.puzzleManager.switchMerchantTab('video')">
+            🎬 2. VIDEO 3.1: HOW AWARE ARE YOU?
+          </button>
+        </div>
+
+        <!-- TAB 1: 10 YES/NO MONEY HABITS SELF-CHECK -->
+        <div id="merchant-tab-habits-panel" style="display: block;">
+          <p style="font-size: 13px; color: #ffd700; margin-bottom: 12px; text-align: left;">
+            Before reconstructing the merchant's lost fortune, complete this 10-question self-reflection check to discover your personal financial awareness score.
+          </p>
+
+          <div class="self-check-grid" id="self-check-questions-container">
+            <!-- Dynamically populated or rendered 10 questions -->
+          </div>
+
+          <!-- Score & Feedback Banner -->
+          <div id="self-check-score-box" class="self-check-score-box" style="display: none;">
+            <div id="self-check-score-badge" class="self-check-score-badge">
+              YOUR MONEY-AWARENESS SCORE: 0 / 10
+            </div>
+            <p id="self-check-feedback-text" style="font-size: 13px; color: #f1f2f6; margin: 4px 0 12px 0; line-height: 1.5;">
+              Answer all 10 questions to receive your financial habits assessment.
+            </p>
+            <button id="btn-habits-proceed-video" class="btn btn-gold" style="font-weight: 800; font-size: 13px; padding: 10px 24px;" onclick="window.puzzleManager.switchMerchantTab('video'); window.puzzleManager.initVideo31UI();">
+              🎬 PROCEED TO VIDEO 3.1: HOW AWARE ARE YOU ABOUT MONEY? →
+            </button>
+          </div>
+        </div>
+
+        <!-- TAB 2: VIDEO 3.1 (How Aware Are You About Money?) -->
+        <div id="merchant-tab-video-panel" style="display: none;">
+          <div class="modal-header" style="margin-bottom: 12px;">
+            <span class="modal-subtitle">MERCHANT'S ARCHIVE — VIDEO 3.1</span>
+            <h2 class="modal-title" style="font-size: 18px;">HOW AWARE ARE YOU ABOUT MONEY?</h2>
+            <div style="margin-top: 4px; font-size: 12.5px; color: #ffd700;">
+              <span id="video31-score-disp">Your Money-Awareness Score: 0 / 10</span> • Mindful Cashflow Tracking
+            </div>
+          </div>
+
+          <!-- Simulated Interactive Video Screen -->
+          <div class="royal-video-viewport" style="height: 240px;">
+            <div id="video31-scene-content" class="video-scene-canvas" style="background: radial-gradient(circle at center, #1b2838 0%, #0d131a 100%);">
+              <div id="video31-stage-badge" class="video-stage-badge" style="color: #00e5ff; border-color: #00e5ff; background: rgba(0, 229, 255, 0.15);">
+                STAGE 1: THE INVISIBLE LEAKS
+              </div>
+              <div id="video31-visual-icon" class="video-scene-icon" style="color: #ffd700;">
+                🪙
+              </div>
+              <div id="video31-captions-box" class="video-captions-box" style="display: flex;">
+                <span id="video31-caption-text" class="video-caption-text">
+                  "Tracking your money is like checking your compass before a voyage. Unseen daily leaks sink the greatest fortunes."
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Video Scrubbing Bar & Controls -->
+          <div class="video-controls-bar">
+            <div class="video-progress-track" onclick="window.puzzleManager.seekVideo31Progress(event)">
+              <div id="video31-progress-fill" class="video-progress-fill" style="width: 0%; background: linear-gradient(90deg, #ffd700 0%, #00e5ff 100%);"></div>
+            </div>
+
+            <div class="video-buttons-row">
+              <div style="display: flex; gap: 8px; align-items: center;">
+                <button id="btn-video31-play-pause" class="btn btn-secondary video-control-btn" onclick="window.puzzleManager.toggleVideo31Playback()">
+                  ▶ PLAY
+                </button>
+                <button id="btn-video31-captions" class="btn btn-secondary video-control-btn" onclick="window.puzzleManager.toggleVideo31Captions()">
+                  💬 CAPTIONS: ON
+                </button>
+                <button id="btn-video31-replay" class="btn btn-secondary video-control-btn" onclick="window.puzzleManager.replayVideo31()">
+                  ↺ REPLAY
+                </button>
+              </div>
+
+              <div style="display: flex; gap: 10px; align-items: center;">
+                <span id="video31-time-display" class="video-time-disp">00:00 / 00:10</span>
+                <button id="btn-video31-skip" class="btn btn-secondary video-control-btn" onclick="window.puzzleManager.skipVideo31Playback()">
+                  SKIP ⏭
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Completion Button to proceed to Ledger -->
+          <div style="margin-top: 14px;">
+            <button id="btn-video31-continue-ledger" class="btn btn-gold" style="width: 100%; font-weight: 800; font-size: 13.5px; padding: 12px; display: none; background: linear-gradient(180deg, #27ae60 0%, #1e8449 100%);" onclick="window.puzzleManager.finishCashBoxVideo()">
+              ✓ COMPLETE ARCHIVE: INSPECT MERCHANT'S DIARY ON NOTICE BOARD →
+            </button>
+          </div>
+        </div>
+
+        <!-- TAB 3: THE MERCHANT'S CLUES (DIARY, RECEIPTS & MISSING PAGE) -->
+        <div id="merchant-tab-clues-panel" style="display: none;">
+          <p style="font-size: 13px; color: #ffd700; margin-bottom: 12px; text-align: left;">
+            Examine the merchant's handwritten diary entries and the three official receipts to discover what expense was left unrecorded.
+          </p>
+
+          <div class="clues-split-layout">
+            <!-- Diary Parchment -->
+            <div class="parchment-sheet">
+              <div class="parchment-title">📖 THE MERCHANT'S DIARY (MARCH 1748)</div>
+              <p style="font-size: 12px; line-height: 1.6; margin: 0 0 10px 0;">
+                <em>"14th March — Sold fine embroidered silk at the Grand Bazaar for ₹5,000 in coins. Added to my starting vault balance of ₹8,000, bringing total capital to ₹13,000."</em>
+              </p>
+              <p style="font-size: 12px; line-height: 1.6; margin: 0 0 10px 0;">
+                <em>"18th March — Paid raw silk weaver ₹1,200. Obtained Receipt #104."</em><br>
+                <em>"22nd March — Paid spice caravan toll ₹850. Obtained Receipt #105."</em><br>
+                <em>"25th March — Purchased workshop repair chisels ₹450. Obtained Receipt #106."</em>
+              </p>
+              <div class="missing-note-callout">
+                <strong>⚠️ HASTILY SCRAWLED MARGIN NOTE:</strong><br>
+                <em>"28th March — Handed ₹500 in solid gold coins to the secret courier for urgent express delivery to Alexandria. In my haste, I forgot to ask for a receipt!"</em>
+              </div>
+            </div>
+
+            <!-- Receipts & Loose Note Column -->
+            <div class="parchment-sheet">
+              <div class="parchment-title">🧾 OFFICIAL PURCHASE RECEIPTS</div>
+              
+              <div class="receipt-item-card">
+                <div>
+                  <strong>Receipt #104</strong> • Raw Silk Materials<br>
+                  <span style="font-size: 11px; color: #555;">Vendor: Imperial Weavers Guild</span>
+                </div>
+                <div class="receipt-price-tag">−₹1,200</div>
+              </div>
+
+              <div class="receipt-item-card">
+                <div>
+                  <strong>Receipt #105</strong> • Spice Caravan Toll<br>
+                  <span style="font-size: 11px; color: #555;">Passage: Silk Road Gateway</span>
+                </div>
+                <div class="receipt-price-tag">−₹850</div>
+              </div>
+
+              <div class="receipt-item-card">
+                <div>
+                  <strong>Receipt #106</strong> • Workshop Repair Tools<br>
+                  <span style="font-size: 11px; color: #555;">Supplier: Artisan Toolwrights</span>
+                </div>
+                <div class="receipt-price-tag">−₹450</div>
+              </div>
+
+              <div class="missing-note-callout" style="background: #fff0f0; border-color: #d9534f; color: #900;">
+                <strong>🔍 LOOSE LEDGER AUDIT SLIP:</strong><br>
+                The accountant noted: <em>"The cash box balance does not tally with the three recorded receipts! An unrecorded expense must be located from the diary to balance the accounts."</em>
+              </div>
+            </div>
+          </div>
+
+          <div style="text-align: right; margin-top: 10px;">
+            <button class="btn btn-gold" style="font-weight: 800; font-size: 13px; padding: 10px 22px;" onclick="window.puzzleManager.switchMerchantTab('ledger')">
+              🧮 OPEN ACCOUNT LEDGER TO SOLVE BALANCE →
+            </button>
+          </div>
+        </div>
+
+        <!-- TAB 4: RECONSTRUCT THE FORTUNE (ACCOUNT LEDGER PUZZLE) -->
+        <div id="merchant-tab-ledger-panel" style="display: none;">
+          <p style="font-size: 13px; color: #ffd700; margin-bottom: 12px; text-align: left;">
+            Enter the missing unrecorded expense identified from the diary, then calculate and enter the correct remaining balance to release the lock!
+          </p>
+
+          <div class="ledger-container">
+            <div style="font-family: 'Cinzel', Georgia, serif; font-size: 15px; font-weight: 800; color: #632b0e; border-bottom: 2px solid #632b0e; padding-bottom: 6px; margin-bottom: 10px;">
+              THE MERCHANT'S ACCOUNT LEDGER (MARCH 1748)
+            </div>
+
+            <table class="ledger-table">
+              <thead>
+                <tr>
+                  <th>TRANSACTION DESCRIPTION</th>
+                  <th style="text-align: right;">AMOUNT (₹)</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Starting Vault Balance</td>
+                  <td style="text-align: right; font-family: 'JetBrains Mono', monospace; font-weight: 700; color: #1b5e20;">₹8,000</td>
+                </tr>
+                <tr>
+                  <td>Income: Embroidered Silk Bazaar Sales</td>
+                  <td style="text-align: right; font-family: 'JetBrains Mono', monospace; font-weight: 700; color: #1b5e20;">+₹5,000</td>
+                </tr>
+                <tr style="background: rgba(0,0,0,0.03); font-weight: bold;">
+                  <td>Total Available Capital</td>
+                  <td style="text-align: right; font-family: 'JetBrains Mono', monospace;">₹13,000</td>
+                </tr>
+                <tr>
+                  <td>Recorded Expense: Purchase Receipt 1 (Raw Silk)</td>
+                  <td style="text-align: right; font-family: 'JetBrains Mono', monospace; color: #b71c1c;">−₹1,200</td>
+                </tr>
+                <tr>
+                  <td>Recorded Expense: Purchase Receipt 2 (Caravan Toll)</td>
+                  <td style="text-align: right; font-family: 'JetBrains Mono', monospace; color: #b71c1c;">−₹850</td>
+                </tr>
+                <tr>
+                  <td>Recorded Expense: Purchase Receipt 3 (Workshop Tools)</td>
+                  <td style="text-align: right; font-family: 'JetBrains Mono', monospace; color: #b71c1c;">−₹450</td>
+                </tr>
+                <tr style="background: #fff8e1;">
+                  <td style="font-weight: 700; color: #b71c1c;">
+                    ⚠️ Unrecorded Expense found in Diary (Courier Fee):
+                  </td>
+                  <td style="text-align: right;">
+                    <span style="font-family: 'JetBrains Mono', monospace; color: #b71c1c; font-weight: bold;">−₹</span>
+                    <input id="ledger-input-missing" type="number" class="ledger-input" placeholder="e.g. 500" value="" />
+                  </td>
+                </tr>
+                <tr class="total-row">
+                  <td style="font-size: 14px;">
+                    🔒 CORRECT REMAINING CASH-BOX BALANCE:
+                  </td>
+                  <td style="text-align: right;">
+                    <span style="font-family: 'JetBrains Mono', monospace; font-weight: 800; font-size: 15px;">₹</span>
+                    <input id="ledger-input-balance" type="number" class="ledger-input" style="font-size: 15px; width: 140px;" placeholder="e.g. 10000" value="" />
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+
+            <div style="display: flex; gap: 10px; margin-top: 14px;">
+              <button class="btn btn-secondary" style="flex: 1; font-weight: 700; font-size: 12.5px;" onclick="window.puzzleManager.calculateLedgerHelper()">
+                🧮 CALCULATE PREVIEW
+              </button>
+              <button id="btn-submit-ledger" class="btn btn-gold" style="flex: 2; font-weight: 800; font-size: 13.5px; background: linear-gradient(180deg, #d4ac0d 0%, #9a7d0a 100%);" onclick="window.puzzleManager.submitLedgerSolution()">
+                🔓 SUBMIT & UNLOCK VAULT COMPARTMENT
+              </button>
+            </div>
+          </div>
+
+          <!-- Solved Reward Reveal Panel -->
+          <div id="ledger-reward-container" style="display: none;">
+            <div class="year-clue-plaque">
+              <div style="font-family: 'Cinzel', Georgia, serif; font-size: 13px; font-weight: 800; letter-spacing: 2px;">
+                ✨ HIDDEN EXHIBIT PLAQUE REVEALED ✨
+              </div>
+              <div class="year-number">YEAR 1748</div>
+              <p style="font-size: 12px; margin: 4px 0 0 0; color: #2e1a0b;">
+                Engraved deep on the inner lock plate: <em>"Established MDCCXLVIII (1748). Keep this year safe for future seals."</em>
+              </p>
+            </div>
+
+            <div style="background: rgba(0, 229, 255, 0.08); border: 1.5px solid #00e5ff; border-radius: 10px; padding: 14px; margin-top: 12px;">
+              <div style="font-family: 'Cinzel', Georgia, serif; font-size: 14px; font-weight: 800; color: #ffd700;">
+                🪞 4 SMALL OPTICAL MIRRORS DISCOVERED!
+              </div>
+              <p style="font-size: 12.5px; color: #dcd0c0; margin: 6px 0 10px 0;">
+                Inside the velvet-lined secret tray sit four flawless precision optical mirrors. You will need these to redirect the laser grid guarding the final treasure on Wall 4!
+              </p>
+              <div class="mirrors-preview-row">
+                <div class="optical-mirror-token">🪞</div>
+                <div class="optical-mirror-token">🪞</div>
+                <div class="optical-mirror-token">🪞</div>
+                <div class="optical-mirror-token">🪞</div>
+              </div>
+
+              <button id="btn-claim-mirrors" class="btn btn-gold" style="width: 100%; font-weight: 900; font-size: 14px; padding: 12px; background: linear-gradient(180deg, #d4ac0d 0%, #9a7d0a 100%); margin-top: 8px;" onclick="window.app.claimMerchantMirrors()">
+                🪞 COLLECT 4 OPTICAL MIRRORS & PROCEED (+250 XP) 🪞
+              </button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ==========================================
+         WALL 2: THE MERCHANT'S RECORDS NOTICE BOARD MODAL
+         ========================================== -->
+    <div id="merchant-records-modal" class="modal-backdrop" onclick="if(event.target === this) window.app.closeModal('merchant-records-modal')">
+      <div class="modal-card" style="max-width: 820px; width: 95%; max-height: 90vh; overflow-y: auto; background: linear-gradient(145deg, rgba(28, 16, 10, 0.99) 0%, rgba(12, 6, 3, 0.99) 100%); border: 2px solid #ffd700; border-radius: 14px; padding: 24px;">
+        <button class="modal-close-btn" onclick="window.app.closeModal('merchant-records-modal')">✕</button>
+
+        <div class="modal-header">
+          <span class="modal-subtitle">WALL 2 • GALLERY NOTICE PINBOARD</span>
+          <h2 class="modal-title">📌 THE MERCHANT'S DIARY & RECEIPTS</h2>
+        </div>
+
+        <div id="records-locked-notice" style="display: none; padding: 20px; background: rgba(0,0,0,0.6); border: 1px dashed rgba(255,215,0,0.3); border-radius: 8px; margin: 16px 0;">
+          <p style="font-size: 13.5px; color: #ffd700; margin-bottom: 10px;">
+            🔒 The documents pinned to this board are protected behind reinforced museum security glass.
+          </p>
+          <p style="font-size: 12.5px; color: #d0c8b8; margin-bottom: 14px;">
+            Solve the Antique Cash Box math equations and complete Video 3.1 to retract the glass barrier and inspect the Merchant's Diary and Receipts.
+          </p>
+          <button class="btn btn-gold" onclick="window.app.closeModal('merchant-records-modal'); window.app.openCashBox();">
+            📦 INSPECT ANTIQUE CASH BOX →
+          </button>
+        </div>
+
+        <div id="records-unlocked-content" style="display: block;">
+          <!-- Clues view -->
+          <div class="clues-split-layout">
+            <!-- Diary -->
+            <div class="parchment-sheet">
+              <div class="parchment-title">📖 THE MERCHANT'S DIARY (MARCH 1748)</div>
+              <p style="font-size: 12px; line-height: 1.6; margin: 0 0 10px 0;">
+                <em>"14th March — Sold fine embroidered silk at the Grand Bazaar for ₹5,000 in coins. Added to my starting vault balance of ₹8,000, bringing total capital to ₹13,000."</em>
+              </p>
+              <p style="font-size: 12px; line-height: 1.6; margin: 0 0 10px 0;">
+                <em>"18th March — Paid raw silk weaver ₹1,200. Obtained Receipt #104."</em><br>
+                <em>"22nd March — Paid spice caravan toll ₹850. Obtained Receipt #105."</em><br>
+                <em>"25th March — Purchased workshop repair chisels ₹450. Obtained Receipt #106."</em>
+              </p>
+              <div class="missing-note-callout">
+                <strong>⚠️ HASTILY SCRAWLED MARGIN NOTE:</strong><br>
+                <em>"28th March — Handed ₹500 in solid gold coins to the secret courier for urgent express delivery to Alexandria. In my haste, I forgot to ask for a receipt!"</em>
+              </div>
+            </div>
+
+            <!-- Receipts -->
+            <div class="parchment-sheet">
+              <div class="parchment-title">🧾 OFFICIAL PURCHASE RECEIPTS</div>
+              
+              <div class="receipt-item-card">
+                <div>
+                  <strong>Receipt #104</strong> • Raw Silk Materials<br>
+                  <span style="font-size: 11px; color: #555;">Vendor: Imperial Weavers Guild</span>
+                </div>
+                <div class="receipt-price-tag">−₹1,200</div>
+              </div>
+
+              <div class="receipt-item-card">
+                <div>
+                  <strong>Receipt #105</strong> • Spice Caravan Toll<br>
+                  <span style="font-size: 11px; color: #555;">Passage: Silk Road Gateway</span>
+                </div>
+                <div class="receipt-price-tag">−₹850</div>
+              </div>
+
+              <div class="receipt-item-card">
+                <div>
+                  <strong>Receipt #106</strong> • Workshop Repair Tools<br>
+                  <span style="font-size: 11px; color: #555;">Supplier: Artisan Toolwrights</span>
+                </div>
+                <div class="receipt-price-tag">−₹450</div>
+              </div>
+
+              <div class="missing-note-callout" style="background: #fff0f0; border-color: #d9534f; color: #900;">
+                <strong>🔍 LOOSE LEDGER AUDIT SLIP:</strong><br>
+                <em>"An unrecorded expense of ₹500 was found in the merchant's diary. It must be entered into the Account Ledger on the right desk to calculate the true balance!"</em>
+              </div>
+            </div>
+          </div>
+
+          <div style="margin-top: 14px; display: flex; gap: 10px;">
+            <button class="btn btn-gold" style="width: 100%; font-weight: 800; padding: 12px; background: linear-gradient(180deg, #27ae60 0%, #1e8449 100%);" onclick="window.app.inspectMerchantDiaryDone()">
+              ✓ MISSING ₹500 IDENTIFIED: UNLOCK ACCOUNT LEDGER (DESK) →
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ==========================================
+         WALL 2: THE ACCOUNT LEDGER MODAL (Right Desk)
+         ========================================== -->
+    <div id="account-ledger-modal" class="modal-backdrop" onclick="if(event.target === this) window.app.closeModal('account-ledger-modal')">
+      <div class="modal-card" style="max-width: 860px; width: 95%; max-height: 90vh; overflow-y: auto; background: linear-gradient(145deg, rgba(28, 16, 10, 0.99) 0%, rgba(12, 6, 3, 0.99) 100%); border: 2px solid #ffd700; border-radius: 14px; padding: 24px;">
+        <button class="modal-close-btn" onclick="window.app.closeModal('account-ledger-modal')">✕</button>
+
+        <div class="modal-header">
+          <span class="modal-subtitle">WALL 2 • LECTERN ACCOUNTING DESK</span>
+          <h2 class="modal-title">📜 THE MERCHANT'S ACCOUNT LEDGER</h2>
+        </div>
+
+        <div id="ledger-modal-locked-notice" style="display: none; padding: 20px; background: rgba(0,0,0,0.6); border: 1px dashed rgba(255,215,0,0.3); border-radius: 8px; margin: 16px 0;">
+          <p style="font-size: 13.5px; color: #ffd700; margin-bottom: 10px;">
+            🔒 The Account Ledger is clasped shut with an antique brass seal.
+          </p>
+          <p style="font-size: 12.5px; color: #d0c8b8; margin-bottom: 14px;">
+            Inspect the Merchant's Diary & Receipts on the Notice Board first to identify the unrecorded expense!
+          </p>
+          <button class="btn btn-gold" onclick="window.app.closeModal('account-ledger-modal'); window.app.openCashBox();">
+            📦 GO TO CASH BOX →
+          </button>
+        </div>
+
+        <div id="ledger-modal-unlocked-content" style="display: block;">
+          <!-- Re-use the clean ledger interface -->
+          <div class="ledger-container">
+            <div style="font-family: 'Cinzel', Georgia, serif; font-size: 15px; font-weight: 800; color: #632b0e; border-bottom: 2px solid #632b0e; padding-bottom: 6px; margin-bottom: 10px;">
+              THE MERCHANT'S ACCOUNT LEDGER (MARCH 1748)
+            </div>
+
+            <table class="ledger-table">
+              <thead>
+                <tr>
+                  <th>TRANSACTION DESCRIPTION</th>
+                  <th style="text-align: right;">AMOUNT (₹)</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Starting Vault Balance</td>
+                  <td style="text-align: right; font-family: 'JetBrains Mono', monospace; font-weight: 700; color: #1b5e20;">₹8,000</td>
+                </tr>
+                <tr>
+                  <td>Income: Embroidered Silk Bazaar Sales</td>
+                  <td style="text-align: right; font-family: 'JetBrains Mono', monospace; font-weight: 700; color: #1b5e20;">+₹5,000</td>
+                </tr>
+                <tr style="background: rgba(0,0,0,0.03); font-weight: bold;">
+                  <td>Total Available Capital</td>
+                  <td style="text-align: right; font-family: 'JetBrains Mono', monospace;">₹13,000</td>
+                </tr>
+                <tr>
+                  <td>Recorded Expense: Purchase Receipt 1 (Raw Silk)</td>
+                  <td style="text-align: right; font-family: 'JetBrains Mono', monospace; color: #b71c1c;">−₹1,200</td>
+                </tr>
+                <tr>
+                  <td>Recorded Expense: Purchase Receipt 2 (Caravan Toll)</td>
+                  <td style="text-align: right; font-family: 'JetBrains Mono', monospace; color: #b71c1c;">−₹850</td>
+                </tr>
+                <tr>
+                  <td>Recorded Expense: Purchase Receipt 3 (Workshop Tools)</td>
+                  <td style="text-align: right; font-family: 'JetBrains Mono', monospace; color: #b71c1c;">−₹450</td>
+                </tr>
+                <tr style="background: #fff8e1;">
+                  <td style="font-weight: 700; color: #b71c1c;">
+                    ⚠️ Unrecorded Expense found in Diary (Courier Fee):
+                  </td>
+                  <td style="text-align: right;">
+                    <span style="font-family: 'JetBrains Mono', monospace; color: #b71c1c; font-weight: bold;">−₹</span>
+                    <input id="ledger-modal-input-missing" type="number" class="ledger-input" placeholder="e.g. 500" value="" />
+                  </td>
+                </tr>
+                <tr class="total-row">
+                  <td style="font-size: 14px;">
+                    🔒 CORRECT REMAINING CASH-BOX BALANCE:
+                  </td>
+                  <td style="text-align: right;">
+                    <span style="font-family: 'JetBrains Mono', monospace; font-weight: 800; font-size: 15px;">₹</span>
+                    <input id="ledger-modal-input-balance" type="number" class="ledger-input" style="font-size: 15px; width: 140px;" placeholder="e.g. 10000" value="" />
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+
+            <div style="display: flex; gap: 10px; margin-top: 14px;">
+              <button class="btn btn-secondary" style="flex: 1; font-weight: 700; font-size: 12.5px;" onclick="window.puzzleManager.calculateLedgerHelperModal()">
+                🧮 CALCULATE PREVIEW
+              </button>
+              <button id="btn-modal-submit-ledger" class="btn btn-gold" style="flex: 2; font-weight: 800; font-size: 13.5px; background: linear-gradient(180deg, #d4ac0d 0%, #9a7d0a 100%);" onclick="window.puzzleManager.submitLedgerModalSolution()">
+                🔓 SUBMIT & UNLOCK VAULT COMPARTMENT
+              </button>
+            </div>
+          </div>
+
+          <!-- Solved Reward Reveal Panel in Modal -->
+          <div id="ledger-modal-reward-container" style="display: none;">
+            <div class="year-clue-plaque">
+              <div style="font-family: 'Cinzel', Georgia, serif; font-size: 13px; font-weight: 800; letter-spacing: 2px;">
+                ✨ HIDDEN EXHIBIT PLAQUE REVEALED ✨
+              </div>
+              <div class="year-number">YEAR 1748</div>
+              <p style="font-size: 12px; margin: 4px 0 0 0; color: #2e1a0b;">
+                Engraved deep on the inner lock plate: <em>"Established MDCCXLVIII (1748). Keep this year safe for future seals."</em>
+              </p>
+            </div>
+
+            <div style="background: rgba(0, 229, 255, 0.08); border: 1.5px solid #00e5ff; border-radius: 10px; padding: 14px; margin-top: 12px;">
+              <div style="font-family: 'Cinzel', Georgia, serif; font-size: 14px; font-weight: 800; color: #ffd700;">
+                🪞 4 SMALL OPTICAL MIRRORS DISCOVERED!
+              </div>
+              <p style="font-size: 12.5px; color: #dcd0c0; margin: 6px 0 10px 0;">
+                Inside the velvet-lined secret tray sit four flawless precision optical mirrors. You will need these to redirect the laser grid guarding the final treasure on Wall 4!
+              </p>
+              <div class="mirrors-preview-row">
+                <div class="optical-mirror-token">🪞</div>
+                <div class="optical-mirror-token">🪞</div>
+                <div class="optical-mirror-token">🪞</div>
+                <div class="optical-mirror-token">🪞</div>
+              </div>
+
+              <button class="btn btn-gold" style="width: 100%; font-weight: 900; font-size: 14px; padding: 12px; background: linear-gradient(180deg, #d4ac0d 0%, #9a7d0a 100%); margin-top: 8px;" onclick="window.app.claimMerchantMirrors()">
+                🪞 COLLECT 4 OPTICAL MIRRORS & PROCEED (+250 XP) 🪞
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ==========================================
+         WALL 2: HIDDEN GOLD BAR IN PLANT POT MODAL
+         ========================================== -->
+    <div id="gold-bar-pot-modal" class="modal-backdrop" onclick="if(event.target === this) window.app.closeModal('gold-bar-pot-modal')">
+      <div class="modal-card pot-gold-bar-card">
+        <button class="modal-close-btn" onclick="window.app.closeModal('gold-bar-pot-modal')">✕</button>
+
+        <div class="modal-header">
+          <span class="modal-subtitle">MUSEUM ARTIFACT • HIDDEN DISCOVERY</span>
+          <h2 id="pot-gold-bar-title" class="modal-title">⚜️ SACRED GOLDEN BAR</h2>
+        </div>
+
+        <div class="gold-bar-display-emblem">
+          <span>⚜️</span>
+        </div>
+
+        <p id="pot-gold-bar-desc" style="font-size: 13.5px; color: #f1f2f6; line-height: 1.6; margin: 12px 0;">
+          Hidden carefully in the museum chamber, you uncover a solid bar of gleaming gold engraved with an ancient wealth-balancing glyph.
+        </p>
+
+        <div style="background: rgba(255, 215, 0, 0.08); border: 1px dashed rgba(255, 215, 0, 0.4); border-radius: 8px; padding: 12px; margin-bottom: 16px;">
+          <strong style="color: #ffd700; font-size: 12px; letter-spacing: 1px;">ANCIENT INSCRIPTION:</strong>
+          <p style="font-size: 12px; color: #dcd0c0; margin: 4px 0 0 0;">
+            “Preserve what you nurture. True wealth grows steadily, shielded from impulsive storms.”
+          </p>
+        </div>
+
+        <button id="btn-claim-pot-gold-bar" class="btn btn-gold" style="width: 100%; font-weight: 800; letter-spacing: 1px; background: linear-gradient(180deg, #d4ac0d 0%, #9a7d0a 100%);" onclick="window.app.claimPotGoldBarConfirm()">
+          ⚜ STORE GOLDEN BAR IN SATCHEL (+150 XP) ⚜
+        </button>
+      </div>
+    </div>
+
+    <!-- ==========================================
+         WALL 3: THE ANTIQUE BALANCE SCALE MODAL
+         ========================================== -->
+    <div id="balance-scale-modal" class="modal-backdrop" onclick="if(event.target === this) window.app.closeModal('balance-scale-modal')">
+      <div class="modal-card balance-scale-card">
+        <button class="modal-close-btn" onclick="window.app.closeModal('balance-scale-modal')">✕</button>
+
+        <div class="modal-header">
+          <span class="modal-subtitle">WALL 3 • PHYSICAL SCALE COUNTERBALANCE</span>
+          <h2 class="modal-title">⚖️ THE MERCHANT'S BALANCE</h2>
+        </div>
+
+        <div class="antique-plaque-quote">
+          “A fortune is protected when every part is given its proper place.”
+        </div>
+
+        <!-- Dynamic Status Section -->
+        <div id="scale-status-box" class="prince-status-box">
+          <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 6px;">
+            <span id="scale-status-icon" style="font-size: 20px;">⚜️</span>
+            <strong id="scale-status-header" class="status-header-text" style="color: #ffd700; font-size: 13px; letter-spacing: 0.5px;">7 GOLDEN BARS REQUIRED</strong>
+          </div>
+          <p id="scale-status-desc" style="font-size: 12.5px; color: #d0c8b8; margin: 0; line-height: 1.5;">
+            The scale's pans require all seven sacred golden bars to activate the weight counterbalance mechanism.
+          </p>
+          <div id="scale-bars-progress-text" style="font-family: 'JetBrains Mono', monospace; font-size: 13.5px; font-weight: 800; color: #ffd700; margin-top: 8px;">
+            Bars found: 0 / 7
+          </div>
+        </div>
+
+        <!-- Museum bar location guide if < 7 bars -->
+        <div id="scale-missing-bars-guide" style="display: none; background: rgba(0,0,0,0.45); border: 1px dashed #8b6b23; border-radius: 8px; padding: 12px 16px; margin-top: 14px; font-size: 12px; color: #dcd6cd; text-align: left;">
+          <strong style="color: #ffd700; font-size: 12.5px;">🔍 Sacred Golden Bar Locations:</strong>
+          <ul style="margin: 6px 0 0 16px; padding: 0; line-height: 1.6;">
+            <li><strong>Wall 1</strong>: Royal Prince Statue (Disarm electric circuit & examine imperial records)</li>
+            <li><strong>Wall 1</strong>: Entrance plant pots (near the chamber door & prince statue)</li>
+            <li><strong>Wall 2</strong>: Merchant study potted plants (flanking the bookcase & roll-top desk)</li>
+            <li><strong>Wall 3</strong>: Large plant pot beside cabinet & wooden stool</li>
+          </ul>
+        </div>
+
+        <!-- 7 Category Slots Matching User Specification -->
+        <div id="scale-slots-section" style="display: none; margin-top: 16px;">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+            <span style="font-family: 'Cinzel', Georgia, serif; font-size: 13px; font-weight: 800; color: #ffd700;">
+              ENGRAVED CATEGORY SLOTS:
+            </span>
+            <button id="btn-place-all-bars" class="btn btn-secondary" style="padding: 4px 12px; font-size: 11px;" onclick="window.puzzleManager.placeAllBarsOnScale()">
+              ⚜️ PLACE ALL 7 BARS ON SCALE
+            </button>
+          </div>
+
+          <table class="balance-scale-slots-table">
+            <tbody>
+              <tr id="scale-slot-row-0" class="balance-slot-row">
+                <td class="balance-slot-category">[ SAVINGS ]</td>
+                <td class="balance-slot-target">
+                  <span id="slot-badge-0" class="slot-drop-badge" onclick="window.puzzleManager.toggleScaleSlot(0)">[ BAR SLOT ]</span>
+                </td>
+              </tr>
+              <tr id="scale-slot-row-1" class="balance-slot-row">
+                <td class="balance-slot-category">[ INVESTMENT ]</td>
+                <td class="balance-slot-target">
+                  <span id="slot-badge-1" class="slot-drop-badge" onclick="window.puzzleManager.toggleScaleSlot(1)">[ BAR SLOT ]</span>
+                </td>
+              </tr>
+              <tr id="scale-slot-row-2" class="balance-slot-row">
+                <td class="balance-slot-category">[ LIVING EXPENSES ]</td>
+                <td class="balance-slot-target">
+                  <span id="slot-badge-2" class="slot-drop-badge" onclick="window.puzzleManager.toggleScaleSlot(2)">[ BAR SLOT ]</span>
+                </td>
+              </tr>
+              <tr id="scale-slot-row-3" class="balance-slot-row">
+                <td class="balance-slot-category">[ EMERGENCY FUND ]</td>
+                <td class="balance-slot-target">
+                  <span id="slot-badge-3" class="slot-drop-badge" onclick="window.puzzleManager.toggleScaleSlot(3)">[ BAR SLOT ]</span>
+                </td>
+              </tr>
+              <tr id="scale-slot-row-4" class="balance-slot-row">
+                <td class="balance-slot-category">[ BUSINESS CAPITAL ]</td>
+                <td class="balance-slot-target">
+                  <span id="slot-badge-4" class="slot-drop-badge" onclick="window.puzzleManager.toggleScaleSlot(4)">[ BAR SLOT ]</span>
+                </td>
+              </tr>
+              <tr id="scale-slot-row-5" class="balance-slot-row">
+                <td class="balance-slot-category">[ RECREATION ]</td>
+                <td class="balance-slot-target">
+                  <span id="slot-badge-5" class="slot-drop-badge" onclick="window.puzzleManager.toggleScaleSlot(5)">[ BAR SLOT ]</span>
+                </td>
+              </tr>
+              <tr id="scale-slot-row-6" class="balance-slot-row">
+                <td class="balance-slot-category">[ EDUCATION / SKILL ]</td>
+                <td class="balance-slot-target">
+                  <span id="slot-badge-6" class="slot-drop-badge" onclick="window.puzzleManager.toggleScaleSlot(6)">[ BAR SLOT ]</span>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+
+          <button id="btn-scale-activate-balance" class="btn btn-gold" style="width: 100%; font-weight: 900; font-size: 14px; padding: 13px; margin-top: 10px; background: linear-gradient(180deg, #d4ac0d 0%, #9a7d0a 100%); letter-spacing: 0.5px;" onclick="window.puzzleManager.calibrateBalanceScale()">
+            ⚖️ TEST THE BALANCE (+200 XP)
+          </button>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ==========================================
+         MUSEUM PUZZLE 3: VIDEO 3.2 — UNDERSTANDING BUDGETING THROUGH SEVEN ENVELOPES
+         ========================================== -->
+    <div id="video-3-2-modal" class="modal-backdrop" onclick="if(event.target === this) window.app.closeModal('video-3-2-modal')">
+      <div class="modal-card royal-archive-video-card">
+        <button class="modal-close-btn" onclick="window.app.closeModal('video-3-2-modal')">✕</button>
+
+        <div class="modal-header">
+          <span class="modal-subtitle">MERCHANT'S ARCHIVE — VIDEO 3.2</span>
+          <h2 class="modal-title">UNDERSTANDING BUDGETING THROUGH SEVEN ENVELOPES</h2>
+          <p style="font-size: 13px; color: #ffd700; margin: 4px 0 0 0;">
+            Allocating Limited Money Among Competing Priorities & Long-Term Goals
+          </p>
+        </div>
+
+        <!-- Simulated Interactive Video Screen -->
+        <div class="royal-video-viewport">
+          <div id="video32-scene-content" class="video-scene-canvas">
+            <div id="video32-stage-badge" class="video-stage-badge">MODULE 3.2 • THE SEVEN ENVELOPES</div>
+            <div id="video32-stage-title" class="video-stage-title">✉️ The Power of Allocation</div>
+            <div id="video32-stage-sub" class="video-stage-sub">
+              Dividing your income into distinct envelopes ensures every rupee serves an explicit purpose before spending occurs.
+            </div>
+          </div>
+        </div>
+
+        <!-- Captions Display Area -->
+        <div id="video32-captions-box" class="video-captions-box">
+          <span id="video32-captions-text">“Give every rupee a designated job before the month begins.”</span>
+        </div>
+
+        <!-- Video Player Controls Bar -->
+        <div class="video-controls-bar">
+          <button id="btn-video32-play-pause" class="btn btn-secondary" style="padding: 6px 14px; font-size: 12px;" onclick="window.puzzleManager.toggleVideo32Playback()">
+            ▶ PLAY
+          </button>
+          
+          <div class="video-progress-track" onclick="window.puzzleManager.seekVideo32Progress(event)">
+            <div id="video32-progress-fill" class="video-progress-fill"></div>
+          </div>
+
+          <span id="video32-time-display" class="video-time-disp">00:00 / 00:10</span>
+
+          <button id="btn-video32-captions" class="btn btn-secondary" style="padding: 6px 10px; font-size: 11px;" onclick="window.puzzleManager.toggleVideo32Captions()">
+            💬 CAPTIONS: ON
+          </button>
+
+          <button id="btn-video32-skip" class="btn btn-secondary" style="padding: 6px 10px; font-size: 11px;" onclick="window.puzzleManager.skipVideo32Playback()">
+            ⏭ SKIP
+          </button>
+        </div>
+
+        <!-- Post-Video Action Button -->
+        <div style="margin-top: 18px;">
+          <button id="btn-video32-continue-envelopes" class="btn btn-gold" style="width: 100%; font-weight: 800; display: none; background: linear-gradient(180deg, #d4ac0d 0%, #9a7d0a 100%); letter-spacing: 1px;" onclick="window.app.closeModal('video-3-2-modal'); window.app.openSevenEnvelopesBoard();">
+            ✉️ CONTINUE TO THE SEVEN-ENVELOPE CHALLENGE →
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ==========================================
+         WALL 3: ACTIVITY 3 — THE SEVEN-ENVELOPE CHALLENGE MODAL
+         ========================================== -->
+    <div id="seven-envelopes-modal" class="modal-backdrop" onclick="if(event.target === this) window.app.closeModal('seven-envelopes-modal')">
+      <div class="modal-card balance-scale-card">
+        <button class="modal-close-btn" onclick="window.app.closeModal('seven-envelopes-modal')">✕</button>
+
+        <div class="modal-header">
+          <span class="modal-subtitle">MODULE 3.2 • ACTIVITY 3</span>
+          <h2 class="modal-title">✉️ THE SEVEN-ENVELOPE CHALLENGE</h2>
+        </div>
+
+        <div style="background: rgba(255, 215, 0, 0.08); border: 1.5px solid #ffd700; border-radius: 10px; padding: 14px; margin: 10px 0 14px 0; text-align: left;">
+          <div style="display: flex; justify-content: space-between; align-items: center;">
+            <div style="font-family: 'Cinzel', Georgia, serif; font-size: 14px; font-weight: 800; color: #ffd700;">
+              AVAILABLE FORTUNE: ₹10,000
+            </div>
+            <div id="env-status-badge" style="font-family: 'JetBrains Mono', monospace; font-size: 12px; font-weight: 800; color: #e74c3c;">
+              ADJUSTMENT REQUIRED
+            </div>
+          </div>
+          <p style="font-size: 12.5px; color: #f1f2f6; margin: 6px 0 0 0; line-height: 1.5;">
+            Distribute your monthly fortune across all seven envelopes. You must satisfy every official category constraint and allocate exactly <strong>₹10,000</strong>.
+          </p>
+        </div>
+
+        <!-- Seven Envelopes Budget Table -->
+        <table class="envelope-budget-table">
+          <thead>
+            <tr>
+              <th>ENVELOPE</th>
+              <th>REQUIREMENT</th>
+              <th style="text-align: right;">ALLOCATION (₹)</th>
+              <th style="text-align: center; width: 60px;">STATUS</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Savings</strong></td>
+              <td style="color: #632b0e;">Minimum 5% — ₹500</td>
+              <td style="text-align: right;"><input id="env-input-savings" type="number" class="envelope-input" placeholder="₹" value="1000" oninput="window.puzzleManager.updateEnvelopeTotal()" /></td>
+              <td id="env-row-status-savings" style="text-align: center; font-size: 13px;">✓</td>
+            </tr>
+            <tr>
+              <td><strong>Investment</strong></td>
+              <td style="color: #632b0e;">Minimum 10% — ₹1,000</td>
+              <td style="text-align: right;"><input id="env-input-investment" type="number" class="envelope-input" placeholder="₹" value="1500" oninput="window.puzzleManager.updateEnvelopeTotal()" /></td>
+              <td id="env-row-status-investment" style="text-align: center; font-size: 13px;">✓</td>
+            </tr>
+            <tr>
+              <td><strong>Living expenses</strong></td>
+              <td style="color: #632b0e;">Maximum 50% — ₹5,000</td>
+              <td style="text-align: right;"><input id="env-input-living" type="number" class="envelope-input" placeholder="₹" value="4000" oninput="window.puzzleManager.updateEnvelopeTotal()" /></td>
+              <td id="env-row-status-living" style="text-align: center; font-size: 13px;">✓</td>
+            </tr>
+            <tr>
+              <td><strong>Emergency fund</strong></td>
+              <td style="color: #632b0e;">Minimum 10% — ₹1,000</td>
+              <td style="text-align: right;"><input id="env-input-emergency" type="number" class="envelope-input" placeholder="₹" value="1500" oninput="window.puzzleManager.updateEnvelopeTotal()" /></td>
+              <td id="env-row-status-emergency" style="text-align: center; font-size: 13px;">✓</td>
+            </tr>
+            <tr>
+              <td><strong>Business capital</strong></td>
+              <td style="color: #632b0e;">Minimum 5% — ₹500</td>
+              <td style="text-align: right;"><input id="env-input-business" type="number" class="envelope-input" placeholder="₹" value="800" oninput="window.puzzleManager.updateEnvelopeTotal()" /></td>
+              <td id="env-row-status-business" style="text-align: center; font-size: 13px;">✓</td>
+            </tr>
+            <tr>
+              <td><strong>Recreation</strong></td>
+              <td style="color: #632b0e;">Minimum 10% — ₹1,000</td>
+              <td style="text-align: right;"><input id="env-input-recreation" type="number" class="envelope-input" placeholder="₹" value="700" oninput="window.puzzleManager.updateEnvelopeTotal()" /></td>
+              <td id="env-row-status-recreation" style="text-align: center; font-size: 13px; color: #e74c3c;">⚠️</td>
+            </tr>
+            <tr>
+              <td><strong>Education / skilling</strong></td>
+              <td style="color: #632b0e;">Maximum 10% — ₹1,000</td>
+              <td style="text-align: right;"><input id="env-input-education" type="number" class="envelope-input" placeholder="₹" value="500" oninput="window.puzzleManager.updateEnvelopeTotal()" /></td>
+              <td id="env-row-status-education" style="text-align: center; font-size: 13px;">✓</td>
+            </tr>
+            <tr style="background: rgba(99, 43, 14, 0.12); font-weight: 800;">
+              <td colspan="2" style="font-size: 13.5px;">TOTAL ALLOCATED (TARGET: ₹10,000):</td>
+              <td style="text-align: right; font-family: 'JetBrains Mono', monospace; font-size: 15px;" id="env-total-disp">₹10,000 / ₹10,000</td>
+              <td id="env-total-status-icon" style="text-align: center; font-size: 14px;">✓</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <!-- Check Budget Button -->
+        <button id="btn-check-my-budget" class="btn btn-gold" style="width: 100%; font-weight: 900; font-size: 14px; padding: 12px; margin-top: 6px; background: linear-gradient(180deg, #d4ac0d 0%, #9a7d0a 100%);" onclick="window.puzzleManager.checkMyBudget()">
+          🔍 CHECK MY BUDGET
+        </button>
+
+        <!-- Feedback message area -->
+        <div id="envelope-validation-feedback" style="display: none; margin-top: 10px; padding: 10px 14px; border-radius: 6px; font-size: 12.5px; line-height: 1.5; text-align: left;">
+        </div>
+
+        <!-- Justification Step Section (Revealed when budget satisfies all constraints) -->
+        <div id="envelope-justification-section" style="display: none; margin-top: 18px; border-top: 1px dashed rgba(255,215,0,0.3); padding-top: 16px;">
+          <div style="font-family: 'Cinzel', Georgia, serif; font-size: 14px; font-weight: 800; color: #ffd700; margin-bottom: 6px; text-align: left;">
+            ⚖️ JUSTIFICATION STEP: REASONING BEHIND YOUR BUDGET
+          </div>
+          <p style="font-size: 12px; color: #d0c8b8; margin: 0 0 14px 0; text-align: left; line-height: 1.4;">
+            Sound financial management requires purposeful reasoning. Select the sensible rationale for each key decision:
+          </p>
+
+          <!-- Prompt 1: Emergency Reserve -->
+          <div class="justification-card">
+            <div class="justification-prompt-q">1. Why have you kept funds for emergencies?</div>
+            <button id="just-opt-em-1" class="justification-option-btn selected" onclick="window.puzzleManager.selectJustification('emergency', 1)">
+              ✓ “Unexpected expenses can happen anytime. Keeping money aside means I do not need to borrow immediately or incur crushing debt.”
+            </button>
+            <button id="just-opt-em-2" class="justification-option-btn" onclick="window.puzzleManager.selectJustification('emergency', 2)">
+              “To immediately buy impulsive luxury items whenever friends invite me out.”
+            </button>
+          </div>
+
+          <!-- Prompt 2: Living Expenses Limit -->
+          <div class="justification-card">
+            <div class="justification-prompt-q">2. Why is Living Expenses capped at a maximum of 50% (₹5,000)?</div>
+            <button id="just-opt-liv-1" class="justification-option-btn selected" onclick="window.puzzleManager.selectJustification('living', 1)">
+              ✓ “Limiting basic recurring necessities prevents lifestyle inflation and reserves capital for savings, investment, and growth.”
+            </button>
+            <button id="just-opt-liv-2" class="justification-option-btn" onclick="window.puzzleManager.selectJustification('living', 2)">
+              “Because basic living costs should take 100% of income since tomorrow is never guaranteed.”
+            </button>
+          </div>
+
+          <!-- Prompt 3: Recreation Envelope -->
+          <div class="justification-card">
+            <div class="justification-prompt-q">3. Why allocate a planned envelope of at least 10% (₹1,000) for Recreation?</div>
+            <button id="just-opt-rec-1" class="justification-option-btn selected" onclick="window.puzzleManager.selectJustification('recreation', 1)">
+              ✓ “Setting aside a planned recreational budget allows guilt-free leisure without dipping into essential bills or emergency reserves.”
+            </button>
+            <button id="just-opt-rec-2" class="justification-option-btn" onclick="window.puzzleManager.selectJustification('recreation', 2)">
+              “To spend everything on spontaneous entertainment without any financial limits.”
+            </button>
+          </div>
+
+          <button id="btn-submit-justifications" class="btn btn-gold" style="width: 100%; font-weight: 900; font-size: 14px; padding: 13px; background: linear-gradient(180deg, #27ae60 0%, #1e8449 100%); letter-spacing: 0.5px;" onclick="window.puzzleManager.submitBudgetWithJustifications()">
+            ✉️ CONFIRM BUDGET & UNLOCK SECRET COMPARTMENT (+250 XP) ✉️
+          </button>
+        </div>
+
+        <!-- Hidden Reward Compartment: Special Financial Glasses -->
+        <div id="glasses-reward-container" class="glasses-reward-box" style="display: none;">
+          <div style="font-size: 42px; margin-bottom: 6px;">👓</div>
+          <div style="font-family: 'Cinzel', Georgia, serif; font-size: 16px; font-weight: 800; color: #ffd700; letter-spacing: 1px;">
+            ✨ SECRET COMPARTMENT UNLOCKED: SPECIAL FINANCIAL GLASSES! ✨
+          </div>
+          <p style="font-size: 12.5px; color: #e0d0f0; margin: 8px 0 14px 0; line-height: 1.5;">
+            A hidden velvet drawer slides out from the console, revealing the enchanted lenses. Wearing these special glasses reveals the invisible laser grid and optical mirror pedestals guarding the treasure vault on Wall 4!
+          </p>
+          <button class="btn btn-gold" style="width: 100%; font-weight: 900; font-size: 14px; padding: 13px; background: linear-gradient(180deg, #9b59b6 0%, #6c3483 100%); border-color: #ffd700;" onclick="window.app.claimSpecialGlasses()">
+            👓 EQUIP SPECIAL FINANCIAL GLASSES & ENTER WALL 4 (+250 XP) 👓
+          </button>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ==========================================
+         WALL 4: MIRROR ALIGNMENT CONSOLE MODAL
+         ========================================== -->
+    <div id="mirror-mount-modal" class="modal-backdrop" onclick="if(event.target === this) window.app.closeModal('mirror-mount-modal')">
+      <div class="modal-card balance-scale-card" style="max-width: 640px;">
+        <button class="modal-close-btn" onclick="window.app.closeModal('mirror-mount-modal')">✕</button>
+
+        <div class="modal-header">
+          <span class="modal-subtitle">WALL 4 • OPTICAL DEFLECTION CONSOLE</span>
+          <h2 id="modal-mirror-mount-title" class="modal-title">🪞 OPTICAL MIRROR MOUNT</h2>
+        </div>
+
+        <div style="background: rgba(0, 0, 0, 0.55); border: 1.5px solid #ffd700; border-radius: 10px; padding: 18px; margin: 14px 0; text-align: center;">
+          <div style="display: flex; justify-content: center; align-items: center; min-height: 170px; margin-bottom: 10px;">
+            <img id="modal-mirror-graphic-img" src="assets/ornate_hand_mirror.png" alt="Ornate Handheld Mirror" style="width: 120px; height: auto; transform: rotate(0deg); transform-origin: 50% 50%; transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1); filter: drop-shadow(0 6px 16px rgba(0,0,0,0.85)) drop-shadow(0 0 12px rgba(255, 215, 0, 0.6));" />
+          </div>
+          
+          <div id="modal-mirror-status-badge" style="display: inline-block; padding: 4px 14px; border-radius: 12px; font-family: 'JetBrains Mono', monospace; font-size: 13px; font-weight: 800; color: #ff4757; background: rgba(255, 71, 87, 0.15); border: 1px solid #ff4757; margin-bottom: 8px;">
+            ⚠️ BEAM AIMED DIRECTLY AT TREASURE CHEST
+          </div>
+
+          <p id="modal-mirror-desc" style="font-size: 13px; color: #e0d0c0; line-height: 1.5; margin: 6px 0 14px 0;">
+            Rotate the brass optical mirror to refract the incoming red laser beam safely into the stone architecture, away from the treasure chest.
+          </p>
+
+          <!-- Current Rotation Angle Display -->
+          <div style="font-family: 'Cinzel', Georgia, serif; font-size: 16px; font-weight: 800; color: #ffd700; margin-bottom: 12px;">
+            CURRENT ANGLE: <span id="modal-mirror-angle-disp" style="font-family: 'JetBrains Mono', monospace; font-size: 20px; color: #ffffff;">0°</span>
+          </div>
+
+          <!-- Controls Bar -->
+          <div style="display: flex; justify-content: center; align-items: center; gap: 14px; margin: 12px 0;">
+            <span style="font-size: 14px; font-weight: 700; color: #ffd700;">Rotation:</span>
+            <button class="btn btn-secondary" style="font-size: 16px; font-weight: 900; padding: 8px 18px;" onclick="window.puzzleManager.rotateActiveMirror(-45)" title="Rotate Counter-Clockwise">
+              [ - ]
+            </button>
+            <span id="modal-mirror-angle-disp" style="font-family: 'JetBrains Mono', monospace; font-size: 22px; font-weight: 800; color: #ffffff; min-width: 60px; text-align: center;">0°</span>
+            <button class="btn btn-secondary" style="font-size: 16px; font-weight: 900; padding: 8px 18px;" onclick="window.puzzleManager.rotateActiveMirror(45)" title="Rotate Clockwise">
+              [ + ]
+            </button>
+          </div>
+          <div style="margin-top: 8px;">
+            <button class="btn btn-secondary" style="font-size: 11px; padding: 4px 10px; color: #2ecc71; border-color: #2ecc71;" onclick="window.puzzleManager.autoAlignActiveMirror()">
+              ⚡ PRE-SET OPTIMAL ANGLE
+            </button>
+          </div>
+        </div>
+
+        <div style="display: flex; gap: 10px; margin-top: 14px;">
+          <button class="btn btn-secondary" style="flex: 1; padding: 11px; font-weight: 700; font-size: 13px; border-color: #ffd700; color: #ffd700;" onclick="window.puzzleManager.previewLaserPath()">
+            🔍 PREVIEW LASER PATH
+          </button>
+          <button class="btn btn-gold" style="flex: 1; font-weight: 800; padding: 11px; font-size: 13px; background: linear-gradient(180deg, #d4ac0d 0%, #9a7d0a 100%);" onclick="window.app.closeModal('mirror-mount-modal')">
+            🔒 LOCK MIRROR
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ==========================================
+         WALL 4: PLAN LIST PLAQUE MODAL
+         ========================================== -->
+    <div id="plan-list-modal" class="modal-backdrop" onclick="if(event.target === this) window.app.closeModal('plan-list-modal')">
+      <div class="modal-card balance-scale-card" style="max-width: 580px;">
+        <button class="modal-close-btn" onclick="window.app.closeModal('plan-list-modal')">✕</button>
+
+        <div class="modal-header">
+          <span class="modal-subtitle">WALL 4 • IMPERIAL ARCHIVE PLAQUE</span>
+          <h2 class="modal-title">📜 PLAN LIST: BETTER TOMORROW</h2>
+        </div>
+
+        <div class="antique-plaque-quote">
+          “Wealth without a plan is only temporary luck. A wise builder aligns every coin with the stage of life they inhabit.”
+        </div>
+
+        <div style="background: rgba(0,0,0,0.45); border: 1px dashed rgba(255,215,0,0.35); border-radius: 8px; padding: 16px; margin: 12px 0; font-size: 13px; color: #f1f2f6; line-height: 1.6; text-align: left;">
+          <strong style="color: #ffd700;">Four Pillars of the Life Stage Plan:</strong>
+          <ol style="margin: 8px 0 0 18px; padding: 0;">
+            <li><strong>Protection First</strong>: Always cover basic living essentials and emergency cushions before taking risks.</li>
+            <li><strong>Stage Awareness</strong>: Students prioritize skills; earners prioritize compounding savings; partners plan shared buffers.</li>
+            <li><strong>Avoid Reckless Traps</strong>: Never risk emergency reserves on unverified schemes promising instant riches.</li>
+            <li><strong>Consistency Over Speed</strong>: A disciplined monthly habit beats erratic windfalls.</li>
+          </ol>
+        </div>
+
+        <button class="btn btn-gold" style="width: 100%; font-weight: 800; padding: 12px;" onclick="window.app.closeModal('plan-list-modal')">
+          ✓ CLOSE PLAQUE INSPECTION
+        </button>
+      </div>
+    </div>
+
+    <!-- ==========================================
+         WALL 4: THE GRAND TREASURE CHEST MODAL (Video 3.4 & Activity 4)
+         ========================================== -->
+    <div id="treasure-chest-modal" class="modal-backdrop" onclick="if(event.target === this) window.app.closeModal('treasure-chest-modal')">
+      <div class="modal-card balance-scale-card" style="max-width: 920px;">
+        <button class="modal-close-btn" onclick="window.app.closeModal('treasure-chest-modal')">✕</button>
+
+        <div class="modal-header">
+          <span class="modal-subtitle">MODULE 3.4 • THE LIFE STAGE PLANNING CHAMBER</span>
+          <h2 class="modal-title">👑 THE TREASURE'S FINAL TEST</h2>
+        </div>
+
+        <!-- STAGE 1: VIDEO 3.4 - LIFE STAGE SIMULATION -->
+        <div id="chest-video-stage">
+          <div style="background: rgba(255, 215, 0, 0.08); border: 1.5px solid #ffd700; border-radius: 8px; padding: 12px 16px; margin-bottom: 12px; text-align: left;">
+            <div style="font-family: 'Cinzel', serif; font-size: 13.5px; font-weight: 800; color: #ffd700;">
+              🎬 VIDEO 3.4: LIFE STAGE SIMULATION — WHAT WOULD YOU PRIORITIZE?
+            </div>
+            <p style="font-size: 12px; color: #dcd0c0; margin: 4px 0 0 0; line-height: 1.45;">
+              As our life evolves from studenthood to early career, partnership, side enterprise, and retirement, our financial priorities transform. Learn how to allocate wisely for each chapter.
+            </p>
+          </div>
+
+          <!-- Video Viewport -->
+          <div class="royal-video-viewport" style="max-height: 240px;">
+            <div id="video34-scene-content" class="video-scene-canvas">
+              <div id="video34-stage-badge" class="video-stage-badge">MODULE 3.4 • LIFE STAGES</div>
+              <div id="video34-stage-title" class="video-stage-title">🌱 Priorities Change with Life</div>
+              <div id="video34-stage-sub" class="video-stage-sub">
+                Students prioritize skills; earners build savings; partners balance shared goals; side hustlers protect against volatility.
+              </div>
+            </div>
+          </div>
+
+          <!-- Captions -->
+          <div id="video34-captions-box" class="video-captions-box">
+            <span id="video34-captions-text">“A sound financial plan matches the exact life stage you live in today.”</span>
+          </div>
+
+          <!-- Video Controls -->
+          <div class="video-controls-bar">
+            <button id="btn-video34-play-pause" class="btn btn-secondary" style="padding: 6px 14px; font-size: 12px;" onclick="window.puzzleManager.toggleVideo34Playback()">
+              ▶ PLAY
+            </button>
+            <div class="video-progress-track" onclick="window.puzzleManager.seekVideo34Progress(event)">
+              <div id="video34-progress-fill" class="video-progress-fill"></div>
+            </div>
+            <span id="video34-time-display" class="video-time-disp">00:00 / 00:10</span>
+            <button id="btn-video34-captions" class="btn btn-secondary" style="padding: 6px 10px; font-size: 11px;" onclick="window.puzzleManager.toggleVideo34Captions()">
+              💬 CAPTIONS: ON
+            </button>
+            <button id="btn-video34-skip" class="btn btn-secondary" style="padding: 6px 10px; font-size: 11px;" onclick="window.puzzleManager.skipVideo34Playback()">
+              ⏭ SKIP
+            </button>
+          </div>
+
+          <button id="btn-video34-continue-plan" class="btn btn-gold" style="width: 100%; font-weight: 800; padding: 13px; margin-top: 14px; display: none; background: linear-gradient(180deg, #d4ac0d 0%, #9a7d0a 100%);" onclick="window.puzzleManager.unlockFuturePlanActivity()">
+            📜 PROCEED TO ACTIVITY 4: BUILD YOUR FUTURE PLAN →
+          </button>
+        </div>
+
+        <!-- STAGE 2: ACTIVITY 4 - BUILD YOUR FUTURE PLAN -->
+        <div id="chest-activity-stage" style="display: none; margin-top: 10px;">
+          
+          <div style="background: rgba(255, 215, 0, 0.08); border: 1.5px solid #ffd700; border-radius: 8px; padding: 12px 16px; margin-bottom: 14px; text-align: left;">
+            <div style="font-family: 'Cinzel', serif; font-size: 14px; font-weight: 800; color: #ffd700; margin-bottom: 4px;">
+              THE TREASURE'S FINAL TEST — CHOOSE A LIFE STAGE
+            </div>
+            <p style="font-size: 12px; color: #dcd0c0; margin: 0; line-height: 1.45;">
+              Financial prioritization shifts across life chapters. Select a life stage below to craft and simulate its financial blueprint:
+            </p>
+          </div>
+
+          <!-- Life Stage Selection Buttons -->
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 8px; margin-bottom: 16px;">
+            <button id="btn-stage-student" class="btn btn-secondary selected" style="padding: 10px 8px; font-size: 12px; border-color: #ffd700;" onclick="window.puzzleManager.selectLifeStage('student')">
+              🎓 STUDENT<br><span style="font-size: 10px; color: #ffd700;">₹10,000 allowance</span>
+            </button>
+            <button id="btn-stage-earning" class="btn btn-secondary" style="padding: 10px 8px; font-size: 12px;" onclick="window.puzzleManager.selectLifeStage('earning')">
+              💼 STARTED EARNING<br><span style="font-size: 10px; color: #ffd700;">₹25,000 income</span>
+            </button>
+            <button id="btn-stage-partner" class="btn btn-secondary" style="padding: 10px 8px; font-size: 12px;" onclick="window.puzzleManager.selectLifeStage('partner')">
+              💍 LIVING WITH PARTNER<br><span style="font-size: 10px; color: #ffd700;">₹40,000 combined</span>
+            </button>
+            <button id="btn-stage-hustler" class="btn btn-secondary" style="padding: 10px 8px; font-size: 12px;" onclick="window.puzzleManager.selectLifeStage('hustler')">
+              🚀 SIDE HUSTLER<br><span style="font-size: 10px; color: #ffd700;">₹20,000 irregular</span>
+            </button>
+            <button id="btn-stage-retirement" class="btn btn-secondary" style="padding: 10px 8px; font-size: 12px;" onclick="window.puzzleManager.selectLifeStage('retirement')">
+              🏖️ EARLY RETIREMENT<br><span style="font-size: 10px; color: #ffd700;">₹50,000 corpus</span>
+            </button>
+          </div>
+
+          <!-- Future Plan Configuration Card -->
+          <div style="background: #fbf3df; border-radius: 8px; padding: 16px; color: #1a0f0a; margin-bottom: 16px; box-shadow: 0 4px 16px rgba(0,0,0,0.4);">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; font-family: 'Cinzel', serif; font-weight: 800; font-size: 14px; color: #632b0e; border-bottom: 1.5px solid #d4af37; padding-bottom: 6px;">
+              <span id="plan-stage-headline">BUILD YOUR FUTURE PLAN: STUDENT</span>
+              <span id="plan-income-badge" style="font-family: 'JetBrains Mono', monospace; font-size: 13px; color: #8a3b0f;">MONTHLY INCOME / ALLOWANCE: ₹10,000</span>
+            </div>
+
+            <table class="envelope-budget-table" style="margin: 0; background: transparent; width: 100%;">
+              <tbody>
+                <tr>
+                  <td style="padding: 8px 10px; color: #1a0f0a;">
+                    <strong>Essential Expenses</strong>
+                    <div style="font-size: 11px; color: #555;">Food, housing, utilities, basic travel</div>
+                  </td>
+                  <td style="text-align: right; padding: 8px 10px;">
+                    ₹ <input id="plan-input-essentials" type="number" class="envelope-input" value="4000" min="0" oninput="window.puzzleManager.updatePlanTotal()" />
+                  </td>
+                </tr>
+                <tr>
+                  <td style="padding: 8px 10px; color: #1a0f0a;">
+                    <strong>Emergency Savings</strong>
+                    <div style="font-size: 11px; color: #555;">Cash cushion for unforeseen emergencies</div>
+                  </td>
+                  <td style="text-align: right; padding: 8px 10px;">
+                    ₹ <input id="plan-input-emergency" type="number" class="envelope-input" value="1500" min="0" oninput="window.puzzleManager.updatePlanTotal()" />
+                  </td>
+                </tr>
+                <tr>
+                  <td style="padding: 8px 10px; color: #1a0f0a;">
+                    <strong>Education / Skills</strong>
+                    <div style="font-size: 11px; color: #555;">Certifications, books, tools, career development</div>
+                  </td>
+                  <td style="text-align: right; padding: 8px 10px;">
+                    ₹ <input id="plan-input-education" type="number" class="envelope-input" value="2000" min="0" oninput="window.puzzleManager.updatePlanTotal()" />
+                  </td>
+                </tr>
+                <tr>
+                  <td style="padding: 8px 10px; color: #1a0f0a;">
+                    <strong>Investment / Savings</strong>
+                    <div style="font-size: 11px; color: #555;">Index funds, recurring deposits, compounding wealth</div>
+                  </td>
+                  <td style="text-align: right; padding: 8px 10px;">
+                    ₹ <input id="plan-input-investment" type="number" class="envelope-input" value="1500" min="0" oninput="window.puzzleManager.updatePlanTotal()" />
+                  </td>
+                </tr>
+                <tr>
+                  <td style="padding: 8px 10px; color: #1a0f0a;">
+                    <strong>Recreation</strong>
+                    <div style="font-size: 11px; color: #555;">Entertainment, leisure, dining out, hobbies</div>
+                  </td>
+                  <td style="text-align: right; padding: 8px 10px;">
+                    ₹ <input id="plan-input-recreation" type="number" class="envelope-input" value="1000" min="0" oninput="window.puzzleManager.updatePlanTotal()" />
+                  </td>
+                </tr>
+                <tr style="background: rgba(99, 43, 14, 0.15); font-weight: 800;">
+                  <td style="padding: 10px; color: #1a0f0a;">TOTAL ALLOCATED SPENDING:</td>
+                  <td style="text-align: right; font-family: 'JetBrains Mono', monospace; font-size: 15px; padding: 10px;" id="plan-total-disp">₹10,000 / ₹10,000</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <!-- Long-term Goal & Next Action Questions -->
+          <div class="justification-card" style="margin-bottom: 12px; text-align: left;">
+            <div class="justification-prompt-q" style="font-weight: 700; color: #ffd700; margin-bottom: 8px;">
+              1. Long-Term Goal:
+            </div>
+            <div style="display: flex; flex-direction: column; gap: 8px;">
+              <button id="goal-opt-1" class="justification-option-btn selected" onclick="window.puzzleManager.selectGoalOption(1)">
+                ✓ “Save for a high-value skill certification course & build a 6-month emergency reserve.”
+              </button>
+              <button id="goal-opt-2" class="justification-option-btn" onclick="window.puzzleManager.selectGoalOption(2)">
+                “Borrow maximum high-interest consumer debt for luxury status symbols.”
+              </button>
+              <button id="goal-opt-3" class="justification-option-btn" onclick="window.puzzleManager.selectGoalOption(3)">
+                ✓ “Invest in diversified index mutual funds for long-term compound wealth growth.”
+              </button>
+            </div>
+          </div>
+
+          <div class="justification-card" style="margin-bottom: 14px; text-align: left;">
+            <div class="justification-prompt-q" style="font-weight: 700; color: #ffd700; margin-bottom: 8px;">
+              2. My Next Action:
+            </div>
+            <div style="display: flex; flex-direction: column; gap: 8px;">
+              <button id="action-opt-1" class="justification-option-btn selected" onclick="window.puzzleManager.selectActionOption(1)">
+                ✓ “Save a fixed amount every month immediately before any discretionary spending.”
+              </button>
+              <button id="action-opt-2" class="justification-option-btn" onclick="window.puzzleManager.selectActionOption(2)">
+                “Spend all monthly income freely and hope to save whatever coins remain at month-end.”
+              </button>
+              <button id="action-opt-3" class="justification-option-btn" onclick="window.puzzleManager.selectActionOption(3)">
+                ✓ “Automate monthly recurring deposit transfers to emergency & skilling accounts.”
+              </button>
+            </div>
+          </div>
+
+          <!-- Plan Review Feedback Panel (Real-time evaluation) -->
+          <div id="plan-review-feedback-box" style="display: none; padding: 12px 16px; border-radius: 8px; margin-bottom: 14px; text-align: left; font-size: 12.5px; line-height: 1.5;"></div>
+
+          <!-- Action Buttons: [ REVIEW MY PLAN ] & [ SUBMIT FINAL PLAN ] -->
+          <div style="display: flex; gap: 12px;">
+            <button id="btn-review-future-plan" class="btn btn-secondary" style="flex: 1; font-weight: 800; font-size: 13px; padding: 12px; border-color: #ffd700; color: #ffd700;" onclick="window.puzzleManager.reviewFuturePlan()">
+              📋 REVIEW MY PLAN
+            </button>
+            <button id="btn-submit-future-plan" class="btn btn-gold" style="flex: 1.5; font-weight: 900; font-size: 13.5px; padding: 12px; background: linear-gradient(180deg, #27ae60 0%, #1e8449 100%); letter-spacing: 0.5px;" onclick="window.puzzleManager.submitFuturePlan()">
+              📜 SUBMIT FINAL PLAN
+            </button>
+          </div>
+        </div>
+
+        <!-- STAGE 3: GOLDEN ESCAPE KEY REVEAL -->
+        <div id="chest-key-reward-stage" class="glasses-reward-box" style="display: none; background: radial-gradient(circle, rgba(212, 175, 55, 0.3) 0%, rgba(20, 10, 5, 0.95) 100%); border-color: #ffd700;">
+          <div style="font-size: 54px; margin-bottom: 6px; animation: floatChest 2s infinite ease-in-out;">🗝️</div>
+          <div style="font-family: 'Cinzel', serif; font-size: 18px; font-weight: 800; color: #ffd700; letter-spacing: 1px;">
+            ✨ THE GOLDEN ESCAPE KEY HAS APPEARED! ✨
+          </div>
+          <p style="font-size: 13px; color: #f1f2f6; margin: 8px 0 16px 0; line-height: 1.6;">
+            A secret velvet drawer in the base of the chest slides forward, revealing the legendary <strong>Golden Escape Key</strong>. You now possess the ancient royal key capable of unsealing the Museum Entrance Door on Wall 1!
+          </p>
+          <button class="btn btn-gold" style="width: 100%; font-weight: 900; font-size: 15px; padding: 14px; background: linear-gradient(180deg, #d4ac0d 0%, #9a7d0a 100%);" onclick="window.app.claimGoldenEscapeKey()">
+            🗝️ CLAIM GOLDEN ESCAPE KEY & PROCEED TO EXIT DOOR (+300 XP) →
+          </button>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ==========================================
+         FINAL VICTORY & ESCAPE CERTIFICATE MODAL
+         ========================================== -->
+    <div id="escape-victory-modal" class="modal-backdrop modal-backdrop-fullscreen" style="display: none; z-index: 10000; background: radial-gradient(circle, rgba(15, 10, 5, 0.98) 0%, rgba(5, 3, 2, 0.99) 100%);">
+      <div class="modal-card balance-scale-card" style="max-width: 820px; border: 3px solid #ffd700; text-align: center; box-shadow: 0 0 80px rgba(255, 215, 0, 0.5);">
+        <div style="font-size: 54px; margin-bottom: 8px;">🏛️ 🗝️ 🎓</div>
+        <span class="modal-subtitle" style="font-size: 13px; letter-spacing: 2px;">THE MUSEUM OF LOST FORTUNES • ESCAPED!</span>
+        <h1 style="font-family: 'Cinzel', Georgia, serif; font-size: 26px; color: #ffd700; margin: 6px 0 14px 0; letter-spacing: 1.5px;">
+          CERTIFICATE OF FINANCIAL MASTERY
+        </h1>
+        <p style="font-size: 14px; color: #f1f2f6; max-width: 620px; margin: 0 auto 18px auto; line-height: 1.6;">
+          Congratulations! You have successfully solved all physical enigmas and mastered the four core pillars of Personal Finance Management in Module 3:
+        </p>
+
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 10px; margin-bottom: 20px; text-align: left;">
+          <div style="background: rgba(255, 215, 0, 0.1); border: 1px solid #ffd700; border-radius: 8px; padding: 10px;">
+            <strong style="color: #ffd700; font-size: 12px;">1. Smarter Spending</strong>
+            <p style="font-size: 11px; color: #d0c8b8; margin: 4px 0 0 0;">Needs vs Wants & Value Decay Formula</p>
+          </div>
+          <div style="background: rgba(255, 215, 0, 0.1); border: 1px solid #ffd700; border-radius: 8px; padding: 10px;">
+            <strong style="color: #ffd700; font-size: 12px;">2. Money Awareness</strong>
+            <p style="font-size: 11px; color: #d0c8b8; margin: 4px 0 0 0;">Transaction Tracking & Account Reconciliation</p>
+          </div>
+          <div style="background: rgba(255, 215, 0, 0.1); border: 1px solid #ffd700; border-radius: 8px; padding: 10px;">
+            <strong style="color: #ffd700; font-size: 12px;">3. Seven Envelopes</strong>
+            <p style="font-size: 11px; color: #d0c8b8; margin: 4px 0 0 0;">Strict Category Bounds & Emergency Shields</p>
+          </div>
+          <div style="background: rgba(255, 215, 0, 0.1); border: 1px solid #ffd700; border-radius: 8px; padding: 10px;">
+            <strong style="color: #ffd700; font-size: 12px;">4. Life Stage Planning</strong>
+            <p style="font-size: 11px; color: #d0c8b8; margin: 4px 0 0 0;">Adaptive Prioritization & Future Security</p>
+          </div>
+        </div>
+
+        <button class="btn btn-gold" style="font-size: 15px; font-weight: 900; padding: 14px 34px; background: linear-gradient(180deg, #d4ac0d 0%, #9a7d0a 100%);" onclick="window.location.reload()">
+          🔄 PLAY AGAIN / RETURN TO LOBBY
+        </button>
+      </div>
+    </div>
+    <!-- ==========================================
          3. BUILDING MAP PARCHMENT BLUEPRINT MODAL
          (Exact Artwork Matching User's Uploaded Parchment Map)
          ========================================== -->
@@ -418,16 +2361,6 @@
       </div>
     </div>
 
-    <!-- ==========================================
-         3. FINANCIAL FLOW PIN BOARD ZOOM MODAL (Wall 2)
-         ========================================== -->
-    <div id="notice-board-modal" class="modal-backdrop" onclick="if(event.target === this) window.app.closeModal('notice-board-modal')">
-      <div class="modal-card notice-board-zoom-card" style="max-width: 900px; width: 92%; background: rgba(12, 6, 3, 0.94); border: 2px solid #ffd700; border-radius: 16px; box-shadow: 0 25px 70px rgba(0,0,0,0.95), 0 0 35px rgba(255,215,0,0.3); padding: 24px; position: relative; text-align: center;">
-        <button class="modal-close-btn" style="position: absolute; top: 12px; right: 16px; z-index: 10; font-size: 22px; background: rgba(0,0,0,0.85); border: 1.5px solid #ffd700; border-radius: 50%; width: 36px; height: 36px; line-height: 32px; color: #ffd700; cursor: pointer;" onclick="window.app.closeModal('notice-board-modal')">✕</button>
-        
-        <img src="assets/pin_board.png?v=2" alt="Financial Flow Wooden Pin Board Zoomed" style="width: 100%; max-height: 75vh; object-fit: contain; filter: none; box-shadow: none; cursor: pointer;" onclick="window.app.closeModal('notice-board-modal')" />
-      </div>
-    </div>
 
     <!-- ==========================================
          3B. ATM MACHINE PUZZLE MODAL (Wall 2)
@@ -557,157 +2490,6 @@
         <div id="atm-footer-actions" style="margin-top: 14px;">
           <button id="btn-insert-atm-card" class="btn btn-gold" style="width: 100%; font-weight: 800;" onclick="window.puzzleManager.insertATMCard()">
             💳 INSERT ATM CARD FROM INVENTORY →
-          </button>
-        </div>
-      </div>
-    </div>
-
-    <!-- ==========================================
-         3C. PIN CLUE NOTE MODAL
-         ========================================== -->
-    <div id="pin-note-modal" class="modal-backdrop">
-      <div class="modal-card pin-note-card" style="max-width: 460px; text-align: center;">
-        <button class="modal-close-btn" onclick="window.app.closeModal('pin-note-modal')">✕</button>
-        
-        <div class="modal-header" style="margin-bottom: 10px;">
-          <span class="modal-subtitle">HANDWRITTEN PUZZLE CLUE</span>
-          <h2 class="modal-title">📝 ATM PIN NOTE</h2>
-        </div>
-
-        <div class="pin-note-paper-box">
-          <div class="pin-note-filigree">⚜ ────── ❖ ────── ⚜</div>
-          <div class="pin-note-text-line">“Start with money coming in.</div>
-          <div class="pin-note-text-line">Then money going out.</div>
-          <div class="pin-note-text-line">Next, money moving away.</div>
-          <div class="pin-note-text-line">Finally, money kept aside.”</div>
-          <div class="pin-note-filigree">── ❖ ──</div>
-        </div>
-
-        <p style="font-size: 12px; color: var(--brass-highlight); margin-top: 14px; line-height: 1.5;">
-          🔍 <em>Match each phrase to the four financial counters around the room to solve the PIN.</em>
-        </p>
-      </div>
-    </div>
-
-    <!-- ==========================================
-         3C-2. STICKY NOTE ZOOMED INSPECTION MODAL (Wall 4)
-         ========================================== -->
-    <div id="sticky-note-zoom-modal" class="modal-backdrop" onclick="if(event.target === this) window.app.closeModal('sticky-note-zoom-modal')">
-      <div class="modal-card sticky-zoom-card" style="max-width: 440px; text-align: center; background: linear-gradient(145deg, rgba(24, 14, 8, 0.97) 0%, rgba(12, 6, 3, 0.99) 100%); border: 2px solid #ffd700; box-shadow: 0 25px 70px rgba(0,0,0,0.9), 0 0 35px rgba(255,215,0,0.3);">
-        <button class="modal-close-btn" onclick="window.app.closeModal('sticky-note-zoom-modal')">✕</button>
-
-        <div class="modal-header" style="margin-bottom: 12px;">
-          <span class="modal-subtitle">WALL 4 • HANDWRITTEN CLUE</span>
-          <h2 class="modal-title">📌 STICKY NOTE CLUE</h2>
-        </div>
-
-        <div class="sticky-note-zoomed-viewport" style="display: flex; justify-content: center; align-items: center; padding: 16px; background: rgba(0, 0, 0, 0.5); border-radius: 12px; border: 1.5px solid rgba(255, 215, 0, 0.3);">
-          <img src="assets/w4_sticky_note.png" alt="Zoomed Sticky Note Clue" style="max-width: 100%; max-height: 52vh; object-fit: contain; filter: drop-shadow(0 10px 25px rgba(0,0,0,0.9));" />
-        </div>
-
-        <button class="btn btn-gold" style="width: 100%; margin-top: 16px; font-weight: 800; letter-spacing: 1px;" onclick="window.app.closeModal('sticky-note-zoom-modal')">
-          RETURN TO ROOM ✓
-        </button>
-      </div>
-    </div>
-
-    <!-- ==========================================
-         3D. FINANCIAL COUNTER INSPECTION MODAL
-         ========================================== -->
-    <div id="counter-modal" class="modal-backdrop">
-      <div class="modal-card counter-inspect-card" style="max-width: 440px; text-align: center;">
-        <button class="modal-close-btn" onclick="window.app.closeModal('counter-modal')">✕</button>
-        
-        <div class="modal-header">
-          <span id="counter-modal-subtitle" class="modal-subtitle">FINANCIAL COUNTER</span>
-          <h2 id="counter-modal-title" class="modal-title">DEPOSIT</h2>
-        </div>
-
-        <div class="counter-display-box">
-          <div id="counter-modal-icon" class="counter-icon-large">📈</div>
-          <div id="counter-modal-name" class="counter-name-text">DEPOSIT</div>
-          <div id="counter-modal-number" class="counter-number-large">7</div>
-          <div id="counter-modal-clue" class="counter-clue-badge">Money coming in</div>
-        </div>
-
-        <button class="btn btn-gold" style="width: 100%; margin-top: 16px;" onclick="window.app.closeModal('counter-modal')">
-          RETURN TO ROOM ✓
-        </button>
-      </div>
-    </div>
-
-    <!-- ==========================================
-         3E. ATM RECEIPT INSPECTION MODAL
-         ========================================== -->
-    <div id="receipt-modal" class="modal-backdrop">
-      <div class="modal-card receipt-modal-card" style="max-width: 440px; text-align: center;">
-        <button class="modal-close-btn" onclick="window.app.closeModal('receipt-modal')">✕</button>
-        
-        <div class="modal-header" style="margin-bottom: 12px;">
-          <span class="modal-subtitle">ATM TRANSACTION RECORD</span>
-          <h2 class="modal-title">🧾 ATM RECEIPT</h2>
-        </div>
-
-        <div class="receipt-paper-box">
-          <div class="receipt-header-logo">🏛️ FINANCIAL VAULT ATM</div>
-          <div class="receipt-divider">========================================</div>
-          <div class="receipt-row"><span>TRANSACTION:</span> <span>CASH ACCESS</span></div>
-          <div class="receipt-row"><span>CARD NO:</span> <span>**** **** 4821</span></div>
-          <div class="receipt-row"><span>AMOUNT:</span> <span>₹5000</span></div>
-          <div class="receipt-row"><span>DATE:</span> <span>09/09/2026</span></div>
-          <div class="receipt-row"><span>TXN ID:</span> <span>739184</span></div>
-          <div class="receipt-row"><span>STATUS:</span> <span>APPROVED ✓</span></div>
-          <div class="receipt-divider">----------------------------------------</div>
-          <div class="receipt-row-large">
-            <span>REFERENCE:</span>
-            <strong style="color: #8b0000; font-size: 24px; letter-spacing: 2px;">4629</strong>
-          </div>
-          <div class="receipt-divider">========================================</div>
-          <div class="receipt-footer-note">
-            💡 <em>“Every transaction leaves a reference.”</em>
-          </div>
-        </div>
-
-        <button class="btn btn-gold" style="width: 100%; margin-top: 14px;" onclick="window.app.closeModal('receipt-modal');">
-          CLOSE RECEIPT NOTE ✓
-        </button>
-      </div>
-    </div>
-
-    <!-- ==========================================
-         4. VINTAGE DESK SCRATCH FRAME MODAL (Wall 2)
-         ========================================== -->
-    <div id="scratch-modal" class="modal-backdrop">
-      <div class="modal-card scratch-desk-modal-card">
-        <button class="modal-close-btn" onclick="window.app.closeModal('scratch-modal')">✕</button>
-        
-        <div class="modal-header" style="margin-bottom: 12px;">
-          <span class="modal-subtitle">WALL 2 • TABLE MYSTERY FRAME</span>
-          <h2 class="modal-title">SCRATCH THE VINTAGE FRAME</h2>
-          <p style="font-size: 13px; color: var(--text-muted); margin-top: 4px;">
-            Rub your cursor across the wax parchment in the frame to uncover the secret passcode.
-          </p>
-        </div>
-
-        <div class="scratch-desk-vignette-frame">
-          <img src="assets/scratch_frame_desk.jpg" alt="Vintage Ornate Table Frame" class="scratch-desk-bg-img" />
-          
-          <!-- Interactive Scratch Canvas Container over the exact frame opening -->
-          <div class="scratch-card-box">
-            <div class="scratch-secret-reveal">
-              <div class="scratch-filigree-top">⚜ ── ❖ ── ⚜</div>
-              <span class="scratch-reveal-label">SECRET KEYCODE</span>
-              <div class="scratch-reveal-passcode">29</div>
-              <span class="scratch-reveal-sub">DRAWER 01 PASSCODE</span>
-              <div class="scratch-filigree-bottom">── ❖ ──</div>
-            </div>
-            <canvas id="scratch-canvas-el" class="scratch-canvas-layer"></canvas>
-          </div>
-        </div>
-
-        <div class="scratch-modal-footer">
-          <button id="btn-scratch-goto-keypad" class="btn btn-gold" style="width: 100%; font-weight: 800;" onclick="window.app.closeModal('scratch-modal'); window.app.openKeypadPuzzle();">
-            ENTER PASSCODE [29] INTO DRAWER 01 KEYPAD →
           </button>
         </div>
       </div>
@@ -1010,15 +2792,7 @@
             <img src="assets/handle2_wheel.png?v=2" alt="Installed Handle 2 Brass Wheel" style="width: 100%; height: 100%; object-fit: contain; filter: drop-shadow(0 8px 22px rgba(0,0,0,0.95));" />
           </div>
 
-          <!-- Middle Dot: Handle 1 (Center Hub) -->
-          <div id="vault-dot-handle-1" class="vault-focal-dot" style="top: 50.8%; left: 48.6%;" title="Handle 1" onclick="window.puzzleManager.rotateHandle(1)">
-            <div class="vault-dot-label-badge">HANDLE 1</div>
-          </div>
 
-          <!-- Second Dot: Handle 2 (Right Mechanism) -->
-          <div id="vault-dot-handle-2" class="vault-focal-dot" style="top: 52.0%; left: 67.2%;" title="Handle 2" onclick="window.puzzleManager.rotateHandle(2)">
-            <div class="vault-dot-label-badge">HANDLE 2</div>
-          </div>
         </div>
 
         <!-- Installation Status & Action Buttons -->
@@ -1625,7 +3399,20 @@
           <span class="modal-subtitle">EXPLORER'S BAG</span>
           <h2 class="modal-title">PLAYER INVENTORY</h2>
         </div>
+        <div id="inventory-gold-bars-banner" style="background: rgba(255, 215, 0, 0.1); border: 1.5px solid #ffd700; border-radius: 8px; padding: 10px 16px; margin-bottom: 16px; display: flex; justify-content: space-between; align-items: center;">
+          <div style="font-family: 'Cinzel', Georgia, serif; font-size: 13px; font-weight: 800; color: #ffd700;">
+            ⚜️ SACRED GOLDEN BARS
+          </div>
+          <div id="inventory-gold-bars-count" style="font-family: 'JetBrains Mono', monospace; font-size: 14px; font-weight: 800; color: #ffffff;">
+            0 / 7 COLLECTED
+          </div>
+        </div>
         <div id="inventory-items-grid" class="inventory-grid"></div>
+        <div id="inventory-action-footer" style="margin-top: 16px; display: flex; gap: 10px;">
+          <button id="btn-inventory-equip-glasses" class="btn btn-gold" style="width: 100%; font-weight: 800; padding: 12px; display: none; background: linear-gradient(180deg, #9b59b6 0%, #6c3483 100%);" onclick="window.app.equipGlassesFromInventory()">
+            👓 WEAR SPECIAL GLASSES (ACTIVATE LASER VISION)
+          </button>
+        </div>
       </div>
     </div>
 
@@ -1839,15 +3626,15 @@
   </div> <!-- End Game Container -->
 
   <!-- Application Scripts -->
-  <script src="js/audio.js"></script>
-  <script src="js/state.js"></script>
-  <script src="js/dialogues.js"></script>
-  <script src="js/learningData.js"></script>
-  <script src="js/vintageRoomEngine.js"></script>
-  <script src="js/puzzles.js"></script>
-  <script src="js/roomController.js"></script>
-  <script src="js/profileReport.js"></script>
-  <script src="js/app.js"></script>
+  <script src="js/audio.js?v=37"></script>
+  <script src="js/state.js?v=37"></script>
+  <script src="js/dialogues.js?v=37"></script>
+  <script src="js/learningData.js?v=37"></script>
+  <script src="js/vintageRoomEngine.js?v=37"></script>
+  <script src="js/puzzles.js?v=37"></script>
+  <script src="js/roomController.js?v=37"></script>
+  <script src="js/profileReport.js?v=37"></script>
+  <script src="js/app.js?v=37"></script>
 
 </body>
 </html>

@@ -27,20 +27,19 @@
 }
 
 /* ==========================================================================
-   WALL VIEWS MASTER STAGE (16:9 Cinema Container with 3D Perspective)
+   WALL VIEWS MASTER STAGE (Full Viewport Panoramic Room with 3D Perspective)
    ========================================================================== */
 .walls-master-stage {
   position: relative;
-  width: 100%;
-  height: 100%;
-  max-width: min(100vw, 177.78vh);
-  max-height: min(100vh, 56.25vw);
-  aspect-ratio: 16 / 9;
+  width: 100vw;
+  height: 100vh;
+  max-width: 100vw;
+  max-height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
   overflow: hidden;
-  box-shadow: 0 12px 50px rgba(0, 0, 0, 0.4);
+  box-shadow: none;
   perspective: 1200px;
   transform-style: preserve-3d;
 }
@@ -119,19 +118,22 @@
 
 /* Remastered Ultra HD Clean Wall Background Images */
 #wall-view-1 {
-  background-image: url('../assets/wall1_entrance.jpg?v=15');
+  background-image: url('../assets/wall1_entrance.jpg?v=16');
 }
 
 #wall-view-2 {
-  background-image: url('../assets/wall2_notice_desk.jpg?v=15');
+  background-image: url('../assets/wall2_notice_desk.jpg?v=16');
 }
 
 #wall-view-3 {
-  background-image: url('../assets/wall3_exit_painting.jpg?v=15');
+  background-image: url('../assets/wall3_exit_painting.jpg?v=16');
 }
 
 #wall-view-4 {
-  background-image: url('../assets/wall4_teller.jpg?v=15');
+  background-image: url('../assets/wall4_laser_chamber.jpg?v=32');
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
 }
 
 #wall-view-5 {
@@ -160,233 +162,238 @@
 }
 
 /* ==========================================================================
-   AUTHENTIC VINTAGE GOLD BRASS DOOR NAMEPLATES (ENLARGED PROPORTIONAL)
+   MUSEUM INTERACTIVE DOTS (Authentic Antique Gold Hotspots)
    ========================================================================== */
-.vintage-door-plate {
+.museum-interactive-dot {
   position: absolute;
-  z-index: 25;
-  display: flex !important;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  width: 138px;
-  height: 46px;
-  background-image: url('../assets/gold_nameplate.jpg?v=7');
-  background-size: 100% 100%;
-  background-repeat: no-repeat;
-  mix-blend-mode: screen;
-  pointer-events: auto;
-  opacity: 1 !important;
-  visibility: visible !important;
-  transition: all 0.3s ease;
-  transform: translate(-50%, -50%);
-  padding: 4px 10px;
-  filter: drop-shadow(0 5px 10px rgba(0, 0, 0, 0.85));
-}
-
-.vintage-door-plate.entrance-plate {
-  top: 32.5%;
-  left: 30.1%;
-}
-
-.vintage-door-plate.exit-plate {
-  top: 37.8%;
-  left: 72.0%;
-  width: 98px;
+  z-index: 45;
+  width: 32px;
   height: 32px;
-  padding: 2px 6px;
-}
-
-.vintage-door-plate.exit-plate .door-plate-text {
-  font-size: 8px;
-  letter-spacing: 0.8px;
-}
-
-.door-plate-text {
-  font-family: 'Cinzel', 'Playfair Display', Georgia, serif;
-  font-size: 10.5px;
-  font-weight: 900;
-  color: #1a0801;
-  letter-spacing: 1.2px;
-  text-transform: uppercase;
-  text-align: center;
-  text-shadow: 0 1px 1px rgba(255, 230, 160, 0.95), 0 -1px 1px rgba(0, 0, 0, 0.6);
-  white-space: nowrap;
-}
-
-/* ==========================================================================
-   GLOWING GOLDEN DOOR FOCAL DOTS (ENTRANCE & EXIT DOORS)
-   ========================================================================== */
-.door-focal-dot {
-  position: absolute;
-  z-index: 35;
-  width: 24px;
-  height: 24px;
   border-radius: 50%;
-  background: transparent !important;
-  border: none !important;
-  box-shadow: none !important;
-  cursor: pointer;
-  pointer-events: auto;
-  opacity: 0 !important;
-  visibility: visible !important;
   transform: translate(-50%, -50%);
-  animation: none !important;
-}
-
-.door-focal-dot::after {
-  display: none !important;
-  opacity: 0 !important;
-  border: none !important;
-  animation: none !important;
-}
-
-.door-focal-dot:hover {
-  transform: translate(-50%, -50%);
-  box-shadow: none !important;
-  opacity: 0 !important;
-}
-
-@keyframes door-dot-pulse {
-  0%, 100% {
-    transform: translate(-50%, -50%) scale(1);
-    box-shadow: 0 0 10px #ffd700, 0 0 18px rgba(255, 215, 0, 0.85);
-  }
-  50% {
-    transform: translate(-50%, -50%) scale(1.28);
-    box-shadow: 0 0 18px #ffffff, 0 0 28px rgba(255, 215, 0, 1);
-  }
-}
-
-@keyframes door-ring-ping {
-  0% {
-    transform: scale(0.6);
-    opacity: 1;
-  }
-  100% {
-    transform: scale(2.0);
-    opacity: 0;
-  }
-}
-
-#w1-entrance-dot {
-  top: 52.5%;
-  left: 23.8%;
-}
-
-#w1-painting-dot {
-  top: 31.0%;
-  left: 63.8%;
-}
-
-#w1-drawer-dot {
-  top: 57.5%;
-  left: 63.8%;
-  width: 24px;
-  height: 24px;
-}
-
-#w2-atm-dot {
-  top: 40.0%;
-  left: 26.5%;
-}
-
-.wall2-pinboard-element {
-  position: absolute;
-  top: 25.0%;
-  left: 44.0%;
-  transform: translate(-50%, -50%);
-  width: 220px;
-  height: 97px;
-  z-index: 35;
   cursor: pointer;
   pointer-events: auto !important;
-  box-shadow: none !important;
-  filter: none !important;
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.28s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
-.wall2-pinboard-element:hover {
-  transform: translate(-50%, -50%);
-  box-shadow: none !important;
-  filter: none !important;
+.museum-interactive-dot:hover {
+  transform: translate(-50%, -50%) scale(1.15);
+  z-index: 50;
 }
 
-.wall2-pinboard-element img {
-  box-shadow: none !important;
-  filter: none !important;
+/* Glowing Core */
+.museum-interactive-dot .dot-core {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: radial-gradient(circle, #fff9e6 0%, #ffd700 55%, #b38600 100%);
+  border: 1.5px solid #ffffff;
+  box-shadow: 0 0 10px #ffd700, 0 0 20px rgba(255, 215, 0, 0.85), inset 0 1px 2px rgba(255, 255, 255, 0.9);
+  transition: all 0.25s ease;
+  z-index: 2;
 }
 
-#w2-suitcase-dot {
-  top: 63.5%;
-  left: 70.0%;
-}
-
-#w3-exit-dot {
-  top: 50.5%;
-  left: 67.2%;
-}
-
-#w3-vault-safe-dot {
-  top: 48.4%;
-  left: 33.3%;
-}
-
-#w3-handle2-dot {
-  top: 48.6%;
-  left: 41.7%;
-}
-
-#w4-sticky-note-dot {
-  top: 36.0%;
-  left: 50.0%;
-}
-
-.wall4-sticky-note-element {
+/* Pulsing Outer Radiance */
+.museum-interactive-dot .dot-ring {
   position: absolute;
-  top: 36.0%;
-  left: 50.0%;
-  transform: translate(-50%, -50%) rotate(-1.5deg);
-  width: 100px;
-  height: 100px;
-  z-index: 30;
-  cursor: pointer;
-  filter: drop-shadow(0 6px 12px rgba(0, 0, 0, 0.7));
-  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), filter 0.25s ease;
+  inset: -6px;
+  border-radius: 50%;
+  border: 1.5px solid rgba(255, 215, 0, 0.75);
+  animation: museumDotPulse 2.4s infinite ease-out;
+  pointer-events: none;
 }
 
-.wall4-sticky-note-element:hover {
-  transform: translate(-50%, -50%) rotate(0deg) scale(1.18);
-  filter: drop-shadow(0 12px 24px rgba(0, 0, 0, 0.85)) drop-shadow(0 0 12px rgba(255, 215, 0, 0.6));
+/* Secondary Ambient Ring */
+.museum-interactive-dot .dot-ping {
+  position: absolute;
+  inset: -12px;
+  border-radius: 50%;
+  border: 1px dashed rgba(255, 235, 150, 0.45);
+  animation: museumDotRotate 14s infinite linear;
+  pointer-events: none;
 }
 
-.sticky-note-img {
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-  display: block;
+/* Hover Tooltip Label */
+.museum-interactive-dot .dot-label {
+  position: absolute;
+  bottom: calc(100% + 12px);
+  left: 50%;
+  transform: translateX(-50%) translateY(6px);
+  background: linear-gradient(180deg, rgba(28, 16, 9, 0.97) 0%, rgba(14, 7, 3, 0.99) 100%);
+  border: 1.5px solid #ffd700;
+  border-radius: 7px;
+  padding: 6px 14px;
+  font-family: 'Cinzel', Georgia, serif;
+  font-size: 11.5px;
+  font-weight: 800;
+  letter-spacing: 1.2px;
+  color: #ffd700;
+  text-transform: uppercase;
+  white-space: nowrap;
+  pointer-events: none;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.95), 0 0 16px rgba(255, 215, 0, 0.4);
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  z-index: 100;
 }
 
-@keyframes doorknob-pulse {
-  0%, 100% {
-    transform: scale(1);
-    box-shadow: 0 0 8px #ffd700, 0 0 14px rgba(255, 215, 0, 0.85);
-  }
-  50% {
-    transform: scale(1.3);
-    box-shadow: 0 0 14px #ffffff, 0 0 22px rgba(255, 215, 0, 1);
-  }
+/* Tooltip Little Arrow Pointer */
+.museum-interactive-dot .dot-label::after {
+  content: '';
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  border-width: 5px;
+  border-style: solid;
+  border-color: #ffd700 transparent transparent transparent;
 }
 
-@keyframes doorknob-ring-ping {
+.museum-interactive-dot:hover .dot-label {
+  opacity: 1;
+  visibility: visible;
+  transform: translateX(-50%) translateY(0);
+}
+
+.museum-interactive-dot:hover .dot-core {
+  transform: scale(1.3);
+  box-shadow: 0 0 16px #ffffff, 0 0 28px rgba(255, 215, 0, 1), 0 0 40px rgba(255, 215, 0, 0.6);
+}
+
+/* Completed Dot State */
+.museum-interactive-dot.completed .dot-core {
+  background: radial-gradient(circle, #e8f8f5 0%, #2ecc71 60%, #196f3d 100%) !important;
+  border-color: #ffffff !important;
+  box-shadow: 0 0 10px #2ecc71, 0 0 22px rgba(46, 204, 113, 0.95) !important;
+  animation: none !important;
+}
+
+.museum-interactive-dot.completed .dot-ring {
+  border-color: rgba(46, 204, 113, 0.75) !important;
+  animation-duration: 3.5s !important;
+}
+
+.museum-interactive-dot.completed .dot-label {
+  border-color: #2ecc71 !important;
+  color: #2ecc71 !important;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.95), 0 0 16px rgba(46, 204, 113, 0.5) !important;
+}
+
+.museum-interactive-dot.completed .dot-label::after {
+  border-color: #2ecc71 transparent transparent transparent !important;
+}
+
+.museum-interactive-dot.completed .dot-ring {
+  border-color: rgba(46, 204, 113, 0.7);
+  animation-duration: 3.5s;
+}
+
+.museum-interactive-dot.completed .dot-ping {
+  border-color: rgba(46, 204, 113, 0.3);
+}
+
+.museum-interactive-dot.completed .dot-label {
+  border-color: #2ecc71;
+  color: #2ecc71;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.95), 0 0 16px rgba(46, 204, 113, 0.4);
+}
+
+.museum-interactive-dot.completed .dot-label::after {
+  border-color: #2ecc71 transparent transparent transparent;
+}
+
+/* Locked Dot State */
+.museum-interactive-dot.locked .dot-core {
+  background: radial-gradient(circle, #8a7a60 0%, #4a3e2c 100%);
+  border-color: #6d5b42;
+  box-shadow: 0 0 6px rgba(0, 0, 0, 0.8);
+  opacity: 0.7;
+}
+
+.museum-interactive-dot.locked .dot-ring {
+  border-color: rgba(140, 120, 90, 0.25);
+  animation: none;
+}
+
+.museum-interactive-dot.locked .dot-ping {
+  display: none;
+}
+
+.museum-interactive-dot.locked .dot-label {
+  border-color: #7f6a4e;
+  color: #bfb098;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.9);
+}
+
+.museum-interactive-dot.locked .dot-label::after {
+  border-color: #7f6a4e transparent transparent transparent;
+}
+
+/* Active Puzzle Dot State (Pulsing Amber/Gold to attract focus) */
+.museum-interactive-dot.active-puzzle .dot-core {
+  background: radial-gradient(circle, #ffffff 0%, #ff9f1a 60%, #e67e22 100%);
+  border-color: #ffffff;
+  box-shadow: 0 0 16px #ff9f1a, 0 0 32px rgba(255, 159, 26, 0.95);
+  animation: activeDotHeartbeat 1.4s infinite ease-in-out;
+}
+
+.museum-interactive-dot.active-puzzle .dot-ring {
+  border-color: rgba(255, 159, 26, 0.9);
+  animation: museumDotPulse 1.4s infinite ease-out;
+}
+
+.museum-interactive-dot.active-puzzle .dot-label {
+  border-color: #ff9f1a;
+  color: #ff9f1a;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.95), 0 0 18px rgba(255, 159, 26, 0.5);
+}
+
+.museum-interactive-dot.active-puzzle .dot-label::after {
+  border-color: #ff9f1a transparent transparent transparent;
+}
+
+@keyframes activeDotHeartbeat {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.35); }
+}
+
+@keyframes museumDotPulse {
   0% {
-    transform: scale(0.6);
-    opacity: 1;
+    transform: scale(0.85);
+    opacity: 0.95;
+    box-shadow: 0 0 0 0 rgba(255, 215, 0, 0.7);
+  }
+  70% {
+    transform: scale(1.45);
+    opacity: 0;
+    box-shadow: 0 0 0 14px rgba(255, 215, 0, 0);
   }
   100% {
-    transform: scale(2.0);
+    transform: scale(0.85);
     opacity: 0;
   }
 }
+
+@keyframes museumDotRotate {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/* NAMEPLATES REMOVED */
+
+/* ALL FOCAL DOTS AND DOORKNOB ANIMATIONS REMOVED */
+
 
 *, *::before, *::after {
   outline: none !important;
@@ -396,12 +403,7 @@
 /* ==========================================================================
    HOTSPOT POSITION COORDINATES (Active Puzzles Only)
    ========================================================================== */
-#w1-entrance-door {
-  top: 15%;
-  left: 19%;
-  width: 18%;
-  height: 70%;
-}
+/* entrance-door hotspot removed */
 
 #w1-wall-clock {
   top: 5.5%;
@@ -424,12 +426,7 @@
   height: 16%;
 }
 
-#w2-notice-board {
-  top: 20%;
-  left: 12%;
-  width: 29%;
-  height: 40%;
-}
+/* notice-board hotspot removed */
 
 #w2-pin-note {
   top: 45.0%;
@@ -459,12 +456,7 @@
   height: 12.0%;
 }
 
-#w3-exit-door {
-  top: 27%;
-  left: 63.5%;
-  width: 16%;
-  height: 56%;
-}
+/* exit-door hotspot removed */
 
 #w3-transfer-counter {
   top: 54.0%;
@@ -617,4 +609,280 @@
   0% { transform: scale(1); box-shadow: 0 0 8px #00e5ff, 0 0 15px rgba(0,229,255,0.6); }
   50% { transform: scale(1.35); box-shadow: 0 0 20px #00e5ff, 0 0 30px rgba(0,229,255,0.9); }
   100% { transform: scale(1); box-shadow: 0 0 8px #00e5ff, 0 0 15px rgba(0,229,255,0.6); }
+}
+
+/* ==========================================================================
+   WALL 4: LASER CHAMBER, GLASSES OVERLAY & OPTICAL MIRRORS
+   ========================================================================== */
+.wall4-laser-svg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 12;
+  transition: opacity 0.4s ease;
+}
+
+.wall4-laser-svg.lasers-hidden {
+  opacity: 0.12;
+  filter: blur(4px);
+}
+
+.laser-beam-line {
+  stroke: #ff0033;
+  stroke-width: 3.2;
+  stroke-linecap: round;
+  filter: drop-shadow(0 0 6px #ff0033) drop-shadow(0 0 14px rgba(255, 0, 51, 0.9));
+  animation: laserPulse 1.2s infinite ease-in-out alternate;
+}
+
+.laser-beam-core {
+  stroke: #ffffff;
+  stroke-width: 1.2;
+  stroke-linecap: round;
+  opacity: 0.95;
+}
+
+.laser-deflected-line {
+  stroke: #00ffcc;
+  stroke-width: 3.0;
+  stroke-linecap: round;
+  filter: drop-shadow(0 0 8px #00ffcc) drop-shadow(0 0 16px rgba(0, 255, 204, 0.8));
+  animation: laserPulseSafe 1.5s infinite ease-in-out alternate;
+}
+
+.laser-deflected-core {
+  stroke: #ffffff;
+  stroke-width: 1.2;
+  stroke-linecap: round;
+  opacity: 0.95;
+}
+
+@keyframes laserPulse {
+  0% { stroke-width: 2.8; opacity: 0.85; filter: drop-shadow(0 0 5px #ff0033); }
+  100% { stroke-width: 3.8; opacity: 1; filter: drop-shadow(0 0 12px #ff0033) drop-shadow(0 0 22px rgba(255, 0, 51, 0.95)); }
+}
+
+@keyframes laserPulseSafe {
+  0% { stroke-width: 2.6; opacity: 0.85; filter: drop-shadow(0 0 6px #00ffcc); }
+  100% { stroke-width: 3.5; opacity: 1; filter: drop-shadow(0 0 14px #00ffcc) drop-shadow(0 0 24px rgba(0, 255, 204, 0.9)); }
+}
+
+.laser-impact-spark {
+  fill: #ff3838;
+  filter: drop-shadow(0 0 10px #ff0033);
+  animation: sparkFlicker 0.4s infinite alternate;
+}
+
+@keyframes sparkFlicker {
+  0% { r: 5; opacity: 0.7; }
+  100% { r: 8; opacity: 1; }
+}
+
+/* Glasses Overlay on Wall 4 */
+.glasses-hud-banner {
+  position: absolute;
+  top: 18px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(12, 6, 20, 0.88);
+  border: 1.5px solid #9b59b6;
+  border-radius: 30px;
+  padding: 8px 22px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  z-index: 30;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.9), 0 0 18px rgba(155, 89, 182, 0.45);
+  font-family: 'Cinzel', Georgia, serif;
+  font-size: 13px;
+  color: #ffd700;
+  backdrop-filter: blur(6px);
+}
+
+.glasses-indicator-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11.5px;
+  font-weight: 800;
+  color: #2ecc71;
+  background: rgba(46, 204, 113, 0.15);
+  padding: 3px 10px;
+  border-radius: 12px;
+  border: 1px solid rgba(46, 204, 113, 0.4);
+}
+
+.glasses-indicator-pill.blocked {
+  color: #ff4757;
+  background: rgba(255, 71, 87, 0.15);
+  border-color: rgba(255, 71, 87, 0.4);
+}
+
+/* Mirror Pedestal Mount Marker */
+.mirror-pedestal-marker {
+  position: absolute;
+  width: 44px;
+  height: 44px;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  border: 2px solid #ffd700;
+  background: radial-gradient(circle, rgba(255, 215, 0, 0.25) 0%, rgba(20, 10, 5, 0.85) 100%);
+  box-shadow: 0 0 14px rgba(255, 215, 0, 0.6);
+  cursor: pointer;
+  z-index: 25;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.25s ease;
+}
+
+.mirror-pedestal-marker:hover {
+  transform: translate(-50%, -50%) scale(1.15);
+  box-shadow: 0 0 24px #ffd700, 0 0 40px rgba(255, 215, 0, 0.9);
+}
+
+.mirror-pedestal-marker.placed {
+  border-color: #2ecc71;
+  background: radial-gradient(circle, rgba(46, 204, 113, 0.35) 0%, rgba(10, 30, 20, 0.9) 100%);
+  box-shadow: 0 0 16px rgba(46, 204, 113, 0.8);
+}
+
+.mirror-angle-badge {
+  position: absolute;
+  bottom: -22px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(0, 0, 0, 0.85);
+  border: 1px solid #ffd700;
+  border-radius: 4px;
+  padding: 2px 6px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  font-weight: 800;
+  color: #ffd700;
+  white-space: nowrap;
+  pointer-events: none;
+}
+
+/* Safe Chest Aura when all lasers deflected */
+.chest-safe-perimeter-aura {
+  position: absolute;
+  top: 53%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 220px;
+  height: 140px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(46, 204, 113, 0.25) 0%, rgba(255, 215, 0, 0.15) 50%, transparent 80%);
+  border: 2px dashed #2ecc71;
+  box-shadow: 0 0 30px #2ecc71, inset 0 0 20px rgba(46, 204, 113, 0.4);
+  pointer-events: none;
+  z-index: 15;
+  animation: auraGlow 2.5s infinite ease-in-out;
+  display: none;
+}
+
+@keyframes auraGlow {
+  0% { transform: translate(-50%, -50%) scale(0.96); opacity: 0.75; }
+  50% { transform: translate(-50%, -50%) scale(1.04); opacity: 1; }
+  100% { transform: translate(-50%, -50%) scale(0.96); opacity: 0.75; }
+}
+
+/* Wall 4 Red Laser Emitter Hubs */
+.laser-emitter-hub {
+  filter: drop-shadow(0 0 8px #ff0033) drop-shadow(0 0 16px rgba(255, 0, 51, 0.9));
+  animation: emitterPulse 2s infinite ease-in-out alternate;
+}
+
+@keyframes emitterPulse {
+  0% { filter: drop-shadow(0 0 6px #ff0033); }
+  100% { filter: drop-shadow(0 0 14px #ff0033) drop-shadow(0 0 24px rgba(255, 0, 51, 1)); }
+}
+
+.wall4-laser-svg.lasers-off {
+  display: none !important;
+}
+
+/* Wall 4 Glasses Off / On Mirror mount transitions */
+.wall4-laser-svg.lasers-off {
+  display: none !important;
+}
+
+.wall4-lasers-dormant .mirror-angle-badge {
+  opacity: 0.4;
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+/* Wall 4 Ornate Wall Hooks & Hanging Rotatable Mirrors */
+.mirror-hook-container {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  width: 52px;
+  height: 72px;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  cursor: pointer;
+  z-index: 22;
+  transition: transform 0.25s ease;
+}
+
+.mirror-hook-container:hover {
+  transform: translate(-50%, -50%) scale(1.12);
+}
+
+.mirror-wall-hook-img {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 32px;
+  height: auto;
+  pointer-events: none;
+  filter: drop-shadow(0 3px 6px rgba(0, 0, 0, 0.9)) drop-shadow(0 0 6px rgba(212, 175, 55, 0.6));
+  z-index: 1;
+}
+
+.mirror-hanging-img {
+  position: absolute;
+  top: 13px;
+  left: 50%;
+  width: 38px;
+  height: auto;
+  pointer-events: none;
+  transform-origin: 50% 22%;
+  transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+  filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.9)) drop-shadow(0 0 8px rgba(255, 215, 0, 0.7));
+  z-index: 2;
+}
+
+.mirror-hook-dot {
+  position: absolute !important;
+  top: 36px !important;
+  left: 50% !important;
+  transform: translate(-50%, -50%) !important;
+  z-index: 3;
+}
+
+.mirror-hook-dot .dot-core {
+  width: 14px !important;
+  height: 14px !important;
+}
+
+.mirror-hook-dot .dot-ring {
+  width: 28px !important;
+  height: 28px !important;
+}
+
+.mirror-hook-dot .dot-ping {
+  width: 40px !important;
+  height: 40px !important;
+}
+
+.mirror-hook-dot .mirror-angle-badge {
+  top: 32px !important;
 }

@@ -210,6 +210,28 @@ class SoundEngine {
     osc.start();
     osc.stop(this.ctx.currentTime + 0.25);
   }
+
+  // Security Alarm / Warning Siren
+  playAlarm() {
+    if (this.muted) return;
+    this.init();
+    try {
+      const now = this.ctx.currentTime;
+      [0, 0.2, 0.4].forEach((offset) => {
+        const osc = this.ctx.createOscillator();
+        const gain = this.ctx.createGain();
+        osc.type = 'sawtooth';
+        osc.frequency.setValueAtTime(720, now + offset);
+        osc.frequency.linearRampToValueAtTime(420, now + offset + 0.15);
+        gain.gain.setValueAtTime(0.28, now + offset);
+        gain.gain.exponentialRampToValueAtTime(0.01, now + offset + 0.18);
+        osc.connect(gain);
+        gain.connect(this.ctx.destination);
+        osc.start(now + offset);
+        osc.stop(now + offset + 0.18);
+      });
+    } catch (e) {}
+  }
 }
 
 window.soundEngine = new SoundEngine();
